@@ -24,17 +24,15 @@ const Name = ({ workspace, styles, ...props }) => {
         placeholder="Enter session name"
         style={{ marginLeft: "0px" }}
       />
-      <select name="workspace">{workspaceList}</select>
+      <select style={{ width: "100%", height: "35%" }} name="workspace">
+        {workspaceList}
+      </select>
     </FlexContainer>
   );
 };
 
-export default withStyles(() => {
+export default withStyles(({ themes }) => {
   return {
-    name: {
-      ":nth-child(1n) select": {
-        width: "200px"
-      }
-    }
+    name: {}
   };
 })(Name);
