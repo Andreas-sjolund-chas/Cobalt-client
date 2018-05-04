@@ -61,7 +61,6 @@ class CreateSession extends React.Component {
     for (const [key, value] of data.entries()) {
       newObj[key] = value;
     }
-    debugger;
     this.props.requestNewSession(newObj);
 >>>>>>> fixed workspace styling
   }
