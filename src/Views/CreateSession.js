@@ -31,7 +31,6 @@ const mapStateToProps = ({
 class CreateSession extends React.Component {
   constructor({ styles, handleSubmit = null, ...props }) {
     super(props);
-
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.closeModal = this.closeModal.bind(this);
@@ -40,6 +39,9 @@ class CreateSession extends React.Component {
       isModalHidden: false
     };
   }
+
+  // TODO: Get real workspaces
+  workspaces = ["Chas academy", "Ballerina", "KTH", "Hoppla"];
 
   handleSubmit(data) {
     const dataObj = {
