@@ -5,6 +5,7 @@ import { css, withStyles } from "../../withStyles";
 import FlexContainer from "../../Containers/FlexContainer";
 import Avatar from "../../Elements/Avatar";
 import Button from "../../Elements/Button";
+import Heading from "../../Elements/Heading";
 import ButtonLink from "../../Elements/ButtonLink";
 import Navigation from "../../Components/Navigation";
 import Sessions from "./Sessions";
@@ -26,11 +27,23 @@ class Dashboard extends React.Component {
 
   render() {
     const { styles, auth, user } = this.props;
+    let path = this.props.location.pathname.slice(11);
     return (
       <div {...css(styles.dashboard)}>
         <Navigation {...this.props} />
         <div {...css(styles.main)}>
           <div {...css(styles.header)}>
+            <FlexContainer direction="row" align="center" justify="between">
+              <Heading size="2" style={{ margin: "0" }}>
+                {path == "profile"
+                  ? "Profile"
+                  : path == "upgrade"
+                    ? "Upgrade Plan"
+                    : path == "settings"
+                      ? "Settings"
+                      : "Sessions"}
+              </Heading>
+            </FlexContainer>
             <FlexContainer direction="row" align="center" justify="end">
               <ButtonLink
                 to={`${this.props.match.url}/new`}
@@ -52,12 +65,6 @@ class Dashboard extends React.Component {
                 <Sessions dispatch={this.props.dispatch} data={user} />
               )}
             />
-            <Route
-              exact
-              path={`${this.props.match.url}/new`}
-              component={CreateSession}
-            />
-
             <Route
               exact
               path={`${this.props.match.url}/profile`}
@@ -104,6 +111,10 @@ export default withStyles(({ colors }) => {
       width: "100%",
       padding: "15px",
       backgroundColor: "white",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
       borderBottom: `1px solid ${colors.aluminum}`
     },
     main: {
