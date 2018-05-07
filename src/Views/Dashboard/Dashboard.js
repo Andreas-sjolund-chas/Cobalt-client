@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { css, withStyles } from "../../withStyles";
 import FlexContainer from "../../Containers/FlexContainer";
 import Avatar from "../../Elements/Avatar";
+import Heading from "../../Elements/Heading";
 import Button from "../../Elements/Button";
 import ButtonLink from "../../Elements/ButtonLink";
 import Navigation from "../../Components/Navigation";
@@ -36,11 +37,23 @@ class Dashboard extends React.Component {
 
   render() {
     const { styles, auth, user } = this.props;
+    let path = this.props.location.pathname.slice(11);
     return (
       <div {...css(styles.dashboard)}>
         <Navigation logOut={this.handleLogout} {...this.props} />
         <div {...css(styles.main)}>
           <div {...css(styles.header)}>
+            <FlexContainer direction="row" align="center" justify="between">
+              <Heading size="2" style={{ margin: "0" }}>
+                {path == "profile"
+                  ? "Profile"
+                  : path == "upgrade"
+                    ? "Upgrade Plan"
+                    : path == "settings"
+                      ? "Settings"
+                      : "Sessions"}
+              </Heading>
+            </FlexContainer>
             <FlexContainer direction="row" align="center" justify="end">
               <ButtonLink
                 to={`${this.props.match.url}/workspaces`}
@@ -64,12 +77,9 @@ class Dashboard extends React.Component {
             <Route
               exact
               path={`${this.props.match.url}`}
-              render={() => <Sessions data={user} />}
-            />
-            <Route
-              exact
-              path={`${this.props.match.url}/new`}
-              component={CreateSession}
+              render={() => (
+                <Sessions dispatch={this.props.dispatch} data={user} />
+              )}
             />
 
             <Route
@@ -103,7 +113,7 @@ const mapStateToProps = state => {
   return {
     auth: state.auth,
     isAuthenticated: state.auth.isAuthenticated,
-    user: state.user.user
+    user: state.user
   };
 };
 
@@ -123,6 +133,10 @@ export default withStyles(({ colors }) => {
       width: "100%",
       padding: "15px",
       backgroundColor: "white",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
       borderBottom: `1px solid ${colors.aluminum}`
     },
     main: {
