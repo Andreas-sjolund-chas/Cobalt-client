@@ -17,7 +17,8 @@ export default withStyles(({ themes, shadow, rounded }) => {
   return {
     card: {
       padding: "40px",
-      color: "white"
+      color: "white",
+      position: "relative"
     },
 
     /* Color */
