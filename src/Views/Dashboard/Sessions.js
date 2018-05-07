@@ -4,6 +4,7 @@ import FlexContainer from "../../Containers/FlexContainer";
 import Heading from "../../Elements/Heading";
 import Paragraph from "../../Elements/Paragraph";
 import Button from "../../Elements/Button";
+import Icon from "../../Elements/Icon";
 import ButtonLink from "../../Elements/ButtonLink";
 import Loader from "../../Elements/Loader";
 import Modal from "../../Components/Modal";
@@ -79,6 +80,31 @@ class Sessions extends React.Component {
       <div {...css(styles.sessions)}>
         {this.state.showModal ? (
           <Modal withAnimation withOverlay>
+            <FlexContainer
+              align="end"
+              style={{
+                width: "100%",
+                position: "absolute",
+                top: "12px",
+                right: "12px"
+              }}
+            >
+              <Icon
+                icon="fas fa-times"
+                fillColor="white"
+                style={{
+                  borderRadius: "2px",
+                  width: "20px",
+                  height: "20px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  cursor: "pointer"
+                }}
+                onClick={this.toggleModal}
+                {...css(this.props.styles.closeModal)}
+              />
+            </FlexContainer>
             <Heading size="3" appearance="white">
               {this.state.session.name}
             </Heading>
@@ -114,7 +140,7 @@ class Sessions extends React.Component {
   }
 }
 
-export default withStyles(({ colors }) => {
+export default withStyles(({ themes, colors }) => {
   return {
     centered: {
       height: "100%",
@@ -133,6 +159,7 @@ export default withStyles(({ colors }) => {
     icon: {
       width: "128px",
       marginBottom: "48px"
-    }
+    },
+    closeModal: themes.danger
   };
 })(Sessions);

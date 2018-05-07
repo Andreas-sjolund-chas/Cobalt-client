@@ -67,6 +67,11 @@ class Dashboard extends React.Component {
             />
             <Route
               exact
+              path={`${this.props.match.url}/new`}
+              component={CreateSession}
+            />
+            <Route
+              exact
               path={`${this.props.match.url}/profile`}
               component={Profile}
             />
