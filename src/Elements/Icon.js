@@ -25,6 +25,7 @@ const Icon = ({
   icon = null,
   fillColor = "white",
   size = "small",
+  padding = "padding",
   styles,
   ...props
 }) => {
@@ -83,7 +84,10 @@ const Icon = ({
   }
 
   return (
-    <span {...css(styles.icon, styles[size], styles[fillColor])} {...props}>
+    <span
+      {...css(styles.icon, styles[size], styles[fillColor], styles[padding])}
+      {...props}
+    >
       <FontAwesomeIcon icon={faIcon} />
     </span>
   );
@@ -92,10 +96,12 @@ const Icon = ({
 export default withStyles(({ colors, text }) => {
   return {
     icon: {
-      padding: "13.5px",
       ":nth-child(1) svg": {
         verticalAlign: "0px"
       }
+    },
+    padding: {
+      padding: "13.5px"
     },
     /** TODO: change from fontawesome to svg? */
 
