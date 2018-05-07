@@ -6,12 +6,20 @@ import Paragraph from "../../Elements/Paragraph";
 import Button from "../../Elements/Button";
 import Loader from "../../Elements/Loader";
 import SessionItem from "../../Components/SessionItem";
-
 import openBoxIcon from "../../assets/open-box.svg";
 
+const renderSessions = data => {
+  return data.map(workspace => {
+    return workspace.presentations.map((session, key) => {
+      return (
+        <SessionItem key={key} data={session} workspace={workspace.name} />
+      );
+    });
+  });
+};
+
 const Sessions = ({ styles, ...props }) => {
-  /* TODO: MAJOR REFACTOR - VERY TEMPORARY */
-  if (!props.data.workspaces) {
+  if (props.data.isFetching) {
     return (
       <div {...css(styles.centered)}>
         <Loader fillColor="dawn" size="large" />
@@ -19,10 +27,7 @@ const Sessions = ({ styles, ...props }) => {
     );
   }
 
-  let sessions = props.data.workspaces[0].presentations;
-  let workspaceName = props.data.workspaces[0].name;
-
-  if (sessions.length <= 0) {
+  if (!props.data.user.workspaces) {
     return (
       <div {...css(styles.centered)}>
         <FlexContainer justify="center" align="center">
@@ -45,10 +50,7 @@ const Sessions = ({ styles, ...props }) => {
         direction="row"
         style={{ flexWrap: "wrap" }}
       >
-        {sessions.map((session, i) => {
-          if (i > 5) return;
-          return <SessionItem data={session} workspace={workspaceName} />;
-        })}
+        {renderSessions(props.data.user.workspaces)}
       </FlexContainer>
     </div>
   );

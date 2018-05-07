@@ -13,8 +13,6 @@ import Upgrade from "./Upgrade";
 import Profile from "./Profile";
 import Settings from "./Settings";
 
-import openBoxIcon from "../../assets/open-box.svg";
-
 import { requestUser } from "../../redux/user/actions";
 
 class Dashboard extends React.Component {
@@ -25,6 +23,7 @@ class Dashboard extends React.Component {
   componentDidMount() {
     this.props.dispatch(requestUser());
   }
+
   render() {
     const { styles, auth, user } = this.props;
     return (
@@ -49,7 +48,9 @@ class Dashboard extends React.Component {
             <Route
               exact
               path={`${this.props.match.url}`}
-              render={() => <Sessions data={user} />}
+              render={() => (
+                <Sessions dispatch={this.props.dispatch} data={user} />
+              )}
             />
             <Route
               exact
@@ -83,7 +84,7 @@ const mapStateToProps = state => {
   return {
     auth: state.auth,
     isAuthenticated: state.auth.isAuthenticated,
-    user: state.user.user
+    user: state.user
   };
 };
 
