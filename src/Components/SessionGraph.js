@@ -43,49 +43,53 @@ const SessionGraph = ({
         ? "Threshold"
         : value;
 
+  const renderAverage = () => (
+    <LineChart
+      data={data}
+      margin={{ top: 15, right: 35, left: 35, bottom: 15 }}
+    >
+      <XAxis dataKey="timeStamp" />
+      <RCTooltip content={<SessionTooltip />} />
+      <YAxis tickFormatter={formatter} ticks={[-5, -threshold / 10, 5]} />
+      <Line
+        type="monotone"
+        dataKey={getAverage}
+        stroke={styles.secondary._definition}
+        strokeWidth={4}
+        activeDot={{ r: 8 }}
+      />
+    </LineChart>
+  );
+
+  const renderPercent = () => (
+    <LineChart
+      data={data}
+      margin={{ top: 15, right: 35, left: 35, bottom: 15 }}
+    >
+      <XAxis dataKey="timeStamp" />
+      <RCTooltip content={<SessionTooltip />} />
+      <YAxis tickFormatter={formatter} ticks={[0, threshold, 100]} />
+      <Line
+        type="monotone"
+        dataKey={getPositive}
+        stroke={styles.success._definition}
+        strokeWidth={4}
+        activeDot={{ r: 8 }}
+      />
+      <Line
+        type="monotone"
+        dataKey={getNegative}
+        stroke={styles.danger._definition}
+        strokeWidth={4}
+        activeDot={{ r: 8 }}
+      />
+    </LineChart>
+  );
+
   return (
     <FlexContainer style={{ height: "320px" }}>
       <ResponsiveContainer height="100%" width="100%">
-        {isAverage ? (
-          <LineChart
-            data={data}
-            margin={{ top: 15, right: 35, left: 35, bottom: 15 }}
-          >
-            <XAxis dataKey="timeStamp" />
-            <RCTooltip content={<SessionTooltip />} />
-            <YAxis tickFormatter={formatter} ticks={[-5, -threshold / 10, 5]} />
-            <Line
-              type="monotone"
-              dataKey={getAverage}
-              stroke={styles.secondary._definition}
-              strokeWidth={4}
-              activeDot={{ r: 8 }}
-            />
-          </LineChart>
-        ) : (
-          <LineChart
-            data={data}
-            margin={{ top: 15, right: 35, left: 35, bottom: 15 }}
-          >
-            <XAxis dataKey="timeStamp" />
-            <RCTooltip content={<SessionTooltip />} />
-            <YAxis tickFormatter={formatter} ticks={[0, threshold, 100]} />
-            <Line
-              type="monotone"
-              dataKey={getPositive}
-              stroke={styles.success._definition}
-              strokeWidth={4}
-              activeDot={{ r: 8 }}
-            />
-            <Line
-              type="monotone"
-              dataKey={getNegative}
-              stroke={styles.danger._definition}
-              strokeWidth={4}
-              activeDot={{ r: 8 }}
-            />
-          </LineChart>
-        )}
+        {isAverage ? renderAverage() : renderPercent()}
       </ResponsiveContainer>
     </FlexContainer>
   );
