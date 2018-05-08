@@ -12,6 +12,7 @@ import CreateSession from "../CreateSession";
 import Upgrade from "./Upgrade";
 import Profile from "./Profile";
 import Settings from "./Settings";
+import Workspaces from "./Workspaces";
 
 import openBoxIcon from "../../assets/open-box.svg";
 
@@ -33,6 +34,12 @@ class Dashboard extends React.Component {
         <div {...css(styles.main)}>
           <div {...css(styles.header)}>
             <FlexContainer direction="row" align="center" justify="end">
+              <ButtonLink
+                to={`${this.props.match.url}/workspaces`}
+                appearance="primary"
+              >
+                My Workspaces
+              </ButtonLink>
               <ButtonLink
                 to={`${this.props.match.url}/new`}
                 appearance="secondary"
@@ -71,6 +78,11 @@ class Dashboard extends React.Component {
               exact
               path={`${this.props.match.url}/settings`}
               component={Settings}
+            />
+            <Route
+              exact
+              path={`${this.props.match.url}/workspaces`}
+              render={() => <Workspaces data={user} />}
             />
           </Switch>
         </div>
