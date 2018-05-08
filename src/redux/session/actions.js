@@ -2,6 +2,9 @@ import {
   REQUEST_SESSION_START,
   REQUEST_SESSION_SUCCESS,
   REQUEST_SESSION_FAIL,
+  REQUEST_DELETE_SESSION_START,
+  REQUEST_DELETE_SESSION_SUCCESS,
+  REQUEST_DELETE_SESSION_FAIL,
   SESSION_CREATED
 } from "./constants";
 
@@ -12,6 +15,18 @@ export const requestSessionSuccess = data => ({
 });
 export const requestSessionFail = err => ({
   type: REQUEST_SESSION_FAIL,
+  payload: err
+});
+
+export const requestDeleteSessionStart = () => ({
+  type: REQUEST_DELETE_SESSION_START
+});
+export const requestDeleteSessionSuccess = data => ({
+  type: REQUEST_DELETE_SESSION_SUCCESS,
+  payload: data
+});
+export const requestDeleteSessionFail = err => ({
+  type: REQUEST_DELETE_SESSION_FAIL,
   payload: err
 });
 
@@ -53,6 +68,20 @@ export const requestNewSession = data => dispatch => {
     .then(handleResponse)
     .then(data => dispatch(requestSessionSuccess(data)))
     .catch(err => dispatch(requestSessionFail(err)));
+};
+
+export const requestDeleteSession = id => dispatch => {
+  dispatch(requestDeleteSessionStart());
+  fetch(`${process.env.REACT_APP_API_BASE_URL}/api/session/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    credentials: "include"
+  })
+    .then(handleResponse)
+    .then(data => dispatch(requestDeleteSessionSuccess(data)))
+    .catch(err => dispatch(requestDeleteSessionFail(err)));
 };
 
 const handleResponse = response => {
