@@ -596,3 +596,5 @@ export default withStyles(({ themes, colors }) => {
     }
   };
 })(Workspaces);
+
+// '0.3 sec ease'
