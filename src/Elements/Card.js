@@ -29,7 +29,7 @@ export default withStyles(({ colors, themes, shadow, rounded }) => {
     danger: themes.danger,
     carbon: themes.carbon,
     white: {
-      backgroundColor: "white"
+      backgroundColor: "#FFF"
     },
 
     primaryBackground: {
