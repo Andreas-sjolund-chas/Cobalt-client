@@ -39,18 +39,16 @@ class Sessions extends React.Component {
   renderSessions(data) {
     return data.map(workspace => {
       return workspace.presentations.map((session, key) => {
-        if (session.hasEnded) {
-          return (
-            <SessionItem
-              toggleModal={() => {
-                this.toggleModal(session);
-              }}
-              key={key}
-              data={session}
-              workspace={workspace.name}
-            />
-          );
-        }
+        return (
+          <SessionItem
+            toggleModal={() => {
+              this.toggleModal(session);
+            }}
+            key={key}
+            data={session}
+            workspace={workspace.name}
+          />
+        );
       });
     });
   }
