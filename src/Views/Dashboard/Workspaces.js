@@ -1,18 +1,19 @@
-import React from "react";
+import React, { Component } from "react";
 import { css, withStyles } from "../../withStyles";
 import FlexContainer from "../../Containers/FlexContainer";
 import Heading from "../../Elements/Heading";
 import Paragraph from "../../Elements/Paragraph";
 import Button from "../../Elements/Button";
-import Loader from "../../Elements/Loader";
 import Card from "../../Elements/Card";
-
-import openBoxIcon from "../../assets/open-box.svg";
+import Modal from "../../Components/Modal";
+import Icon from "../../Elements/Icon";
+import Input from "../../Elements/Input";
 
 const mockWorkspaces = [
   {
     _id: "1",
     name: "Personal",
+    workspaceType: "Personal",
     members: ["5aec6579023b093b3d66db73"],
     presentations: [
       { id: "4" },
@@ -29,7 +30,8 @@ const mockWorkspaces = [
   },
   {
     _id: "2",
-    name: "Custom",
+    name: "Custom named workspace",
+    workspaceType: "Custom",
     members: [
       "5aec6579023b093b3d66db73",
       "5252525",
@@ -56,7 +58,8 @@ const mockWorkspaces = [
   },
   {
     _id: "3",
-    name: "Enterprise",
+    name: "Super awesome company",
+    workspaceType: "Enterprise",
     members: [
       "5aec6579023b093b3d66db73",
       "2139772398713827",
@@ -82,47 +85,142 @@ const mockWorkspaces = [
   }
 ];
 
-const Workspaces = ({ styles, ...props }) => {
-  console.log(props.data.workspaces);
+class Workspaces extends Component {
+  constructor({ styles, ...props }) {
+    super(props);
+    this.styles = styles;
+    this.state = {
+      modalShowing: false,
+      newWorkspaceModal: false,
+      workspaceModal: false
+    };
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-  if (!props.data.workspaces) {
+  handleSubmit(e) {
+    let formData = new FormData(e.target);
+    let entries = formData.entries();
+    debugger;
+  }
+
+  openModal = (e, workspace = null) => {
+    e.currentTarget.tagName === "BUTTON"
+      ? this.setState({
+          modalShowing: true,
+          newWorkspaceModal: true
+        })
+      : this.setState({
+          modalShowing: true,
+          workspaceModal: true,
+          workspace: workspace
+        });
+  };
+
+  closeModal = e => {
+    this.setState({
+      modalShowing: false,
+      newWorkspaceModal: false,
+      workspaceModal: false
+    });
+  };
+
+  render() {
     return (
-      <div {...css(styles.centered)}>
-        <Loader fillColor="dawn" size="large" />
+      <div {...css(this.styles.workspaces)}>
+        {this.state.modalShowing ? (
+          <Modal withOverlay withAnimation>
+            <Icon
+              icon="fas fa-times"
+              fillColor="white"
+              onClick={e => this.closeModal(e)}
+              style={{
+                borderRadius: "4px",
+                width: "25px",
+                height: "25px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                cursor: "pointer",
+                alignSelf: "flex-end",
+                position: "absolute",
+                top: "8px"
+              }}
+              {...css(this.props.styles.closeModal)}
+            />
+            {this.state.newWorkspaceModal ? (
+              <form
+                {...css(this.styles.addWorkspace)}
+                onSubmit={e => this.handleSubmit(e)}
+              >
+                <Input
+                  name="workspaceName"
+                  style={{ margin: "20px 0 0 0 " }}
+                  placeholder="Give your new workspace a name..."
+                />
+                <Button>Submit</Button>
+              </form>
+            ) : (
+              <div {...css(this.styles.workspaceModal)}>
+                <Card>
+                  <Heading size="2">{this.state.workspace.name}</Heading>
+                  <Paragraph size="sub">
+                    Workspace Type: {this.state.workspace.workspaceType}
+                  </Paragraph>
+                  <Paragraph size="sub">
+                    Members: {this.state.workspace.members.length}
+                  </Paragraph>
+                  <Paragraph size="sub">
+                    Presentations held in this workspace:{" "}
+                    {this.state.workspace.presentations.length}
+                  </Paragraph>
+                </Card>
+              </div>
+            )}
+          </Modal>
+        ) : (
+          ""
+        )}
+        <Button onClick={e => this.openModal(e)} style={{ margin: "20px" }}>
+          Add new workspace
+        </Button>
+        <FlexContainer
+          align="start"
+          justify="start"
+          direction="row"
+          style={{ flexWrap: "wrap" }}
+        >
+          {mockWorkspaces.map((workspace, i) => {
+            return (
+              <div
+                key={i}
+                onClick={e => this.openModal(e, workspace)}
+                {...css(this.styles.workspace)}
+              >
+                <Card>
+                  <Heading size="2">{workspace.name}</Heading>
+                  <Paragraph size="sub">
+                    Workspace Type: {workspace.workspaceType}
+                  </Paragraph>
+                  <Paragraph size="sub">
+                    Members: {workspace.members.length}
+                  </Paragraph>
+                  <Paragraph size="sub">
+                    Presentations held in this workspace:{" "}
+                    {workspace.presentations.length}
+                  </Paragraph>
+                </Card>
+              </div>
+            );
+          })}
+        </FlexContainer>
       </div>
     );
   }
+}
 
-  return (
-    <div {...css(styles.workspaces)}>
-      <FlexContainer
-        align="start"
-        justify="start"
-        direction="row"
-        style={{ flexWrap: "wrap" }}
-      >
-        {mockWorkspaces.map((workspace, i) => {
-          return (
-            <div {...css(styles.workspace)}>
-              <Card key={i}>
-                <Heading size="2">{workspace.name}</Heading>
-                <Paragraph size="sub">
-                  Members: {workspace.members.length}
-                </Paragraph>
-                <Paragraph size="sub">
-                  Presentations held in this workspace:{" "}
-                  {workspace.presentations.length}
-                </Paragraph>
-              </Card>
-            </div>
-          );
-        })}
-      </FlexContainer>
-    </div>
-  );
-};
-
-export default withStyles(({ colors }) => {
+export default withStyles(({ themes, colors }) => {
   return {
     centered: {
       height: "100%",
@@ -135,14 +233,21 @@ export default withStyles(({ colors }) => {
       height: "100%",
       display: "flex",
       flexDirection: "column",
+      alignItems: "flex-start",
       margin: "0px 12px"
     },
     workspace: {
-      padding: "20px"
+      margin: "20px",
+      minWidth: "500px"
     },
-    icon: {
-      width: "128px",
-      marginBottom: "48px"
+    workspaceModal: {
+      minWidth: "500px"
+    },
+    closeModal: themes.danger,
+    addWorkspace: {
+      width: "500px",
+      display: "flex",
+      flexDirection: "column"
     }
   };
 })(Workspaces);
