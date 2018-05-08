@@ -6,6 +6,7 @@ import Icon from "../Elements/Icon";
 import Card from "../Elements/Card";
 import Heading from "../Elements/Heading";
 import Paragraph from "../Elements/Paragraph";
+import Badge from "../Elements/Badge";
 import FlexContainer from "../Containers/FlexContainer";
 
 const stripStringLength = string => string.slice(0, 80) + "...";
@@ -23,28 +24,12 @@ const SessionItem = ({ styles, ...props }) => {
           appearance="white"
           style={{ margin: "12px 12px 0px 0px", width: "400px" }}
         >
-          <span {...css(styles.icon)}>
-            <Icon
-              padding={null}
-              size="small"
-              fillColor="dawn"
-              icon="fas fa-times"
-            />
-          </span>
           <FlexContainer
             fullWidth="1"
             direction="row"
             justify="between"
             align="start"
           >
-            {props.data.hasEnded ? (
-              <Paragraph size="sub" appearance="danger">
-                {" "}
-                This session has ended{" "}
-              </Paragraph>
-            ) : (
-              ""
-            )}
             <Paragraph size="sub">{props.workspace}</Paragraph>
           </FlexContainer>
           <FlexContainer
@@ -61,10 +46,22 @@ const SessionItem = ({ styles, ...props }) => {
           <FlexContainer align="start">
             <Heading size="3" appearance="default">
               {props.data.name}
-            </Heading>
-            <Paragraph style={{ height: "32px" }}>
-              {stripStringLength(props.data.description)}
-            </Paragraph>
+            </Heading>{" "}
+            {props.data.hasEnded ? (
+              <Badge appearance="danger">
+                <Paragraph size="sub" appearance="danger">
+                  {" "}
+                  This session has ended{" "}
+                </Paragraph>
+              </Badge>
+            ) : (
+              <Badge appearance="success">
+                <Paragraph size="sub" appearance="success">
+                  {" "}
+                  Ready to go!{" "}
+                </Paragraph>
+              </Badge>
+            )}
           </FlexContainer>
         </Card>
       </FlexContainer>
@@ -86,6 +83,13 @@ export default withStyles(({ themes, colors }) => {
       position: "absolute",
       top: "8px",
       right: "8px"
+    },
+    badge: {
+      display: "inline-block",
+      border: `1px solid ${colors.danger}`,
+      borderRadius: "2px",
+      background: "transparent",
+      padding: "4px"
     },
 
     primary: colors.primary,
