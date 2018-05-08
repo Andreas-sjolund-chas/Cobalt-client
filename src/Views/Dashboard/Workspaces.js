@@ -100,9 +100,9 @@ class Workspaces extends Component {
   }
 
   handleSubmit(e) {
+    e.preventDefault();
     let formData = new FormData(e.target);
     let entries = formData.entries();
-    debugger;
   }
 
   openModal = (e, workspace = null) => {
@@ -198,7 +198,7 @@ class Workspaces extends Component {
                 onClick={e => this.openModal(e, workspace)}
                 {...css(this.styles.workspace)}
               >
-                <Card>
+                <Card appearance="white">
                   <Heading size="2">{workspace.name}</Heading>
                   <Paragraph size="sub">
                     Workspace Type: {workspace.workspaceType}
@@ -238,7 +238,11 @@ export default withStyles(({ themes, colors }) => {
     },
     workspace: {
       margin: "20px",
-      minWidth: "500px"
+      minWidth: "500px",
+      transition: "transform 300ms ease",
+      ":hover": {
+        transform: "translateY(-8px)"
+      }
     },
     workspaceModal: {
       minWidth: "500px"
@@ -251,3 +255,5 @@ export default withStyles(({ themes, colors }) => {
     }
   };
 })(Workspaces);
+
+// '0.3 sec ease'
