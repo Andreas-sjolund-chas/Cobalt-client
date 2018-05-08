@@ -11,6 +11,8 @@ import Modal from "../../Components/Modal";
 import SessionItem from "../../Components/SessionItem";
 import openBoxIcon from "../../assets/open-box.svg";
 
+import { requestDeleteSession } from "../../redux/session/actions";
+
 class Sessions extends React.Component {
   constructor({ styles, ...props }) {
     super(props);
@@ -20,6 +22,7 @@ class Sessions extends React.Component {
     };
 
     this.toggleModal = this.toggleModal.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   toggleModal(session) {
@@ -27,6 +30,10 @@ class Sessions extends React.Component {
       showModal: !this.state.showModal,
       session: session
     });
+  }
+
+  handleDelete() {
+    this.props.dispatch(requestDeleteSession(this.state.session._id));
   }
 
   renderSessions(data) {
@@ -117,7 +124,7 @@ class Sessions extends React.Component {
               >
                 Go to lobby
               </ButtonLink>
-              <Button appearance="danger" onClick={this.toggleModal}>
+              <Button appearance="danger" onClick={this.handleDelete}>
                 Delete
               </Button>
             </FlexContainer>
