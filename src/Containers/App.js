@@ -16,6 +16,7 @@ import SignUp from "../Views/SignUp";
 import Notifications from "../Components/Notifications";
 import { removeOldNotification } from "../redux/notifications/actions";
 import Client from "../Views/Client";
+import Workspaces from "../Views/Dashboard/Workspaces"; /*REMOVE ME LATER*/
 
 /* HOC */
 import withSocket from "../Components/WithSocket";
@@ -61,6 +62,8 @@ class App extends React.Component {
           <Route exact path="/" component={this.LandingPage} />
           <Route exact path="/login" component={this.Login} />
           <Route exact path="/createsession" component={this.CreateSession} />
+          <Route exact path="/workspaces-dev" component={Workspaces} />{" "}
+          {/*REMOVE ME LATER*/}
           <Route exact path="/signup" component={this.SignUp} />
           <Route path="/session/:sessionId" component={Client} />
           <Route path="/host/:sessionId" component={this.LiveSessionHost} />
