@@ -119,18 +119,25 @@ class Workspaces extends Component {
   };
 
   closeModal = e => {
-    this.setState({
-      modalShowing: false,
-      newWorkspaceModal: false,
-      workspaceModal: false
-    });
+    if (e) {
+      this.setState({
+        modalShowing: false,
+        newWorkspaceModal: false,
+        workspaceModal: false
+      });
+    }
   };
 
   render() {
     return (
       <div {...css(this.styles.workspaces)}>
         {this.state.modalShowing ? (
-          <Modal withOverlay withAnimation>
+          <Modal
+            withOverlay
+            withAnimation
+            appearance="white"
+            closeModal={this.closeModal}
+          >
             <Icon
               icon="fas fa-times"
               fillColor="white"
@@ -145,38 +152,40 @@ class Workspaces extends Component {
                 cursor: "pointer",
                 alignSelf: "flex-end",
                 position: "absolute",
-                top: "8px"
+                top: "20px",
+                right: "20px"
               }}
               {...css(this.props.styles.closeModal)}
             />
             {this.state.newWorkspaceModal ? (
-              <form
-                {...css(this.styles.addWorkspace)}
-                onSubmit={e => this.handleSubmit(e)}
-              >
-                <Input
-                  name="workspaceName"
-                  style={{ margin: "20px 0 0 0 " }}
-                  placeholder="Give your new workspace a name..."
-                />
-                <Button>Submit</Button>
-              </form>
-            ) : (
-              <div {...css(this.styles.workspaceModal)}>
-                <Card>
-                  <Heading size="2">{this.state.workspace.name}</Heading>
-                  <Paragraph size="sub">
-                    Workspace Type: {this.state.workspace.workspaceType}
-                  </Paragraph>
-                  <Paragraph size="sub">
-                    Members: {this.state.workspace.members.length}
-                  </Paragraph>
-                  <Paragraph size="sub">
-                    Presentations held in this workspace:{" "}
-                    {this.state.workspace.presentations.length}
-                  </Paragraph>
-                </Card>
+              <div>
+                <Heading size="2">Create new workspace</Heading>
+                <form
+                  {...css(this.styles.addWorkspace)}
+                  onSubmit={e => this.handleSubmit(e)}
+                >
+                  <Input
+                    name="workspaceName"
+                    style={{ margin: "20px 0 0 0 " }}
+                    placeholder="Give your new workspace a name..."
+                  />
+                  <Button>Submit</Button>
+                </form>
               </div>
+            ) : (
+              <FlexContainer appearance="white" style={{ minWidth: "500px" }}>
+                <Heading size="2">{this.state.workspace.name}</Heading>
+                <Paragraph size="sub">
+                  Workspace Type: {this.state.workspace.workspaceType}
+                </Paragraph>
+                <Paragraph size="sub">
+                  Members: {this.state.workspace.members.length}
+                </Paragraph>
+                <Paragraph size="sub">
+                  Presentations held in this workspace:{" "}
+                  {this.state.workspace.presentations.length}
+                </Paragraph>
+              </FlexContainer>
             )}
           </Modal>
         ) : (
@@ -245,7 +254,8 @@ export default withStyles(({ themes, colors }) => {
       }
     },
     workspaceModal: {
-      minWidth: "500px"
+      minWidth: "500px",
+      backgroundColor: "#FFF"
     },
     closeModal: themes.danger,
     addWorkspace: {
