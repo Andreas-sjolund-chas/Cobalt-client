@@ -36,3 +36,18 @@ export const requestUser = id => dispatch => {
     })
     .catch(err => dispatch(requestUserFail(err)));
 };
+
+export const requestUserUpdate = data => dispatch => {
+  dispatch(requestUserStart());
+  fetch(`${process.env.REACT_APP_API_BASE_URL}/api/user`, {
+    method: "PUT",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+    .then(handleResponse)
+    .then(data => dispatch(requestUserSuccess(data)))
+    .catch(err => dispatch(requestUserFail(err)));
+};

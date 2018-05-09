@@ -20,6 +20,7 @@ const Profile = ({
   touched,
   handleBlur,
   isSubmitting,
+  updateRequest,
   ...props
 }) => {
   return (
@@ -146,9 +147,9 @@ const Profile = ({
                     New Password
                   </Heading>
                   <Input
-                    name="newpassword"
+                    name="password"
                     type="password"
-                    value={values.newpassword}
+                    value={values.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     placeholder="New Password"
@@ -159,7 +160,7 @@ const Profile = ({
                 >
                   {errors.password &&
                     touched.password && (
-                      <Paragraph size="sub">{errors.newpassword}</Paragraph>
+                      <Paragraph size="sub">{errors.password}</Paragraph>
                     )}
                 </FlexContainer>
               </FlexContainer>
@@ -181,7 +182,7 @@ const formikForm = withFormik({
     return {
       name: "",
       email: "",
-      newpassword: "",
+      password: "",
       picture: ""
     };
   },
@@ -195,23 +196,26 @@ const formikForm = withFormik({
     password: Yup.string()
       .trim("Your password should'nt include leading or trailing whitespace")
       .strict(false)
-      .min(6, "Password must be 6 characters or longer"),
-    newpassword: Yup.string()
-      .trim("Your password should'nt include leading or trailing whitespace")
-      .strict(false)
       .min(6, "Password must be 6 characters or longer")
   }),
-  handleSubmit(values, { resetForm, setErrors, setSubmitting }) {
-    //TODO: send a request to db and check if the email already exists
-    setTimeout(() => {
-      if (values.email === "test@test.com") {
-        setErrors({ email: "That email is already registered" });
-      } else {
-        console.log(values);
-        resetForm();
-      }
-      setSubmitting(false);
-    }, 2000);
+  handleSubmit(values, { props, resetForm, setErrors, setSubmitting }) {
+    if (values.name == "") {
+      delete values.name;
+    }
+
+    if (values.email == "") {
+      delete values.email;
+    }
+
+    if (values.password == "") {
+      delete values.password;
+    }
+
+    if (values.picture == "") {
+      delete values.picture;
+    }
+
+    props.updateRequest(values);
   }
 })(Profile);
 
