@@ -34,7 +34,7 @@ class JoinSession extends React.Component {
 
   render() {
     const { fireRedirect } = this.state;
-    console.log(window.innerWidth);
+
     if (fireRedirect) {
       return <Redirect to={`/session/${this.state.code}`} />;
     }
