@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { css, withStyles } from "../withStyles";
+import Media from "react-media";
 
 import { withFormik } from "formik";
 import Yup from "yup";
@@ -27,125 +28,145 @@ let LoginForm = ({
   return (
     <div {...css(styles, styles.loginForm)}>
       <FlexContainer>
-        <Heading appearance="primary" size="2">
-          Log in as presenter
-        </Heading>
-        <form onSubmit={handleSubmit}>
-          <FlexContainer>
-            <FlexContainer align="start" style={{ width: "400px" }}>
-              <label
-                style={{ marginBottom: "5px", color: "white" }}
-                htmlFor="email"
-              >
-                Email
-              </label>
-              <Input
-                name="email"
-                appearance={
-                  !touched.email && !errors.email
-                    ? "primary"
-                    : touched.email && !errors.email
-                      ? "success"
-                      : touched.email && errors.email
-                        ? "danger"
-                        : "primary"
-                }
-                icon={
-                  !touched.email && !errors.email
-                    ? "fas fa-envelope"
-                    : touched.email && !errors.email
-                      ? "fas fa-check"
-                      : touched.email && errors.email
-                        ? "fas fa-times"
-                        : "fas fa-envelope"
-                }
-                iconPosition="right"
-                iconBackground={
-                  !touched.email && !errors.email
-                    ? "primary"
-                    : touched.email && !errors.email
-                      ? "success"
-                      : touched.email && errors.email
-                        ? "danger"
-                        : "primary"
-                }
-                iconFillColor="white"
-                type="text"
-                placeholder="Email..."
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <FlexContainer style={{ minHeight: "20px" }}>
-                {errors.email &&
-                  touched.email && (
-                    <Paragraph appearance="danger" size="sub">
-                      {errors.email}
-                    </Paragraph>
-                  )}
+        <Media query={{ minHeight: 400 }}>
+          <Heading appearance="primary" size="2">
+            Log in as presenter
+          </Heading>
+        </Media>
+        <Media query={{ maxWidth: 480 }}>
+          {matches => (
+            <form onSubmit={handleSubmit}>
+              <FlexContainer>
+                <FlexContainer
+                  align="start"
+                  style={matches ? { width: "300px" } : { width: "400px" }}
+                >
+                  <label
+                    style={{ marginBottom: "5px", color: "white" }}
+                    htmlFor="email"
+                  >
+                    Email
+                  </label>
+
+                  <Input
+                    name="email"
+                    appearance={
+                      !touched.email && !errors.email
+                        ? "primary"
+                        : touched.email && !errors.email
+                          ? "success"
+                          : touched.email && errors.email
+                            ? "danger"
+                            : "primary"
+                    }
+                    icon={
+                      !touched.email && !errors.email
+                        ? "fas fa-envelope"
+                        : touched.email && !errors.email
+                          ? "fas fa-check"
+                          : touched.email && errors.email
+                            ? "fas fa-times"
+                            : "fas fa-envelope"
+                    }
+                    iconPosition="right"
+                    iconBackground={
+                      !touched.email && !errors.email
+                        ? "primary"
+                        : touched.email && !errors.email
+                          ? "success"
+                          : touched.email && errors.email
+                            ? "danger"
+                            : "primary"
+                    }
+                    iconFillColor="white"
+                    type="text"
+                    placeholder="Email..."
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+
+                  <FlexContainer style={{ minHeight: "20px" }}>
+                    {errors.email &&
+                      touched.email && (
+                        <Paragraph appearance="danger" size="sub">
+                          {errors.email}
+                        </Paragraph>
+                      )}
+                  </FlexContainer>
+                  <label
+                    htmlFor="password"
+                    style={{
+                      marginTop: "10px",
+                      marginBottom: "5px",
+                      color: "white"
+                    }}
+                  >
+                    Password
+                  </label>
+
+                  <Input
+                    name="password"
+                    appearance={
+                      !touched.password && !errors.password
+                        ? "primary"
+                        : touched.password && !errors.password
+                          ? "success"
+                          : touched.password && errors.password
+                            ? "danger"
+                            : "primary"
+                    }
+                    icon={
+                      !touched.password && !errors.password
+                        ? "fas fa-unlock"
+                        : touched.password && !errors.password
+                          ? "fas fa-check"
+                          : touched.password && errors.password
+                            ? "fas fa-times"
+                            : "fas fa-unlock"
+                    }
+                    iconPosition="right"
+                    iconBackground={
+                      !touched.password && !errors.password
+                        ? "primary"
+                        : touched.password && !errors.password
+                          ? "success"
+                          : touched.password && errors.password
+                            ? "danger"
+                            : "primary"
+                    }
+                    iconFillColor="white"
+                    type="password"
+                    placeholder="Password..."
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+
+                  <FlexContainer style={{ minHeight: "20px" }}>
+                    {errors.password &&
+                      touched.password && (
+                        <Paragraph appearance="danger" size="sub">
+                          {errors.password}
+                        </Paragraph>
+                      )}
+                  </FlexContainer>
+                </FlexContainer>
+                <Button
+                  size={matches ? "small" : "medium"}
+                  disabled={isSubmitting}
+                >
+                  Log In
+                </Button>
               </FlexContainer>
-              <label
-                htmlFor="password"
-                style={{
-                  marginTop: "10px",
-                  marginBottom: "5px",
-                  color: "white"
-                }}
-              >
-                Password
-              </label>
-              <Input
-                name="password"
-                appearance={
-                  !touched.password && !errors.password
-                    ? "primary"
-                    : touched.password && !errors.password
-                      ? "success"
-                      : touched.password && errors.password
-                        ? "danger"
-                        : "primary"
-                }
-                icon={
-                  !touched.password && !errors.password
-                    ? "fas fa-unlock"
-                    : touched.password && !errors.password
-                      ? "fas fa-check"
-                      : touched.password && errors.password
-                        ? "fas fa-times"
-                        : "fas fa-unlock"
-                }
-                iconPosition="right"
-                iconBackground={
-                  !touched.password && !errors.password
-                    ? "primary"
-                    : touched.password && !errors.password
-                      ? "success"
-                      : touched.password && errors.password
-                        ? "danger"
-                        : "primary"
-                }
-                iconFillColor="white"
-                type="password"
-                placeholder="Password..."
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <FlexContainer style={{ minHeight: "20px" }}>
-                {errors.password &&
-                  touched.password && (
-                    <Paragraph appearance="danger" size="sub">
-                      {errors.password}
-                    </Paragraph>
-                  )}
-              </FlexContainer>
-            </FlexContainer>
-            <Button disabled={isSubmitting}>Log In</Button>
-          </FlexContainer>
-        </form>
-        <Paragraph appearance="white">
-          Don't have an account? <Link to="signup">Sign up here!</Link>
-        </Paragraph>
+            </form>
+          )}
+        </Media>
+        <Media query={{ minHeight: 400 }}>
+          <Paragraph appearance="white">
+            Don't have an account? <Link to="signup">Sign up here!</Link>
+          </Paragraph>
+        </Media>
       </FlexContainer>
     </div>
   );
