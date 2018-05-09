@@ -8,6 +8,9 @@ import Card from "../../Elements/Card";
 import Modal from "../../Components/Modal";
 import Icon from "../../Elements/Icon";
 import Input from "../../Elements/Input";
+import Overview from "./Workspaces/Overview";
+import Members from "./Workspaces/Members";
+import Presentations from "./Workspaces/Presentations";
 
 const mockWorkspaces = [
   {
@@ -92,11 +95,13 @@ class Workspaces extends Component {
     this.state = {
       modalShowing: false,
       newWorkspaceModal: false,
-      workspaceModal: false
+      workspaceModal: false,
+      currentPage: 0
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.changePage = this.changePage.bind(this);
   }
 
   handleSubmit(e) {
@@ -123,10 +128,18 @@ class Workspaces extends Component {
       this.setState({
         modalShowing: false,
         newWorkspaceModal: false,
-        workspaceModal: false
+        workspaceModal: false,
+        page: "Overview"
       });
     }
   };
+
+  changePage(num) {
+    this.setState({
+      ...this.state,
+      currentPage: num
+    });
+  }
 
   render() {
     return (
@@ -174,17 +187,18 @@ class Workspaces extends Component {
               </div>
             ) : (
               <FlexContainer appearance="white" style={{ minWidth: "500px" }}>
-                <Heading size="2">{this.state.workspace.name}</Heading>
-                <Paragraph size="sub">
-                  Workspace Type: {this.state.workspace.workspaceType}
-                </Paragraph>
-                <Paragraph size="sub">
-                  Members: {this.state.workspace.members.length}
-                </Paragraph>
-                <Paragraph size="sub">
-                  Presentations held in this workspace:{" "}
-                  {this.state.workspace.presentations.length}
-                </Paragraph>
+                <FlexContainer direction="row">
+                  <Button onClick={() => this.changePage(0)}>Overview</Button>
+                  <Button onClick={() => this.changePage(1)}>Members</Button>
+                  <Button onClick={() => this.changePage(2)}>
+                    Presentations
+                  </Button>
+                </FlexContainer>
+                <FlexContainer>
+                  {this.state.currentPage === 0 ? <Overview /> : ""}
+                  {this.state.currentPage === 1 ? <Members /> : ""}
+                  {this.state.currentPage === 2 ? <Presentations /> : ""}
+                </FlexContainer>
               </FlexContainer>
             )}
           </Modal>
