@@ -365,7 +365,8 @@ class Workspaces extends Component {
       this.setState({
         modalShowing: false,
         newWorkspaceModal: false,
-        workspaceModal: false
+        workspaceModal: false,
+        page: "Overview"
       });
     }
   };
