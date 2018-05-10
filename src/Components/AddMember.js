@@ -23,10 +23,6 @@ class AddMember extends React.Component {
     props
   ) {
     super(props);
-
-    this.state = {
-      email: ""
-    };
   }
 
   render() {
