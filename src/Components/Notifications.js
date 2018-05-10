@@ -7,7 +7,7 @@ import FlexContainer from "../Containers/FlexContainer";
 
 class Notifications extends Component {
   constructor({ styles, position = "bottomRight", ...props }) {
-    super(props);
+    super(...props);
     this.styles = styles;
     this.position = position;
 
