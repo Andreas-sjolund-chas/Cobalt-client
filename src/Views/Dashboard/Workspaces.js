@@ -16,55 +16,56 @@ const mockWorkspaces = [
   {
     _id: "1",
     name: "Personal",
-    workspaceType: "Personal",
-    members: ["5aec6579023b093b3d66db73"],
+    plan: "Personal",
+    owner: "Workspace Owner",
+    billing: {
+      price: "FREE",
+      features: [
+        { title: "51-150 attendees per session", allowed: true },
+        { title: "Customizable themes", allowed: true },
+        { title: "Unlimited saved sessions", allowed: true },
+        { title: "Exclusive graphs", allowed: true }
+      ]
+    },
+    members: [
+      {
+        _id: "5aec6579023b093b3d66db73",
+        email: "some@email.com",
+        name: "Super presenter name",
+        type: "Owner"
+      }
+    ],
     presentations: [
       { id: "4" },
       { id: "4" },
       { id: "4" },
       { id: "4" },
+      { id: "4" },
+      { id: "4" },
       { id: "4" }
-    ],
-    features: [
-      { title: "1-50 attendees per session", allowed: true },
-      { title: "Customizable themes", allowed: true },
-      { title: "Up to 25 saved sessions", allowed: true }
     ]
   },
   {
     _id: "2",
-    name: "Custom named workspace",
-    workspaceType: "Custom",
-    members: [
-      "5aec6579023b093b3d66db73",
-      "5252525",
-      "2662626",
-      "2387342897243897432"
-    ],
-    presentations: [
-      { id: "4" },
-      { id: "4" },
-      { id: "4" },
-      { id: "4" },
-      { id: "4" },
-      { id: "4" },
-      { id: "4" },
-      { id: "4" }
-    ],
-    features: [
-      { title: "Unlimited attendees per session", allowed: true },
-      { title: "Customizable themes", allowed: true },
-      { title: "Unlimited saved sessions", allowed: true },
-      { title: "Exclusive graphs", allowed: true },
-      { title: "Fancy stuff", allowed: true }
-    ]
-  },
-  {
-    _id: "3",
     name: "Super awesome company",
-    workspaceType: "Enterprise",
+    plan: "Custom",
+    owner: "Workspace Owner",
+    billing: {
+      price: "$99.99",
+      features: [
+        { title: "51-150 attendees per session", allowed: true },
+        { title: "Customizable themes", allowed: true },
+        { title: "Unlimited saved sessions", allowed: true },
+        { title: "Exclusive graphs", allowed: true }
+      ]
+    },
     members: [
-      "5aec6579023b093b3d66db73",
+      {
+        _id: "5aec6579023b093b3d66db73",
+        email: "some@email.com",
+        name: "Super presenter name",
+        type: "viewer"
+      },
       "2139772398713827",
       "2813738291832190",
       "1273632972819832817",
@@ -78,24 +79,54 @@ const mockWorkspaces = [
       { id: "4" },
       { id: "4" },
       { id: "4" }
+    ]
+  },
+  {
+    _id: "3",
+    name: "Super awesome company",
+    plan: "Enterprise",
+    owner: "Workspace Owner",
+    billing: {
+      price: "$99.99",
+      features: [
+        { title: "51-150 attendees per session", allowed: true },
+        { title: "Customizable themes", allowed: true },
+        { title: "Unlimited saved sessions", allowed: true },
+        { title: "Exclusive graphs", allowed: true }
+      ]
+    },
+    members: [
+      {
+        _id: "5aec6579023b093b3d66db73",
+        email: "some@email.com",
+        name: "Super presenter name",
+        type: "viewer"
+      },
+      "2139772398713827",
+      "2813738291832190",
+      "1273632972819832817",
+      "212893291728317320"
     ],
-    features: [
-      { title: "51-150 attendees per session", allowed: true },
-      { title: "Customizable themes", allowed: true },
-      { title: "Unlimited saved sessions", allowed: true },
-      { title: "Exclusive graphs", allowed: true }
+    presentations: [
+      { id: "4" },
+      { id: "4" },
+      { id: "4" },
+      { id: "4" },
+      { id: "4" },
+      { id: "4" },
+      { id: "4" }
     ]
   }
 ];
 
 class Workspaces extends Component {
   constructor({ styles, ...props }) {
-    super(props);
+    super(...props);
     this.styles = styles;
     this.state = {
-      modalShowing: true,
+      modalShowing: false,
       newWorkspaceModal: false,
-      workspaceModal: true,
+      workspaceModal: false,
       currentPage: 0
     };
     this.openModal = this.openModal.bind(this);
@@ -186,15 +217,66 @@ class Workspaces extends Component {
               </div>
             ) : (
               <FlexContainer appearance="white" style={{ minWidth: "500px" }}>
-                <FlexContainer direction="row">
-                  <Button onClick={() => this.changePage(0)}>Overview</Button>
-                  <Button onClick={() => this.changePage(1)}>Members</Button>
-                  <Button onClick={() => this.changePage(2)}>
-                    Presentations
-                  </Button>
+                <FlexContainer
+                  style={{ borderBottom: "1px solid black" }}
+                  direction="row"
+                  fullWidth="1"
+                  justify="center"
+                >
+                  <div
+                    {...css(
+                      this.state.currentPage == 0
+                        ? this.styles.buttonActive
+                        : this.styles.buttonInactive
+                    )}
+                    style={{
+                      position: "relative",
+                      display: "flex",
+                      flex: "1",
+                      height: "70px"
+                    }}
+                  >
+                    <Button onClick={() => this.changePage(0)}>Overview</Button>
+                  </div>
+                  <div
+                    {...css(
+                      this.state.currentPage == 1
+                        ? this.styles.buttonActive
+                        : this.styles.buttonInactive
+                    )}
+                    style={{
+                      position: "relative",
+                      display: "flex",
+                      flex: "1",
+                      height: "70px"
+                    }}
+                  >
+                    <Button onClick={() => this.changePage(1)}>Members</Button>
+                  </div>
+                  <div
+                    {...css(
+                      this.state.currentPage == 2
+                        ? this.styles.buttonActive
+                        : this.styles.buttonInactive
+                    )}
+                    style={{
+                      position: "relative",
+                      display: "flex",
+                      flex: "1",
+                      height: "70px"
+                    }}
+                  >
+                    <Button onClick={() => this.changePage(2)}>
+                      Presentations
+                    </Button>
+                  </div>
                 </FlexContainer>
-                <FlexContainer>
-                  {this.state.currentPage === 0 ? <Overview /> : ""}
+                <FlexContainer fullWidth="1">
+                  {this.state.currentPage === 0 ? (
+                    <Overview data={this.state.workspace} />
+                  ) : (
+                    ""
+                  )}
                   {this.state.currentPage === 1 ? <Members /> : ""}
                   {this.state.currentPage === 2 ? <Presentations /> : ""}
                 </FlexContainer>
@@ -222,9 +304,7 @@ class Workspaces extends Component {
               >
                 <Card appearance="white">
                   <Heading size="2">{workspace.name}</Heading>
-                  <Paragraph size="sub">
-                    Workspace Type: {workspace.workspaceType}
-                  </Paragraph>
+                  <Paragraph size="sub">Plan: {workspace.plan}</Paragraph>
                   <Paragraph size="sub">
                     Members: {workspace.members.length}
                   </Paragraph>
@@ -275,6 +355,26 @@ export default withStyles(({ themes, colors }) => {
       width: "500px",
       display: "flex",
       flexDirection: "column"
+    },
+    buttonInactive: {
+      ":nth-child(1n) button": {
+        backgroundColor: colors.primary,
+        color: "white",
+        position: "absolute",
+        animation: "btnUp 300ms ease"
+      }
+    },
+    buttonActive: {
+      ":nth-child(1n) button": {
+        backgroundColor: "#FFF",
+        border: "1px solid black",
+        color: "black",
+        position: "absolute",
+        top: "14px",
+        borderBottom: "0",
+        borderRadius: "4px 4px 0 0",
+        animation: "btnDown 300ms ease"
+      }
     }
   };
 })(Workspaces);
