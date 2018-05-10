@@ -315,9 +315,9 @@ class Workspaces extends Component {
     super(...props);
     this.styles = styles;
     this.state = {
-      modalShowing: true,
+      modalShowing: false,
       newWorkspaceModal: false,
-      workspaceModal: true,
+      workspaceModal: false,
       currentPage: 0
     };
     this.openModal = this.openModal.bind(this);
