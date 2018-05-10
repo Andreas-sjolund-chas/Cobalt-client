@@ -28,7 +28,7 @@ const Members = ({
             <ListItem {...css(styles.listItem)}>
               <FlexContainer direction="row" align="center" justify="between">
                 <Paragraph size="sub" style={{ marginBottom: "0px" }}>
-                  {member.name} - {member.email}
+                  {member.name}
                 </Paragraph>
                 -
                 <Paragraph size="sub" style={{ marginBottom: "0px" }}>
