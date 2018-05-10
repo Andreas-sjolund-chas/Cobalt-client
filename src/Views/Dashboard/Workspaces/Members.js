@@ -6,10 +6,17 @@ import List from "../../../Elements/List";
 import ListItem from "../../../Elements/ListItem";
 import Paragraph from "../../../Elements/Paragraph";
 import Icon from "../../../Elements/Icon";
+import Button from "../../../Elements/Button";
+import Input from "../../../Elements/Input";
+import AddMember from "../../../Components/AddMember";
 
-const Members = ({ data, styles, ...props }) => {
-  console.log(data);
-
+const Members = ({
+  data,
+  handleSubmit,
+  handleRemoveUser,
+  styles,
+  ...props
+}) => {
   return (
     <div {...css(styles.members)}>
       <List {...css(styles.list)}>
@@ -21,14 +28,25 @@ const Members = ({ data, styles, ...props }) => {
             <ListItem {...css(styles.listItem)}>
               <FlexContainer direction="row" align="center" justify="between">
                 <Paragraph size="sub" style={{ marginBottom: "0px" }}>
-                  {member.name} - {member.email}
+                  {member.name}
                 </Paragraph>
-                <Icon icon="fas fa-times" fillColor="danger" />
+                -
+                <Paragraph size="sub" style={{ marginBottom: "0px" }}>
+                  {member.email}
+                </Paragraph>
+                <Icon
+                  onClick={e => handleRemoveUser(member._id, data._id)}
+                  icon="fas fa-times"
+                  fillColor="danger"
+                  size="medium"
+                  style={{ cursor: "pointer" }}
+                />
               </FlexContainer>
             </ListItem>
           );
         })}
       </List>
+      <AddMember data={data} handleAddMemberSubmit={handleSubmit} />
     </div>
   );
 };
@@ -48,7 +66,7 @@ export default withStyles(({ themes, colors, rounded }) => {
       color: "white"
     },
     list: {
-      maxWidth: "300px"
+      maxWidth: "400px"
     },
     listItem: {
       marginTop: "10px"
