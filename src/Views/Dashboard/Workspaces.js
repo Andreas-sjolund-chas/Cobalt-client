@@ -195,12 +195,27 @@ class Workspaces extends Component {
     this.closeModal = this.closeModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.changePage = this.changePage.bind(this);
+    this.handleAddMemberSubmit = this.handleAddMemberSubmit.bind(this);
   }
 
   handleSubmit(e) {
     e.preventDefault();
     let formData = new FormData(e.target);
-    let entries = formData.entries();
+    let workspaceName = formData.get("workspaceName");
+    console.log(workspaceName);
+    // Create the new workspace here
+  }
+
+  handleAddMemberSubmit(data) {
+    console.log(data);
+
+    // Add the member to the workspace here
+  }
+
+  handleRemoveUser(userId, workspaceId) {
+    // Remove the user from the workspace here
+    console.log("user id:", userId);
+    console.log("workspace id:", workspaceId);
   }
 
   openModal = (e, workspace = null) => {
@@ -340,7 +355,11 @@ class Workspaces extends Component {
                     ""
                   )}
                   {this.state.currentPage === 1 ? (
-                    <Members data={this.state.workspace} />
+                    <Members
+                      handleRemoveUser={this.handleRemoveUser}
+                      handleSubmit={this.handleAddMemberSubmit}
+                      data={this.state.workspace}
+                    />
                   ) : (
                     ""
                   )}
