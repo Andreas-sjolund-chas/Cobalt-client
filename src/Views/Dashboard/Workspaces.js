@@ -33,7 +33,31 @@ const mockWorkspaces = [
         _id: "5aec6579023b093b3d66db73",
         email: "some@email.com",
         name: "Super presenter name",
-        type: "Owner"
+        type: "viewer"
+      },
+      {
+        _id: "2139772398713827",
+        email: "some@email.com",
+        name: "Super presenter name",
+        type: "viewer"
+      },
+      {
+        _id: "2813738291832190",
+        email: "some@email.com",
+        name: "Super presenter name",
+        type: "viewer"
+      },
+      {
+        _id: "1273632972819832817",
+        email: "some@email.com",
+        name: "Super presenter name",
+        type: "viewer"
+      },
+      {
+        _id: "212893291728317320",
+        email: "some@email.com",
+        name: "Super presenter name",
+        type: "viewer"
       }
     ],
     presentations: [
@@ -48,11 +72,11 @@ const mockWorkspaces = [
   },
   {
     _id: "2",
-    name: "Super awesome company",
+    name: "Chas Academy",
     plan: "Custom",
-    owner: "Workspace Owner",
+    owner: "Axel Olsson",
     billing: {
-      price: "$99.99",
+      price: "$29.99",
       features: [
         { title: "Unlimited attendees per session", allowed: true },
         { title: "Customizable themes", allowed: true },
@@ -64,14 +88,29 @@ const mockWorkspaces = [
     members: [
       {
         _id: "5aec6579023b093b3d66db73",
-        email: "some@email.com",
-        name: "Super presenter name",
-        type: "viewer"
+        email: "joakim@unge.com",
+        name: "Joakim Unge"
       },
-      "2139772398713827",
-      "2813738291832190",
-      "1273632972819832817",
-      "212893291728317320"
+      {
+        _id: "2139772398713827",
+        email: "robert@jarske.eriksson.com",
+        name: "Robert Jarske Eriksson"
+      },
+      {
+        _id: "2813738291832190",
+        email: "Victor@ciavarella.com",
+        name: "Victor Ciavarella"
+      },
+      {
+        _id: "1273632972819832817",
+        email: "tom@ekander.com",
+        name: "Tom Ekander"
+      },
+      {
+        _id: "212893291728317320",
+        email: "some@email.com",
+        name: "Super presenter name"
+      }
     ],
     presentations: [
       { id: "4" },
@@ -105,10 +144,30 @@ const mockWorkspaces = [
         name: "Super presenter name",
         type: "viewer"
       },
-      "2139772398713827",
-      "2813738291832190",
-      "1273632972819832817",
-      "212893291728317320"
+      {
+        _id: "2139772398713827",
+        email: "some@email.com",
+        name: "Super presenter name",
+        type: "viewer"
+      },
+      {
+        _id: "2813738291832190",
+        email: "some@email.com",
+        name: "Super presenter name",
+        type: "viewer"
+      },
+      {
+        _id: "1273632972819832817",
+        email: "some@email.com",
+        name: "Super presenter name",
+        type: "viewer"
+      },
+      {
+        _id: "212893291728317320",
+        email: "some@email.com",
+        name: "Super presenter name",
+        type: "viewer"
+      }
     ],
     presentations: [
       { id: "4" },
@@ -130,18 +189,33 @@ class Workspaces extends Component {
       modalShowing: false,
       newWorkspaceModal: false,
       workspaceModal: false,
-      currentPage: 0
+      currentPage: 1
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.changePage = this.changePage.bind(this);
+    this.handleAddMemberSubmit = this.handleAddMemberSubmit.bind(this);
   }
 
   handleSubmit(e) {
     e.preventDefault();
     let formData = new FormData(e.target);
-    let entries = formData.entries();
+    let workspaceName = formData.get("workspaceName");
+    console.log(workspaceName);
+    // Create the new workspace here
+  }
+
+  handleAddMemberSubmit(data) {
+    console.log(data);
+
+    // Add the member to the workspace here
+  }
+
+  handleRemoveUser(userId, workspaceId) {
+    // Remove the user from the workspace here
+    console.log("user id:", userId);
+    console.log("workspace id:", workspaceId);
   }
 
   openModal = (e, workspace = null) => {
@@ -280,8 +354,20 @@ class Workspaces extends Component {
                   ) : (
                     ""
                   )}
-                  {this.state.currentPage === 1 ? <Members /> : ""}
-                  {this.state.currentPage === 2 ? <Presentations /> : ""}
+                  {this.state.currentPage === 1 ? (
+                    <Members
+                      handleRemoveUser={this.handleRemoveUser}
+                      handleSubmit={this.handleAddMemberSubmit}
+                      data={this.state.workspace}
+                    />
+                  ) : (
+                    ""
+                  )}
+                  {this.state.currentPage === 2 ? (
+                    <Presentations data={this.state.workspace} />
+                  ) : (
+                    ""
+                  )}
                 </FlexContainer>
               </FlexContainer>
             )}
