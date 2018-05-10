@@ -21,10 +21,11 @@ const mockWorkspaces = [
     billing: {
       price: "FREE",
       features: [
-        { title: "51-150 attendees per session", allowed: true },
+        { title: "1-50 attendees per session", allowed: true },
         { title: "Customizable themes", allowed: true },
-        { title: "Unlimited saved sessions", allowed: true },
-        { title: "Exclusive graphs", allowed: true }
+        { title: "Up to 25 saved sessions", allowed: true },
+        { title: "Exclusive graphs", allowed: false },
+        { title: "Fancy stuff", allowed: false }
       ]
     },
     members: [
@@ -53,10 +54,11 @@ const mockWorkspaces = [
     billing: {
       price: "$99.99",
       features: [
-        { title: "51-150 attendees per session", allowed: true },
+        { title: "Unlimited attendees per session", allowed: true },
         { title: "Customizable themes", allowed: true },
         { title: "Unlimited saved sessions", allowed: true },
-        { title: "Exclusive graphs", allowed: true }
+        { title: "Exclusive graphs", allowed: true },
+        { title: "Fancy stuff", allowed: true }
       ]
     },
     members: [
@@ -92,7 +94,8 @@ const mockWorkspaces = [
         { title: "51-150 attendees per session", allowed: true },
         { title: "Customizable themes", allowed: true },
         { title: "Unlimited saved sessions", allowed: true },
-        { title: "Exclusive graphs", allowed: true }
+        { title: "Exclusive graphs", allowed: true },
+        { title: "Fancy stuff", allowed: false }
       ]
     },
     members: [
