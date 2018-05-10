@@ -318,7 +318,7 @@ class Workspaces extends Component {
       modalShowing: false,
       newWorkspaceModal: false,
       workspaceModal: false,
-      currentPage: 1
+      currentPage: 2
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
