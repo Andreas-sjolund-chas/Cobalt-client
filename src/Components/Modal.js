@@ -18,10 +18,11 @@ const Modal = ({
   withAnimation = false,
   appearance = "default",
   styles,
+  closeModal,
   ...props
 }) => (
   <div
-    onClick={e => (props.closeModal ? props.closeModal(killModal(e)) : "")}
+    onClick={e => (closeModal ? closeModal(killModal(e)) : "")}
     {...css(withOverlay === true && styles.overlayColor, styles.overlay)}
     {...props}
   >
