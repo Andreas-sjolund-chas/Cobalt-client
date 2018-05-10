@@ -5,7 +5,7 @@ import Heading from "../../../Elements/Heading";
 import Paragraph from "../../../Elements/Paragraph";
 import List from "../../../Elements/List";
 import ListItemWithIcon from "../../../Elements/ListItemWithIcon";
-import Button from "../../../Elements/Button";
+import ButtonLink from "../../../Elements/ButtonLink";
 
 const Overview = ({ styles, ...props }) => {
   return (
@@ -38,7 +38,7 @@ const Overview = ({ styles, ...props }) => {
           })}
         </List>
       </div>
-      <Button>Upgrade Plan</Button>
+      <ButtonLink to="/">Upgrade Plan</ButtonLink> {/*Change me later*/}
     </FlexContainer>
   );
 };
