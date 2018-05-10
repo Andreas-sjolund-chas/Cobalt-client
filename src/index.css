@@ -159,3 +159,21 @@ input:last-child {
     opacity: 1;
   }
 }
+
+@keyframes btnUp {
+  0% {
+    top: 14px;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+@keyframes btnDown {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: 14px;
+  }
+}
