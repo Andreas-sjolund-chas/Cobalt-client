@@ -5,6 +5,7 @@ import Heading from "../../../Elements/Heading";
 import Paragraph from "../../../Elements/Paragraph";
 import List from "../../../Elements/List";
 import ListItemWithIcon from "../../../Elements/ListItemWithIcon";
+import Button from "../../../Elements/Button";
 
 const Overview = ({ styles, ...props }) => {
   return (
@@ -12,11 +13,15 @@ const Overview = ({ styles, ...props }) => {
       <div {...css(styles.owner)}>
         <Paragraph size="sub">Owner: {props.data.owner}</Paragraph>
         <Paragraph size="sub">Plan: {props.data.plan}</Paragraph>
+        <Paragraph size="sub">
+          Presentations held in this workspace:{" "}
+          {props.data.presentations.length}
+        </Paragraph>
       </div>
       <div {...css(styles.billing)}>
         <Paragraph size="sub">Price: {props.data.billing.price}</Paragraph>
         <Paragraph style={{ margin: "0" }} size="sub">
-          Your included features:
+          Features:
         </Paragraph>
         <List>
           {props.data.billing.features.map((f, i) => {
@@ -25,7 +30,7 @@ const Overview = ({ styles, ...props }) => {
                 key={i}
                 iconPosition="right"
                 iconFillColor="darkMetal"
-                icon="fas fa-check"
+                icon={f.allowed ? "fas fa-check" : "fas fa-times"}
               >
                 <Paragraph size="sub">{f.title}</Paragraph>
               </ListItemWithIcon>
@@ -33,6 +38,7 @@ const Overview = ({ styles, ...props }) => {
           })}
         </List>
       </div>
+      <Button>Upgrade Plan</Button>
     </FlexContainer>
   );
 };
