@@ -4,7 +4,7 @@ import FlexContainer from "../../../Containers/FlexContainer";
 import Heading from "../../../Elements/Heading";
 
 const Presentations = ({ styles, ...props }) => {
-  return <Heading>Presentations</Heading>;
+  return <Heading size="3">Presentations</Heading>;
 };
 
 export default withStyles(({ themes, colors }) => {
