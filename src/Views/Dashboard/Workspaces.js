@@ -318,7 +318,7 @@ class Workspaces extends Component {
       modalShowing: false,
       newWorkspaceModal: false,
       workspaceModal: false,
-      currentPage: 2
+      currentPage: 0
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -596,5 +596,3 @@ export default withStyles(({ themes, colors }) => {
     }
   };
 })(Workspaces);
-
-// '0.3 sec ease'
