@@ -61,13 +61,56 @@ const mockWorkspaces = [
       }
     ],
     presentations: [
-      { id: "4" },
-      { id: "4" },
-      { id: "4" },
-      { id: "4" },
-      { id: "4" },
-      { id: "4" },
-      { id: "4" }
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description:
+          "Some fancy presentation description here that might or not be super duper duper long so that we can see what happens if the text is really really really long",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      }
     ]
   },
   {
@@ -113,13 +156,56 @@ const mockWorkspaces = [
       }
     ],
     presentations: [
-      { id: "4" },
-      { id: "4" },
-      { id: "4" },
-      { id: "4" },
-      { id: "4" },
-      { id: "4" },
-      { id: "4" }
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description:
+          "Some fancy presentation description here that might or not be super duper duper long so that we can see what happens if the text is really really really long",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      }
     ]
   },
   {
@@ -170,13 +256,56 @@ const mockWorkspaces = [
       }
     ],
     presentations: [
-      { id: "4" },
-      { id: "4" },
-      { id: "4" },
-      { id: "4" },
-      { id: "4" },
-      { id: "4" },
-      { id: "4" }
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description:
+          "Some fancy presentation description here that might or not be super duper duper long so that we can see what happens if the text is really really really long",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      },
+      {
+        date: "2018-05-10 16:00",
+        sessionId: Math.floor(Math.random() * Math.floor(100)),
+        name: "Some fancy presentation name here",
+        description: "Some fancy presentation description here",
+        attendees: Math.floor(Math.random() * Math.floor(1000))
+      }
     ]
   }
 ];
@@ -189,7 +318,7 @@ class Workspaces extends Component {
       modalShowing: false,
       newWorkspaceModal: false,
       workspaceModal: false,
-      currentPage: 1
+      currentPage: 0
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -467,5 +596,3 @@ export default withStyles(({ themes, colors }) => {
     }
   };
 })(Workspaces);
-
-// '0.3 sec ease'

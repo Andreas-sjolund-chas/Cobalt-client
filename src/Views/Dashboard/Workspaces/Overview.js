@@ -13,10 +13,6 @@ const Overview = ({ styles, ...props }) => {
       <div {...css(styles.owner)}>
         <Paragraph size="sub">Owner: {props.data.owner}</Paragraph>
         <Paragraph size="sub">Plan: {props.data.plan}</Paragraph>
-        <Paragraph size="sub">
-          Presentations held in this workspace:{" "}
-          {props.data.presentations.length}
-        </Paragraph>
       </div>
       <div {...css(styles.billing)}>
         <Paragraph size="sub">Price: {props.data.billing.price}</Paragraph>
