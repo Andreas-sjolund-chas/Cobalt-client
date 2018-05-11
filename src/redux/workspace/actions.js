@@ -1,4 +1,7 @@
 import {
+  FETCH_WORKSPACES_START,
+  FETCH_WORKSPACES_SUCCESS,
+  FETCH_WORKSPACES_ERROR,
   ADD_MEMBER_START,
   ADD_MEMBER_ERROR,
   ADD_MEMBER_SUCCESS,
@@ -7,46 +10,66 @@ import {
   REMOVE_MEMBER_SUCCESS
 } from "./constants";
 
-import handleError from "../utils";
+import { handleResponse } from "../utils/utils";
+
+// Fetch workspaces
 
 // Add member to workspace
-export const addMemberToWorkspaceSuccess = data => ({
+export const addNewWorkspaceMemberStart = data => ({
+  type: ADD_MEMBER_START
+});
+
+export const addNewWorkspaceMemberSuccess = data => ({
   type: ADD_MEMBER_SUCCESS,
   payload: data
 });
-export const addMemberToWorkspaceError = err => ({
+
+export const addNewWorkspaceMemberError = err => ({
   type: ADD_MEMBER_ERROR,
   payload: err
 });
 
-export const addMemberToWorkspace = data => {
-  fetch(`${process.env.REACT_APP_API_BASE_URL}/api/member`, {
+export const addNewWorkspaceMember = data => dispatch => {
+  dispatch(addNewWorkspaceMemberStart());
+
+  const { email, workspaceId } = data;
+
+  fetch(`${process.env.REACT_APP_API_BASE_URL}/api/workspace/member`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     credentials: "include",
     body: JSON.stringify({
-      userId,
+      email,
       workspaceId
     })
   })
     .then(handleResponse)
-    .then(data => dispatch(addMemberToWorkspaceSuccess(data)))
-    .catch(err => dispatch(addMemberToWorkspaceError(err)));
+    .then(data => dispatch(addNewWorkspaceMemberSuccess(data)))
+    .catch(err => dispatch(addNewWorkspaceMemberError(err)));
 };
 
 // Remove member from workspace
+export const removeMemberFromWorkspaceStart = data => ({
+  type: ADD_MEMBER_START
+});
+
 export const removeMemberFromWorkspaceSuccess = data => ({
   type: ADD_MEMBER_SUCCESS,
   payload: data
 });
+
 export const removeMemberFromWorkspaceError = err => ({
   type: ADD_MEMBER_ERROR,
   payload: err
 });
 
-export const removeMemberFromWorkspace = data => {
+export const removeMemberFromWorkspace = data => dispatch => {
+  dispatch(removeMemberFromWorkspaceStart());
+
+  const { userId, workspaceId } = data;
+
   fetch(`${process.env.REACT_APP_API_BASE_URL}/api/member`, {
     method: "POST",
     headers: {
