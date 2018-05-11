@@ -8,7 +8,6 @@ import ListItem from "../../../Elements/ListItem";
 import ButtonLink from "../../../Elements/ButtonLink";
 
 const Presentations = ({ styles, ...props }) => {
-  console.log(props.data);
   return (
     <FlexContainer fullWidth="1">
       <div {...css(styles.presentationsInfo)}>
