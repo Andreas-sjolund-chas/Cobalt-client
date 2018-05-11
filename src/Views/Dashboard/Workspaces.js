@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { css, withStyles } from "../../withStyles";
+
 import FlexContainer from "../../Containers/FlexContainer";
 import Heading from "../../Elements/Heading";
 import Paragraph from "../../Elements/Paragraph";
@@ -11,6 +12,7 @@ import Input from "../../Elements/Input";
 import Overview from "./Workspaces/Overview";
 import Members from "./Workspaces/Members";
 import Presentations from "./Workspaces/Presentations";
+import { addMemberToWorkspace } from "../../redux/workspace/actions";
 
 const mockWorkspaces = [
   {
