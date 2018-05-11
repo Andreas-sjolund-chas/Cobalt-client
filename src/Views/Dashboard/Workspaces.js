@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { css, withStyles } from "../../withStyles";
+import { connect } from "react-redux";
 
 import FlexContainer from "../../Containers/FlexContainer";
 import Heading from "../../Elements/Heading";
@@ -12,7 +13,17 @@ import Input from "../../Elements/Input";
 import Overview from "./Workspaces/Overview";
 import Members from "./Workspaces/Members";
 import Presentations from "./Workspaces/Presentations";
-import { addMemberToWorkspace } from "../../redux/workspace/actions";
+import {
+  addNewWorkspaceMember,
+  removeMemberFromWorkspace
+} from "../../redux/workspace/actions";
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addNewWorkspaceMember: data => dispatch(addNewWorkspaceMember(data)),
+    removeMemberFromWorkspace: data => dispatch(removeMemberFromWorkspace(data))
+  };
+};
 
 const mockWorkspaces = [
   {
@@ -353,6 +364,7 @@ class Workspaces extends Component {
     console.log(data);
     // this.props.addNewWorkspaceMember(data);
     // Add the member to the workspace here
+    this.props.addNewWorkspaceMember(data);
   }
 
   handleRemoveUser(userId, workspaceId) {
@@ -559,6 +571,8 @@ class Workspaces extends Component {
     );
   }
 }
+
+Workspaces = connect(null, mapDispatchToProps)(Workspaces);
 
 export default withStyles(({ themes, colors }) => {
   return {
