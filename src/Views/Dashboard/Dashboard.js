@@ -77,30 +77,38 @@ class Dashboard extends React.Component {
         <div {...css(styles.main)}>
           <div {...css(styles.header)}>
             <FlexContainer direction="row" align="center" justify="between">
-              <Heading size="2" style={{ margin: "0" }}>
-                {path == "profile"
-                  ? "Profile"
-                  : path == "upgrade"
-                    ? "Upgrade Plan"
-                    : path == "settings"
-                      ? "Settings"
-                      : "Sessions"}
-              </Heading>
+              <span {...css(styles.toggle)} onClick={this.toggleNavigation}>
+                <Icon fillColor="dawn" size="large" icon="fas fa-bars" />
+              </span>
+              {this.state.width > 468 ? (
+                <Heading size="2" style={{ margin: "0" }}>
+                  {path == "profile"
+                    ? "Profile"
+                    : path == "upgrade"
+                      ? "Upgrade Plan"
+                      : path == "settings"
+                        ? "Settings"
+                        : "Sessions"}
+                </Heading>
+              ) : (
+                ""
+              )}
             </FlexContainer>
             <FlexContainer direction="row" align="center" justify="end">
               <ButtonLink
                 to={`${this.props.match.url}/new`}
                 appearance="secondary"
               >
-                New session
+                {this.state.width <= 768 ? (
+                  <Icon icon="fas fa-tag" fillColor="white" size="medium" />
+                ) : (
+                  "New Session"
+                )}
               </ButtonLink>
               <Avatar
                 size="medium"
                 image="https://avatars1.githubusercontent.com/u/24225542?s=460&v=4"
               />
-              </span>
-                <Icon fillColor="dawn" size="large" icon="fas fa-bars" />
-              <span {...css(styles.toggle)} onClick={this.toggleNavigation}>
             </FlexContainer>
           </div>
           <Switch location={this.props.location}>
@@ -157,7 +165,7 @@ export default withStyles(({ colors }) => {
     toggle: {
       color: colors.dawn,
       cursor: "pointer",
-      "@media (min-width: 960px)": {
+      "@media (min-width: 768px)": {
         display: "none"
       },
       ":hover": {

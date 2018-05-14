@@ -119,6 +119,7 @@ export default withStyles(({ themes, text, colors, shadow }) => {
       color: colors.dawn,
       minHeight: "100vh",
       maxWidth: "240px",
+      zIndex: "999",
       position: "relative",
       transition: "all 0.5s ease",
       willChange: "transform",
