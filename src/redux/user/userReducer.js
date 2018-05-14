@@ -16,7 +16,6 @@ const userReducer = (state = initialState, action) => {
     case REQUEST_USER_START:
       return { ...state, isFetching: true };
     case REQUEST_USER_SUCCESS:
-      console.log(action.payload.user);
       return {
         ...state,
         user: action.payload.user,
