@@ -54,6 +54,16 @@ const AboutPageWithPublic = withPublicRoot(AboutPage);
 class App extends React.Component {
   constructor(props) {
     super(props);
+<<<<<<< HEAD
+=======
+    this.LandingPage = withPublicRoot(LandingPage);
+    this.Login = withPublicRoot(Login);
+    this.SignUp = withPublicRoot(SignUp);
+    this.CreateSession = requireAuth(CreateSession);
+    this.LiveSessionHost = requireAuth(LiveSessionHost);
+    this.Dashboard = requireAuth(Dashboard);
+    this.Lobby = requireAuth(Lobby);
+>>>>>>> removed comment
     this.removeNotifications = this.removeNotifications.bind(this);
   }
 
