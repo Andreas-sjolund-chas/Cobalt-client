@@ -62,8 +62,6 @@ class App extends React.Component {
           <Route exact path="/" component={this.LandingPage} />
           <Route exact path="/login" component={this.Login} />
           <Route exact path="/createsession" component={this.CreateSession} />
-          <Route exact path="/workspaces-dev" component={Workspaces} />{" "}
-          {/*REMOVE ME LATER*/}
           <Route exact path="/signup" component={this.SignUp} />
           <Route path="/session/:sessionId" component={Client} />
           <Route path="/host/:sessionId" component={this.LiveSessionHost} />
