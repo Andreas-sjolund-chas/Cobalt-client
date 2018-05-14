@@ -23,7 +23,7 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showNavigation: true
+      showNavigation: false
     };
     this.toggleNavigation = this.toggleNavigation.bind(this);
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
