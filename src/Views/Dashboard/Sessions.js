@@ -36,19 +36,37 @@ class Sessions extends React.Component {
     this.props.dispatch(requestDeleteSession(this.state.session._id));
   }
 
-  renderSessions(data) {
+  renderSessions(data, completed) {
     return data.map(workspace => {
       return workspace.presentations.map((session, key) => {
-        return (
-          <SessionItem
-            toggleModal={() => {
-              this.toggleModal(session);
-            }}
-            key={key}
-            data={session}
-            workspace={workspace.name}
-          />
-        );
+        if (!completed) {
+          if (!session.hasEnded) {
+            return (
+              <SessionItem
+                toggleModal={() => {
+                  this.toggleModal(session);
+                }}
+                key={key}
+                data={session}
+                workspace={workspace.name}
+              />
+            );
+          }
+        }
+        if (completed) {
+          if (session.hasEnded) {
+            return (
+              <SessionItem
+                toggleModal={() => {
+                  this.toggleModal(session);
+                }}
+                key={key}
+                data={session}
+                workspace={workspace.name}
+              />
+            );
+          }
+        }
       });
     });
   }
