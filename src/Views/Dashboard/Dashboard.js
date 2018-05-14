@@ -116,6 +116,9 @@ class Dashboard extends React.Component {
                 size="medium"
                 image="https://avatars1.githubusercontent.com/u/24225542?s=460&v=4"
               />
+              <span {...css(styles.toggle)} onClick={this.toggleNavigation}>
+                <Icon fillColor="dawn" size="large" icon="fas fa-bars" />
+              </span>
             </FlexContainer>
           </div>
           <Switch location={this.props.location}>
