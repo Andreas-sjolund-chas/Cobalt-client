@@ -15,14 +15,21 @@ import Profile from "./Profile";
 import Settings from "./Settings";
 
 import { requestUser } from "../../redux/user/actions";
+import { requestLogout } from "../../redux/auth/actions";
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentDidMount() {
     this.props.dispatch(requestUser());
+  }
+
+  handleLogout() {
+    this.props.dispatch(requestLogout());
   }
 
   render() {
@@ -30,7 +37,7 @@ class Dashboard extends React.Component {
     let path = this.props.location.pathname.slice(11);
     return (
       <div {...css(styles.dashboard)}>
-        <Navigation {...this.props} />
+        <Navigation logOut={this.handleLogout} {...this.props} />
         <div {...css(styles.main)}>
           <div {...css(styles.header)}>
             <FlexContainer direction="row" align="center" justify="between">

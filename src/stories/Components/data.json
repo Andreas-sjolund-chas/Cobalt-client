@@ -1,0 +1,288 @@
+[
+  {
+    "_id": {
+      "$oid": "5aec7f8601c78856a99c4c57"
+    },
+    "timeStamp": "00:00",
+    "value": {
+      "average": 0,
+      "positive": 50,
+      "negative": 50
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec7f9001c788277e9c4c58"
+    },
+    "timeStamp": "00:10",
+    "value": {
+      "average": 2.5,
+      "positive": 70,
+      "negative": 30
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec7f9a01c78855129c4c59"
+    },
+    "timeStamp": "00:20",
+    "value": {
+      "average": 0,
+      "positive": 60,
+      "negative": 40
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec7fa801c788f18b9c4c5a"
+    },
+    "timeStamp": "00:30",
+    "value": {
+      "average": 2,
+      "positive": 30,
+      "negative": 70
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec7fb201c78832e89c4c5b"
+    },
+    "timeStamp": "00:40",
+    "value": {
+      "average": 2,
+      "positive": 40,
+      "negative": 60
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec7fbc01c78814699c4c5c"
+    },
+    "timeStamp": "00:50",
+    "value": {
+      "average": 2,
+      "positive": 90,
+      "negative": 10
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec7fc601c78801b69c4c5d"
+    },
+    "timeStamp": "01:00",
+    "value": {
+      "average": 2,
+      "positive": 80,
+      "negative": 20
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec7fd001c78850b99c4c5e"
+    },
+    "timeStamp": "01:10",
+    "value": {
+      "average": 2,
+      "positive": 70,
+      "negative": 30
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec7fda01c78854789c4c5f"
+    },
+    "timeStamp": "01:20",
+    "value": {
+      "average": 2,
+      "positive": 55,
+      "negative": 45
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec7fe401c78835f69c4c60"
+    },
+    "timeStamp": "01:30",
+    "value": {
+      "average": 2,
+      "positive": 58,
+      "negative": 42
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec7ff001c7882b369c4c61"
+    },
+    "timeStamp": "01:40",
+    "value": {
+      "average": 2,
+      "positive": 68,
+      "negative": 32
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec7ffa01c788f4ff9c4c62"
+    },
+    "timeStamp": "01:50",
+    "value": {
+      "average": 2.5,
+      "positive": 93,
+      "negative": 7
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec800401c788012b9c4c63"
+    },
+    "timeStamp": "02:00",
+    "value": {
+      "average": 2.5,
+      "positive": 15,
+      "negative": 85
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec800e01c788080c9c4c64"
+    },
+    "timeStamp": "02:10",
+    "value": {
+      "average": 2.5,
+      "positive": 34,
+      "negative": 66
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec801801c7880d5a9c4c65"
+    },
+    "timeStamp": "02:20",
+    "value": {
+      "average": 2.5,
+      "positive": 80,
+      "negative": 20
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec802201c788fe909c4c66"
+    },
+    "timeStamp": "02:30",
+    "value": {
+      "average": 2.6666666666666665,
+      "positive": 70,
+      "negative": 30
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec802c01c7883dbf9c4c67"
+    },
+    "timeStamp": "02:40",
+    "value": {
+      "average": 2,
+      "positive": 10,
+      "negative": 90
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec803601c788681e9c4c68"
+    },
+    "timeStamp": "02:50",
+    "value": {
+      "average": 2,
+      "positive": 50,
+      "negative": 50
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec804001c78864df9c4c69"
+    },
+    "timeStamp": "03:00",
+    "value": {
+      "average": 2,
+      "positive": 40,
+      "negative": 60
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec804a01c78872049c4c6a"
+    },
+    "timeStamp": "03:10",
+    "value": {
+      "average": 2,
+      "positive": 50,
+      "negative": 50
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec805401c788d5869c4c6b"
+    },
+    "timeStamp": "03:20",
+    "value": {
+      "average": 2,
+      "positive": 73,
+      "negative": 27
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec805e01c788077c9c4c6c"
+    },
+    "timeStamp": "03:30",
+    "value": {
+      "average": 2,
+      "positive": 80,
+      "negative": 20
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec806801c78860579c4c6d"
+    },
+    "timeStamp": "03:40",
+    "value": {
+      "average": 2.5,
+      "positive": 60,
+      "negative": 40
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec807201c78884149c4c6e"
+    },
+    "timeStamp": "03:50",
+    "value": {
+      "average": 2.5,
+      "positive": 50,
+      "negative": 50
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec807c01c7882bfa9c4c6f"
+    },
+    "timeStamp": "04:00",
+    "value": {
+      "average": 2.5,
+      "positive": 30,
+      "negative": 70
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5aec808601c788b2949c4c70"
+    },
+    "timeStamp": "04:10",
+    "value": {
+      "average": 2.5,
+      "positive": 90,
+      "negative": 10
+    }
+  }
+]

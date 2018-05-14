@@ -46,7 +46,7 @@ const Navigation = ({ styles, colors, match, ...props }) => {
             </li>
           </NavLink>
           <NavLink exact to={`/`}>
-            <li>
+            <li onClick={() => props.logOut()}>
               <Icon fillColor="dawn" icon="fas fa-power-off" />Log out
             </li>
           </NavLink>

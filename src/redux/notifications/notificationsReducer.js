@@ -6,6 +6,7 @@ import {
   REQUEST_SESSION_SUCCESS,
   REQUEST_SESSION_FAIL
 } from "../session/constants";
+import { REQUEST_LOGOUT_SUCCESS, REQUEST_LOGOUT_FAIL } from "../auth/constants";
 import { REMOVE_OLD_NOTIFICATION } from "./constants";
 
 const initialState = {
@@ -19,6 +20,8 @@ const notificationsReducer = (state = initialState, action) => {
     case REQUEST_SIGNUP_FAIL:
     case REQUEST_SESSION_SUCCESS:
     case REQUEST_SESSION_FAIL:
+    case REQUEST_LOGOUT_SUCCESS:
+    case REQUEST_LOGOUT_FAIL:
       return {
         ...state,
         messages: [
