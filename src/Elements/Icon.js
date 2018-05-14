@@ -12,6 +12,7 @@ import {
   faPlus,
   faTag,
   faCog,
+  faBars,
   faPowerOff,
   faBriefcase,
   faBuilding,
@@ -69,6 +70,9 @@ const Icon = ({
       break;
     case "fas fa-building":
       faIcon = faBuilding;
+      break;
+    case "fas fa-bars":
+      faIcon = faBars;
       break;
     case "fas fa-boxes":
       faIcon = faBoxes;
