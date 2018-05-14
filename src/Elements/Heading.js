@@ -6,7 +6,7 @@ const Heading = ({ size, appearance = "default", styles, ...props }) => {
   return <HeadingTag {...css(styles.Heading, styles[appearance])} {...props} />;
 };
 
-export default withStyles(({ themes }) => {
+export default withStyles(({ themes, colors }) => {
   return {
     /* Color */
     default: {
@@ -17,6 +17,12 @@ export default withStyles(({ themes }) => {
     },
     secondary: {
       color: themes.secondary.color
+    },
+    aluminum: {
+      color: colors.aluminum
+    },
+    darkMetal: {
+      color: colors.darkMetal
     },
     white: {
       color: "white"
