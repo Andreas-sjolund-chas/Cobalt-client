@@ -183,6 +183,12 @@ export default withStyles(({ themes, colors }) => {
       width: "128px",
       marginBottom: "48px"
     },
-    closeModal: themes.danger
+    closeModal: themes.danger,
+    divider: {
+      display: "block",
+      width: "100%",
+      height: "2px",
+      backgroundColor: colors.aluminum
+    }
   };
 })(Sessions);
