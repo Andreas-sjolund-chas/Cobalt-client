@@ -43,22 +43,6 @@ const SubscriptionCard = ({ styles, ...props }) => {
               <Heading size="3" appearance="primary" style={{ padding: "5px" }}>
                 $ {card.price} / month
               </Heading>
-              <FlexContainer align="center">
-                <Icon
-                  appearance="primary"
-                  icon={card.icon}
-                  size="large"
-                  style={{ margin: "30px", fontSize: "5rem" }}
-                />
-                <Heading
-                  size="3"
-                  appearance="primary"
-                  style={{ padding: "5px" }}
-                >
-                  $ {card.price} / month
-                </Heading>
-              </FlexContainer>
-
               <List>
                 {card.sellingPoints.map(sellingPoint => {
                   return (
