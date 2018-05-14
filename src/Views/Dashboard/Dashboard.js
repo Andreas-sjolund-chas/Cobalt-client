@@ -20,12 +20,32 @@ import { requestLogout } from "../../redux/auth/actions";
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      showNavigation: true
+    };
+    this.toggleNavigation = this.toggleNavigation.bind(this);
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentDidMount() {
     this.props.dispatch(requestUser());
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth });
+  }
+
+  toggleNavigation() {
+    this.setState({
+      showNavigation: !this.state.showNavigation
+    });
   }
 
   handleLogout() {
@@ -37,7 +57,21 @@ class Dashboard extends React.Component {
     let path = this.props.location.pathname.slice(11);
     return (
       <div {...css(styles.dashboard)}>
-        <Navigation logOut={this.handleLogout} {...this.props} />
+        {this.state.width <= 768 ? (
+          <NavigationMobile
+            {...this.props}
+            logOut={this.handleLogout}
+            showNavigation={this.state.showNavigation}
+            toggleNavigation={this.toggleNavigation}
+          />
+        ) : (
+          <Navigation
+            {...this.props}
+            logOut={this.handleLogout}
+            showNavigation={this.state.showNavigation}
+            toggleNavigation={this.toggleNavigation}
+          />
+        )}
         <div {...css(styles.main)}>
           <div {...css(styles.header)}>
             <FlexContainer direction="row" align="center" justify="between">
@@ -62,6 +96,9 @@ class Dashboard extends React.Component {
                 size="medium"
                 image="https://avatars1.githubusercontent.com/u/24225542?s=460&v=4"
               />
+              </span>
+                <Icon fillColor="dawn" size="large" icon="fas fa-bars" />
+              <span {...css(styles.toggle)} onClick={this.toggleNavigation}>
             </FlexContainer>
           </div>
           <Switch location={this.props.location}>
