@@ -13,6 +13,7 @@ import {
   REMOVE_MEMBER_SUCCESS,
   REMOVE_MEMBER_ERROR
 } from "../workspace/constants";
+import { REQUEST_LOGOUT_SUCCESS, REQUEST_LOGOUT_FAIL } from "../auth/constants";
 import { REMOVE_OLD_NOTIFICATION } from "./constants";
 
 const initialState = {
