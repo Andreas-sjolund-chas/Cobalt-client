@@ -310,6 +310,17 @@ const mockWorkspaces = [
   }
 ];
 
+// const mapStateToProps = state => ({
+//   workspaces: state.workspaces
+// });
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     addNewWorkspace: workspace => dispatch(addNewWorkspace(workspace)),
+//     addNewWorkspaceMember: data => dispatch(addNewWorkspaceMember(data)),
+//     removeWorkspaceMember: data => dispatch(removeWorkspaceMember(data))
+//   };
+// };
 class Workspaces extends Component {
   constructor({ styles, ...props }) {
     super(...props);
@@ -332,12 +343,13 @@ class Workspaces extends Component {
     let formData = new FormData(e.target);
     let workspaceName = formData.get("workspaceName");
     console.log(workspaceName);
+    // this.props.addNewWorkspace(workspaceName);
     // Create the new workspace here
   }
 
   handleAddMemberSubmit(data) {
     console.log(data);
-
+    // this.props.addNewWorkspaceMember(data);
     // Add the member to the workspace here
   }
 
@@ -345,6 +357,12 @@ class Workspaces extends Component {
     // Remove the user from the workspace here
     console.log("user id:", userId);
     console.log("workspace id:", workspaceId);
+    const data = {
+      userId: userId,
+      workspaceId: workspaceId
+    };
+
+    // this.props.removeWorkspaceMember(data);
   }
 
   openModal = (e, workspace = null) => {
