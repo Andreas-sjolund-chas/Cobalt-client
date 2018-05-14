@@ -21,8 +21,7 @@ const Presentations = ({ styles, ...props }) => {
           Your latest presentations in this workspace:
         </Paragraph>
         <List style={{ width: "100%" }}>
-          {props.data.presentations.map((p, i) => {
-            if (i > 4) return;
+          {props.data.presentations.slice(0, 5).map((p, i) => {
             return (
               <div {...css(styles.listItems)}>
                 <ListItem
