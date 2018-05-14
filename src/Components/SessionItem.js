@@ -22,7 +22,7 @@ const SessionItem = ({ styles, ...props }) => {
       >
         <Card
           appearance="white"
-          style={{ margin: "12px 12px 0px 0px", width: "400px" }}
+          style={{ margin: "12px 12px 0px 0px", width: "100%" }}
         >
           <FlexContainer
             fullWidth="1"
@@ -74,8 +74,18 @@ export default withStyles(({ themes, colors }) => {
     sessionItem: {
       cursor: "pointer",
       transition: "all 0.3s ease",
+      width: "100%",
       ":hover": {
         transform: "translateY(-8px)"
+      },
+      "@media (min-width: 600px)": {
+        width: "100%"
+      },
+      "@media (min-width: 1000px)": {
+        width: "50%"
+      },
+      "@media (min-width: 1200px)": {
+        width: "calc(100% / 3)"
       }
     },
     icon: {
