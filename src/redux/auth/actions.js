@@ -1,7 +1,10 @@
 import {
   REQUEST_AUTH_START,
   REQUEST_AUTH_SUCCESS,
-  REQUEST_AUTH_FAIL
+  REQUEST_AUTH_FAIL,
+  REQUEST_LOGOUT_START,
+  REQUEST_LOGOUT_SUCCESS,
+  REQUEST_LOGOUT_FAIL
 } from "./constants";
 
 import { handleResponse } from "../utils/utils";
@@ -13,6 +16,16 @@ export const requestAuthSuccess = data => ({
 });
 export const requestAuthFail = err => ({
   type: REQUEST_AUTH_FAIL,
+  payload: err
+});
+
+export const requestLogoutStart = () => ({ type: REQUEST_LOGOUT_START });
+export const requestLogoutSuccess = res => ({
+  type: REQUEST_LOGOUT_SUCCESS,
+  payload: res
+});
+export const requestLogoutFail = err => ({
+  type: REQUEST_LOGOUT_FAIL,
   payload: err
 });
 
@@ -41,4 +54,19 @@ export const verifyAuth = () => dispatch => {
     .then(handleResponse)
     .then(data => dispatch(requestAuthSuccess(data)))
     .catch(err => dispatch(requestAuthFail(err)));
+};
+
+export const requestLogout = () => dispatch => {
+  dispatch(requestLogoutStart());
+
+  fetch(`${process.env.REACT_APP_API_BASE_URL}/api/auth/logout`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then(handleResponse)
+    .then(res => dispatch(requestLogoutSuccess(res)))
+    .catch(err => dispatch(requestLogoutFail(err)));
 };
