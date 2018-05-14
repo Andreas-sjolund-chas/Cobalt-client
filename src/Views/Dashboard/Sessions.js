@@ -148,15 +148,29 @@ class Sessions extends React.Component {
         ) : (
           " "
         )}
-        <Heading size="3">In progress</Heading>
-
+        <Heading size="5" appearance="darkMetal">
+          In progress
+        </Heading>
+        <span {...css(styles.divider)} />
         <FlexContainer
           align="start"
           justify="start"
           direction="row"
-          style={{ flexWrap: "wrap" }}
+          style={{ flexWrap: "wrap", marginBottom: "40px" }}
         >
-          {this.renderSessions(this.props.data.user.workspaces)}
+          {this.renderSessions(this.props.data.user.workspaces, false)}
+        </FlexContainer>
+        <Heading size="5" appearance="darkMetal">
+          Completed
+        </Heading>
+        <span {...css(styles.divider)} />
+        <FlexContainer
+          align="start"
+          justify="start"
+          direction="row"
+          style={{ flexWrap: "wrap", marginBottom: "40px" }}
+        >
+          {this.renderSessions(this.props.data.user.workspaces, true)}
         </FlexContainer>
       </div>
     );
