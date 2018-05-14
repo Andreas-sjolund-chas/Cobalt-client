@@ -4,10 +4,13 @@ import { connect } from "react-redux";
 import { css, withStyles } from "../../withStyles";
 import FlexContainer from "../../Containers/FlexContainer";
 import Avatar from "../../Elements/Avatar";
+import Icon from "../../Elements/Icon";
+import Button from "../../Elements/Button";
 import Heading from "../../Elements/Heading";
 import Button from "../../Elements/Button";
 import ButtonLink from "../../Elements/ButtonLink";
 import Navigation from "../../Components/Navigation";
+import NavigationMobile from "../../Components/NavigationMobile";
 import Sessions from "./Sessions";
 import CreateSession from "../CreateSession";
 import Upgrade from "./Upgrade";
@@ -162,6 +165,16 @@ export default withStyles(({ colors }) => {
     dashboard: {
       display: "flex",
       flexDirection: "row"
+    },
+    toggle: {
+      color: colors.dawn,
+      cursor: "pointer",
+      "@media (min-width: 960px)": {
+        display: "none"
+      },
+      ":hover": {
+        color: colors.carbon
+      }
     },
     icon: {
       width: "128px",
