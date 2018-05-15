@@ -16,9 +16,8 @@ import CreateSession from "../Views/CreateSession";
 import SignUp from "../Views/SignUp";
 import Notifications from "../Components/Notifications";
 import Client from "../Views/Client";
-import UpgradePlan from "../Views/UpgradePlan";
 
-/* Action */
+/* Actions */
 import { removeOldNotification } from "../redux/notifications/actions";
 
 /* HOC */
