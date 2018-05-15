@@ -17,6 +17,10 @@ import Notifications from "../Components/Notifications";
 import { removeOldNotification } from "../redux/notifications/actions";
 import { verifyAuth } from "../redux/auth/actions";
 import Client from "../Views/Client";
+import UpgradePlan from "../Views/UpgradePlan";
+
+/* Action */
+import { removeOldNotification } from "../redux/notifications/actions";
 
 /* HOC */
 import withSocket from "../Components/WithSocket";
