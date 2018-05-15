@@ -56,20 +56,13 @@ class Workspaces extends Component {
     e.preventDefault();
     let formData = new FormData(e.target);
     let workspaceName = formData.get("workspaceName");
-    console.log(workspaceName);
-    // this.props.addNewWorkspace(workspaceName);
-    // Create the new workspace here
   }
 
   handleAddMemberSubmit(data) {
-    console.log(data);
-    // this.props.addNewWorkspaceMember(data);
-    // Add the member to the workspace here
     this.props.addNewWorkspaceMember(data);
   }
 
   handleRemoveMember(userId, workspaceId) {
-    // Remove the user from the workspace here
     this.props.removeMemberFromWorkspace({
       userId: userId,
       workspaceId: workspaceId
@@ -85,7 +78,6 @@ class Workspaces extends Component {
       : this.setState({
           modalShowing: true,
           workspaceModal: true,
-          // workspace: { [i]: workspace },
           selectedWorkspaceId: i
         });
   };

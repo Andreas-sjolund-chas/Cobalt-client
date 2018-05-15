@@ -10,7 +10,7 @@ import {
   REMOVE_MEMBER_SUCCESS
 } from "./constants";
 
-import { handleResponse } from "../utils/utils";
+import { formatResponse, checkStatus, handleResponse } from "../utils/utils";
 
 // Fetch members
 export const fetchMembersStart = () => ({
@@ -77,8 +77,15 @@ export const addNewWorkspaceMember = data => dispatch => {
     })
   })
     .then(handleResponse)
-    .then(data => dispatch(addNewWorkspaceMemberSuccess(data)))
-    .catch(err => dispatch(addNewWorkspaceMemberError(err)));
+    .then(data => {
+      debugger;
+      dispatch(addNewWorkspaceMemberSuccess(data));
+      dispatch(requestMembers(data.workspace._id));
+    })
+    .catch(err => {
+      debugger;
+      dispatch(addNewWorkspaceMemberError(err));
+    });
 };
 
 // Remove member from workspace
