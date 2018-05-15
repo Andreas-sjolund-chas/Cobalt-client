@@ -12,16 +12,19 @@ import AddMember from "../../../Components/AddMember";
 
 const Members = ({
   data,
+  owner,
+  workspace,
   handleSubmit,
-  handleRemoveUser,
+  handleRemoveMember,
   styles,
   ...props
 }) => {
+  debugger;
   return (
     <div {...css(styles.members)}>
       <List {...css(styles.list)}>
         <ListItem>
-          {data.owner} <span {...css(styles.owner)}>OWNER</span>
+          {owner} <span {...css(styles.owner)}>OWNER</span>
         </ListItem>
         {data.members.map(member => {
           return (
@@ -35,7 +38,7 @@ const Members = ({
                   {member.email}
                 </Paragraph>
                 <Icon
-                  onClick={e => handleRemoveUser(member._id, data._id)}
+                  onClick={e => handleRemoveMember(member._id, workspace._id)}
                   icon="fas fa-times"
                   fillColor="danger"
                   size="medium"

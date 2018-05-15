@@ -15,325 +15,19 @@ import Members from "./Workspaces/Members";
 import Presentations from "./Workspaces/Presentations";
 import {
   addNewWorkspaceMember,
-  removeMemberFromWorkspace
+  removeMemberFromWorkspace,
+  requestMembers
 } from "../../redux/workspace/actions";
 
 const mapDispatchToProps = dispatch => {
   return {
     addNewWorkspaceMember: data => dispatch(addNewWorkspaceMember(data)),
-    removeMemberFromWorkspace: data => dispatch(removeMemberFromWorkspace(data))
+    removeMemberFromWorkspace: data =>
+      dispatch(removeMemberFromWorkspace(data)),
+    requestMembers: data => dispatch(requestMembers(data))
   };
 };
 
-const mockWorkspaces = [
-  {
-    _id: "1",
-    name: "Personal",
-    plan: "Personal",
-    owner: "Workspace Owner",
-    billing: {
-      price: "FREE",
-      features: [
-        { title: "1-50 attendees per session", allowed: true },
-        { title: "Customizable themes", allowed: true },
-        { title: "Up to 25 saved sessions", allowed: true },
-        { title: "Exclusive graphs", allowed: false },
-        { title: "Fancy stuff", allowed: false }
-      ]
-    },
-    members: [
-      {
-        _id: "5aec6579023b093b3d66db73",
-        email: "some@email.com",
-        name: "Super presenter name",
-        type: "viewer"
-      },
-      {
-        _id: "2139772398713827",
-        email: "some@email.com",
-        name: "Super presenter name",
-        type: "viewer"
-      },
-      {
-        _id: "2813738291832190",
-        email: "some@email.com",
-        name: "Super presenter name",
-        type: "viewer"
-      },
-      {
-        _id: "1273632972819832817",
-        email: "some@email.com",
-        name: "Super presenter name",
-        type: "viewer"
-      },
-      {
-        _id: "212893291728317320",
-        email: "some@email.com",
-        name: "Super presenter name",
-        type: "viewer"
-      }
-    ],
-    presentations: [
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description:
-          "Some fancy presentation description here that might or not be super duper duper long so that we can see what happens if the text is really really really long",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      }
-    ]
-  },
-  {
-    _id: "2",
-    name: "Chas Academy",
-    plan: "Custom",
-    owner: "Axel Olsson",
-    billing: {
-      price: "$29.99",
-      features: [
-        { title: "Unlimited attendees per session", allowed: true },
-        { title: "Customizable themes", allowed: true },
-        { title: "Unlimited saved sessions", allowed: true },
-        { title: "Exclusive graphs", allowed: true },
-        { title: "Fancy stuff", allowed: true }
-      ]
-    },
-    members: [
-      {
-        _id: "5aec6579023b093b3d66db73",
-        email: "joakim@unge.com",
-        name: "Joakim Unge"
-      },
-      {
-        _id: "2139772398713827",
-        email: "robert@jarske.eriksson.com",
-        name: "Robert Jarske Eriksson"
-      },
-      {
-        _id: "2813738291832190",
-        email: "Victor@ciavarella.com",
-        name: "Victor Ciavarella"
-      },
-      {
-        _id: "1273632972819832817",
-        email: "tom@ekander.com",
-        name: "Tom Ekander"
-      },
-      {
-        _id: "212893291728317320",
-        email: "some@email.com",
-        name: "Super presenter name"
-      }
-    ],
-    presentations: [
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description:
-          "Some fancy presentation description here that might or not be super duper duper long so that we can see what happens if the text is really really really long",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      }
-    ]
-  },
-  {
-    _id: "3",
-    name: "Super awesome company",
-    plan: "Enterprise",
-    owner: "Workspace Owner",
-    billing: {
-      price: "$99.99",
-      features: [
-        { title: "51-150 attendees per session", allowed: true },
-        { title: "Customizable themes", allowed: true },
-        { title: "Unlimited saved sessions", allowed: true },
-        { title: "Exclusive graphs", allowed: true },
-        { title: "Fancy stuff", allowed: false }
-      ]
-    },
-    members: [
-      {
-        _id: "5aec6579023b093b3d66db73",
-        email: "some@email.com",
-        name: "Super presenter name",
-        type: "viewer"
-      },
-      {
-        _id: "2139772398713827",
-        email: "some@email.com",
-        name: "Super presenter name",
-        type: "viewer"
-      },
-      {
-        _id: "2813738291832190",
-        email: "some@email.com",
-        name: "Super presenter name",
-        type: "viewer"
-      },
-      {
-        _id: "1273632972819832817",
-        email: "some@email.com",
-        name: "Super presenter name",
-        type: "viewer"
-      },
-      {
-        _id: "212893291728317320",
-        email: "some@email.com",
-        name: "Super presenter name",
-        type: "viewer"
-      }
-    ],
-    presentations: [
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description:
-          "Some fancy presentation description here that might or not be super duper duper long so that we can see what happens if the text is really really really long",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      },
-      {
-        date: "2018-05-10 16:00",
-        sessionId: Math.floor(Math.random() * Math.floor(100)),
-        name: "Some fancy presentation name here",
-        description: "Some fancy presentation description here",
-        attendees: Math.floor(Math.random() * Math.floor(1000))
-      }
-    ]
-  }
-];
-
-// const mapStateToProps = state => ({
-//   workspaces: state.workspaces
-// });
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     addNewWorkspace: workspace => dispatch(addNewWorkspace(workspace)),
-//     addNewWorkspaceMember: data => dispatch(addNewWorkspaceMember(data)),
-//     removeWorkspaceMember: data => dispatch(removeWorkspaceMember(data))
-//   };
-// };
 class Workspaces extends Component {
   constructor({ styles, ...props }) {
     super(...props);
@@ -349,6 +43,12 @@ class Workspaces extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.changePage = this.changePage.bind(this);
     this.handleAddMemberSubmit = this.handleAddMemberSubmit.bind(this);
+    this.fetchMembers = this.fetchMembers.bind(this);
+    this.handleRemoveMember = this.handleRemoveMember.bind(this);
+  }
+
+  fetchMembers(workspaceId) {
+    this.props.requestMembers(workspaceId);
   }
 
   handleSubmit(e) {
@@ -367,19 +67,15 @@ class Workspaces extends Component {
     this.props.addNewWorkspaceMember(data);
   }
 
-  handleRemoveUser(userId, workspaceId) {
+  handleRemoveMember(userId, workspaceId) {
     // Remove the user from the workspace here
-    console.log("user id:", userId);
-    console.log("workspace id:", workspaceId);
-    const data = {
+    this.props.removeMemberFromWorkspace({
       userId: userId,
       workspaceId: workspaceId
-    };
-
-    // this.props.removeWorkspaceMember(data);
+    });
   }
 
-  openModal = (e, workspace = null) => {
+  openModal = (e, workspace = null, i) => {
     e.currentTarget.tagName === "BUTTON"
       ? this.setState({
           modalShowing: true,
@@ -388,7 +84,7 @@ class Workspaces extends Component {
       : this.setState({
           modalShowing: true,
           workspaceModal: true,
-          workspace: workspace
+          workspace: { [i]: workspace }
         });
   };
 
@@ -511,15 +207,20 @@ class Workspaces extends Component {
                 </FlexContainer>
                 <FlexContainer fullWidth="1">
                   {this.state.currentPage === 0 ? (
-                    <Overview data={this.state.workspace} />
+                    <Overview
+                      data={this.state.workspace}
+                      owner={this.props.data.name}
+                    />
                   ) : (
                     ""
                   )}
                   {this.state.currentPage === 1 ? (
                     <Members
-                      handleRemoveUser={this.handleRemoveUser}
+                      handleRemoveMember={this.handleRemoveMember}
                       handleSubmit={this.handleAddMemberSubmit}
-                      data={this.state.workspace}
+                      data={this.props.workspaces}
+                      owner={this.props.data.name}
+                      workspace={this.state.workspace}
                     />
                   ) : (
                     ""
@@ -545,16 +246,21 @@ class Workspaces extends Component {
           direction="row"
           style={{ flexWrap: "wrap" }}
         >
-          {mockWorkspaces.map((workspace, i) => {
+          {this.props.workspaces.workspaces.map((workspace, i) => {
             return (
               <div
                 key={i}
-                onClick={e => this.openModal(e, workspace)}
+                onClick={e => this.openModal(e, workspace, i)}
                 {...css(this.styles.workspace)}
               >
-                <Card appearance="white">
+                <Card
+                  appearance="white"
+                  onClick={() => this.fetchMembers(workspace._id)}
+                >
                   <Heading size="2">{workspace.name}</Heading>
-                  <Paragraph size="sub">Plan: {workspace.plan}</Paragraph>
+                  <Paragraph size="sub">
+                    Plan: {workspace.subscription.type}
+                  </Paragraph>
                   <Paragraph size="sub">
                     Members: {workspace.members.length}
                   </Paragraph>
@@ -572,7 +278,13 @@ class Workspaces extends Component {
   }
 }
 
-Workspaces = connect(null, mapDispatchToProps)(Workspaces);
+const mapStateToProps = state => {
+  return {
+    workspaces: state.workspace
+  };
+};
+
+Workspaces = connect(mapStateToProps, mapDispatchToProps)(Workspaces);
 
 export default withStyles(({ themes, colors }) => {
   return {
