@@ -35,11 +35,6 @@ export default withStyles(({ colors, themes, shadow, rounded }) => {
       backgroundColor: colors.aluminum
     },
 
-    successBorder: {
-      backgroundColor: "white",
-      border: `2px solid ${colors.success}`
-    },
-
     primaryBackground: {
       backgroundColor: colors.primary
     },
