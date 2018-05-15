@@ -8,6 +8,7 @@ import FlexContainer from "../Containers/FlexContainer";
 import ListItemWithIcon from "../Elements/ListItemWithIcon";
 import Button from "../Elements/Button";
 import Modal from "../Components/Modal";
+import Icon from "../Elements/Icon";
 
 const mockCards = [
   {
@@ -74,12 +75,35 @@ class UpgradePlan extends React.Component {
   }
 
   handleButtonClick() {
-    console.log(this.state);
+    console.log(
+      `Plan:::${this.state.activeCard.name}, Price:::${
+        this.state.activeCard.price
+      }`
+    );
   }
 
   render() {
     return (
       <Modal withOverlay withAnimation appearance="white">
+        <Icon
+          icon="fas fa-times"
+          fillColor="white"
+          onClick={() => console.log("this is where we call props.closeModal")}
+          style={{
+            borderRadius: "4px",
+            width: "25px",
+            height: "25px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            cursor: "pointer",
+            alignSelf: "flex-end",
+            position: "absolute",
+            top: "20px",
+            right: "20px"
+          }}
+          {...css(this.props.styles.closeModal)}
+        />
         <FlexContainer>
           <Heading size="2">Workspace name: {this.state.workspaceName}</Heading>
           <div {...css(this.styles.upgradePlan)}>
@@ -139,7 +163,7 @@ class UpgradePlan extends React.Component {
   }
 }
 
-export default withStyles(({ colors }) => {
+export default withStyles(({ colors, themes }) => {
   return {
     upgradePlan: {
       display: "flex",
@@ -153,6 +177,7 @@ export default withStyles(({ colors }) => {
         }
       }
     },
+    closeModal: themes.danger,
     button: {
       ":nth-child(1n) button": {
         ":disabled": {
