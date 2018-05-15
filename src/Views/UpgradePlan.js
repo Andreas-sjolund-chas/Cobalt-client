@@ -54,22 +54,23 @@ class UpgradePlan extends React.Component {
     this.styles = styles;
     this.state = {
       activeCard: {},
-      workspaceName: "Some name"
+      workspaceName: ""
     };
 
     this.handleClick = this.handleClick.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
+  componentWillMount() {
+    this.setState({
+      workspaceName: this.props.workspaceName || "Some Name"
+    });
+  }
+
   handleClick(e, card) {
-    this.setState(
-      {
-        activeCard: card
-      },
-      () => {
-        console.log(this.state);
-      }
-    );
+    this.setState({
+      activeCard: card
+    });
   }
 
   handleButtonClick() {
@@ -87,15 +88,12 @@ class UpgradePlan extends React.Component {
                 <Card
                   onClick={e => this.handleClick(e, card)}
                   key={i}
-                  appearance={
-                    this.state.activeCard.id === card.id
-                      ? "successBorder"
-                      : "white"
-                  }
+                  appearance={"white"}
                   style={
                     this.state.activeCard.id === card.id
                       ? {
-                          transform: "translateY(-8px)"
+                          transform: "translateY(-8px)",
+                          boxShadow: "0 0 0 2px #2FF9D7"
                         }
                       : {}
                   }
