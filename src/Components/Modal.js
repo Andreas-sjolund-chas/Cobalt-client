@@ -65,6 +65,13 @@ export default withStyles(({ colors, rounded, shadow }) => {
       justifyContent: "center",
       alignItems: "center"
     },
+
+    default: {
+      backgroundColor: colors.carbon
+    },
+    white: {
+      backgroundColor: "#FFF"
+    },
     overlayColor: {
       backgroundColor: "rgba(0, 0, 0, 0.7)"
     },
