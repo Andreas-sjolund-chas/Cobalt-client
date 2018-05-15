@@ -36,7 +36,8 @@ class Workspaces extends Component {
       modalShowing: false,
       newWorkspaceModal: false,
       workspaceModal: false,
-      currentPage: 0
+      currentPage: 1,
+      selectedWorkspaceId: undefined
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -84,7 +85,8 @@ class Workspaces extends Component {
       : this.setState({
           modalShowing: true,
           workspaceModal: true,
-          workspace: { [i]: workspace }
+          // workspace: { [i]: workspace },
+          selectedWorkspaceId: i
         });
   };
 
@@ -208,7 +210,11 @@ class Workspaces extends Component {
                 <FlexContainer fullWidth="1">
                   {this.state.currentPage === 0 ? (
                     <Overview
-                      data={this.state.workspace}
+                      data={
+                        this.props.workspaces.workspaces[
+                          this.state.selectedWorkspaceId
+                        ]
+                      }
                       owner={this.props.data.name}
                     />
                   ) : (
@@ -218,15 +224,29 @@ class Workspaces extends Component {
                     <Members
                       handleRemoveMember={this.handleRemoveMember}
                       handleSubmit={this.handleAddMemberSubmit}
-                      data={this.props.workspaces}
+                      data={
+                        this.props.workspaces.workspaces[
+                          this.state.selectedWorkspaceId
+                        ]
+                      }
                       owner={this.props.data.name}
-                      workspace={this.state.workspace}
+                      workspace={
+                        this.props.workspaces.workspaces[
+                          this.state.selectedWorkspaceId
+                        ]
+                      }
                     />
                   ) : (
                     ""
                   )}
                   {this.state.currentPage === 2 ? (
-                    <Presentations data={this.state.workspace} />
+                    <Presentations
+                      data={
+                        this.props.workspaces.workspaces[
+                          this.state.selectedWorkspaceId
+                        ]
+                      }
+                    />
                   ) : (
                     ""
                   )}

@@ -111,6 +111,9 @@ export const removeMemberFromWorkspace = data => dispatch => {
     })
   })
     .then(handleResponse)
-    .then(data => dispatch(removeMemberFromWorkspaceSuccess(data)))
+    .then(data => {
+      dispatch(removeMemberFromWorkspaceSuccess(data));
+      dispatch(requestMembers(data.workspace._id));
+    })
     .catch(err => dispatch(removeMemberFromWorkspaceError(err)));
 };
