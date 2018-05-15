@@ -17,7 +17,6 @@ import Notifications from "../Components/Notifications";
 import { removeOldNotification } from "../redux/notifications/actions";
 import { verifyAuth } from "../redux/auth/actions";
 import Client from "../Views/Client";
-import Workspaces from "../Views/Dashboard/Workspaces"; /*REMOVE ME LATER*/
 
 /* HOC */
 import withSocket from "../Components/WithSocket";

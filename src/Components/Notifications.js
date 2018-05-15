@@ -20,6 +20,7 @@ class Notifications extends Component {
   }
 
   render() {
+    console.log(this.props.notifications);
     const notifications = Object.keys(this.props.notifications).map(
       key => this.props.notifications[key]
     );
@@ -32,6 +33,7 @@ class Notifications extends Component {
           transitionLeaveTimeout={500}
         >
           {notifications.map(notification => {
+            console.log("LOOKIIE", notification);
             if (notification.body) {
               return (
                 <Notification
