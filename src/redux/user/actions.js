@@ -3,8 +3,11 @@ import {
   REQUEST_USER_SUCCESS,
   REQUEST_USER_FAIL
 } from "./constants";
+import { ADD_WORKSPACES } from "../workspace/constants";
 
 import { handleResponse } from "../utils/utils";
+
+export const addWorkspaces = data => ({ type: ADD_WORKSPACES, payload: data });
 
 export const requestUserStart = () => ({ type: REQUEST_USER_START });
 export const requestUserSuccess = data => ({
@@ -27,7 +30,9 @@ export const requestUser = id => dispatch => {
     }
   })
     .then(handleResponse)
-    .then(data => dispatch(requestUserSuccess(data)))
+    .then(data => {
+      dispatch(requestUserSuccess(data));
+      dispatch(addWorkspaces(data.user.workspaces));
+    })
     .catch(err => dispatch(requestUserFail(err)));
 };
-
