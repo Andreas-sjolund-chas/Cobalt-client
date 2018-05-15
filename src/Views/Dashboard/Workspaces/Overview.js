@@ -8,7 +8,6 @@ import ListItemWithIcon from "../../../Elements/ListItemWithIcon";
 import ButtonLink from "../../../Elements/ButtonLink";
 
 const Overview = ({ styles, ...props }) => {
-  debugger;
   return (
     <FlexContainer fullWidth="1">
       <div {...css(styles.owner)}>

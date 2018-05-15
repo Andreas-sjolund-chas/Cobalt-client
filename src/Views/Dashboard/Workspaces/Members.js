@@ -19,8 +19,7 @@ const Members = ({
   styles,
   ...props
 }) => {
-  debugger;
-  return (
+  return data ? (
     <div {...css(styles.members)}>
       <List {...css(styles.list)}>
         <ListItem>
@@ -51,6 +50,8 @@ const Members = ({
       </List>
       <AddMember data={data} handleAddMemberSubmit={handleSubmit} />
     </div>
+  ) : (
+    <p>Loading..</p>
   );
 };
 

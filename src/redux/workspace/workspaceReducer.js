@@ -28,7 +28,13 @@ const workspaceReducer = (state = initialState, action) => {
     case FETCH_MEMBERS_SUCCESS:
       return {
         ...state,
-        members: action.payload.members
+        workspaces: state.workspaces.map(w => {
+          if (w._id === action.payload.workspaceId) {
+            w.members = action.payload.members;
+          }
+
+          return w;
+        })
       };
     case ADD_MEMBER_START:
       return { ...state, isFetching: true };
@@ -39,16 +45,17 @@ const workspaceReducer = (state = initialState, action) => {
     case REMOVE_MEMBER_START:
       return { ...state, isFetching: true };
     case REMOVE_MEMBER_ERROR:
-      debugger;
       return {};
     case REMOVE_MEMBER_SUCCESS:
-      const index = state.workspaces.findIndex(
-        i => i._id == action.payload.workspace._id
-      );
-      debugger;
       return {
         ...state,
-        workspaces: { [index]: action.payload.workspace }
+        workspaces: state.workspaces.map(w => {
+          if (w._id === action.payload.workspace._id) {
+            w.members = action.payload.workspace.members;
+          }
+
+          return w;
+        })
       };
 
     default:
