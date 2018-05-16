@@ -12,7 +12,7 @@ import {
   REMOVE_MEMBER_SUCCESS,
   REMOVE_MEMBER_ERROR
 } from "../workspace/constants";
-import { REQUEST_AUTH_SUCCESS, REQUEST_AUTH_FAIL } from "../auth/constants";
+import { REQUEST_LOGOUT_SUCCESS, REQUEST_LOGOUT_FAIL } from "../auth/constants";
 import { REMOVE_OLD_NOTIFICATION } from "./constants";
 
 const initialState = {
@@ -30,6 +30,8 @@ const notificationsReducer = (state = initialState, action) => {
     case ADD_MEMBER_SUCCESS:
     case REMOVE_MEMBER_SUCCESS:
     case REMOVE_MEMBER_ERROR:
+    case REQUEST_LOGOUT_SUCCESS:
+    case REQUEST_LOGOUT_FAIL:
       return {
         ...state,
         messages: [

@@ -49,20 +49,21 @@ class Wizard extends React.Component {
               style={{
                 width: "100%",
                 position: "absolute",
-                top: "20px",
-                right: "20px"
+                top: "12px",
+                right: "12px"
               }}
             >
               <Icon
                 icon="fas fa-times"
                 fillColor="white"
                 style={{
-                  borderRadius: "4px",
-                  width: "25px",
-                  height: "25px",
+                  borderRadius: "2px",
+                  width: "20px",
+                  height: "20px",
                   display: "flex",
                   justifyContent: "center",
-                  alignItems: "center"
+                  alignItems: "center",
+                  cursor: "pointer"
                 }}
                 {...css(this.props.styles.closeModal)}
               />

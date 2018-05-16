@@ -27,7 +27,7 @@ const Navigation = ({ styles, colors, match, ...props }) => {
         <ul {...css(styles.dashboardNav)}>
           <NavLink activeStyle={activeLink} exact to={`${match.url}`}>
             <li>
-              <Icon fillColor="dawn" icon="fas fa-columns" />Dashboard
+              <Icon fillColor="dawn" icon="fas fa-columns" />Sessions
             </li>
           </NavLink>
           <NavLink activeStyle={activeLink} exact to={`${match.url}/profile`}>
@@ -46,7 +46,7 @@ const Navigation = ({ styles, colors, match, ...props }) => {
             </li>
           </NavLink>
           <NavLink exact to={`/`}>
-            <li>
+            <li onClick={() => props.logOut()}>
               <Icon fillColor="dawn" icon="fas fa-power-off" />Log out
             </li>
           </NavLink>
