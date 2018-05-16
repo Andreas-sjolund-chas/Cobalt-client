@@ -6,6 +6,7 @@ import Paragraph from "../../../Elements/Paragraph";
 import List from "../../../Elements/List";
 import ListItem from "../../../Elements/ListItem";
 import ButtonLink from "../../../Elements/ButtonLink";
+import Moment from "moment";
 
 const Presentations = ({ styles, ...props }) => {
   return (
@@ -24,12 +25,10 @@ const Presentations = ({ styles, ...props }) => {
           {props.data.presentations.slice(0, 5).map((p, i) => {
             return (
               <div {...css(styles.listItems)}>
-                <ListItem
-                  key={i}
-                  iconPosition="right"
-                  iconFillColor="darkMetal"
-                >
-                  <Paragraph size="sub">{p.date}</Paragraph>
+                <ListItem key={i}>
+                  <Paragraph size="sub">
+                    {Moment(p.date).format("dddd, MMMM Do YYYY")}
+                  </Paragraph>
                   <Paragraph size="sub">Name: {p.name}</Paragraph>
                   <Paragraph size="sub">Attendees: {p.attendees}</Paragraph>
                 </ListItem>

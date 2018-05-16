@@ -11,15 +11,15 @@ const Overview = ({ styles, ...props }) => {
   return (
     <FlexContainer fullWidth="1">
       <div {...css(styles.owner)}>
-        <Paragraph size="sub">Owner: {props.data.owner}</Paragraph>
-        <Paragraph size="sub">Plan: {props.data.plan}</Paragraph>
+        <Paragraph size="sub">Owner: {props.owner}</Paragraph>
+        <Paragraph size="sub">Plan: {props.data.subscription.type}</Paragraph>
       </div>
       <div {...css(styles.billing)}>
-        <Paragraph size="sub">Price: {props.data.billing.price}</Paragraph>
+        <Paragraph size="sub">Price: {props.data.subscription.price}</Paragraph>
         <Paragraph style={{ margin: "0" }} size="sub">
           Features:
         </Paragraph>
-        <List>
+        {/*        <List>
           {props.data.billing.features.map((f, i) => {
             return (
               <ListItemWithIcon
@@ -32,7 +32,7 @@ const Overview = ({ styles, ...props }) => {
               </ListItemWithIcon>
             );
           })}
-        </List>
+        </List> */}
       </div>
       <ButtonLink to="/">Upgrade Plan</ButtonLink> {/*Change me later*/}
     </FlexContainer>

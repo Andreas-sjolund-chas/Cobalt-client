@@ -9,20 +9,21 @@ import Icon from "../../../Elements/Icon";
 import Button from "../../../Elements/Button";
 import Input from "../../../Elements/Input";
 import AddMember from "../../../Components/AddMember";
+import Loader from "../../../Elements/Loader";
 
 const Members = ({
   data,
+  owner,
+  isFetching,
+  workspace,
   handleSubmit,
-  handleRemoveUser,
+  handleRemoveMember,
   styles,
   ...props
 }) => {
-  return (
+  return !isFetching && data ? (
     <div {...css(styles.members)}>
       <List {...css(styles.list)}>
-        <ListItem>
-          {data.owner} <span {...css(styles.owner)}>OWNER</span>
-        </ListItem>
         {data.members.map(member => {
           return (
             <ListItem {...css(styles.listItem)}>
@@ -34,19 +35,27 @@ const Members = ({
                 <Paragraph size="sub" style={{ marginBottom: "0px" }}>
                   {member.email}
                 </Paragraph>
-                <Icon
-                  onClick={e => handleRemoveUser(member._id, data._id)}
-                  icon="fas fa-times"
-                  fillColor="danger"
-                  size="medium"
-                  style={{ cursor: "pointer" }}
-                />
+                {data.owner === member._id ? (
+                  <span {...css(styles.owner)}>OWNER</span>
+                ) : (
+                  <Icon
+                    onClick={e => handleRemoveMember(member._id, workspace._id)}
+                    icon="fas fa-times"
+                    fillColor="danger"
+                    size="medium"
+                    style={{ cursor: "pointer" }}
+                  />
+                )}
               </FlexContainer>
             </ListItem>
           );
         })}
       </List>
       <AddMember data={data} handleAddMemberSubmit={handleSubmit} />
+    </div>
+  ) : (
+    <div {...css(styles.loader)}>
+      <Loader fillColor="carbon" size="large" />
     </div>
   );
 };
@@ -70,6 +79,10 @@ export default withStyles(({ themes, colors, rounded }) => {
     },
     listItem: {
       marginTop: "10px"
+    },
+    loader: {
+      marginTop: "100px",
+      marginBottom: "100px"
     }
   };
 })(Members);

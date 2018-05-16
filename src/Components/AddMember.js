@@ -112,10 +112,8 @@ export default withFormik({
   handleSubmit(values, { props, resetForm, setErrors, setSubmitting }) {
     setSubmitting(true);
 
-    setTimeout(() => {
-      props.handleAddMemberSubmit(values);
-      resetForm();
-      setSubmitting(false);
-    }, 3000);
+    props.handleAddMemberSubmit(values);
+    resetForm();
+    setSubmitting(false);
   }
 })(AddMember);
