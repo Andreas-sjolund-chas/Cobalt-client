@@ -78,14 +78,10 @@ export const addNewWorkspaceMember = data => dispatch => {
   })
     .then(handleResponse)
     .then(data => {
-      debugger;
       dispatch(addNewWorkspaceMemberSuccess(data));
       dispatch(requestMembers(data.workspace._id));
     })
-    .catch(err => {
-      debugger;
-      dispatch(addNewWorkspaceMemberError(err));
-    });
+    .catch(err => dispatch(addNewWorkspaceMemberError(err)));
 };
 
 // Remove member from workspace

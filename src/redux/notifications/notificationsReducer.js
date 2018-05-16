@@ -30,8 +30,6 @@ const notificationsReducer = (state = initialState, action) => {
     case ADD_MEMBER_SUCCESS:
     case REMOVE_MEMBER_SUCCESS:
     case REMOVE_MEMBER_ERROR:
-      console.log(action.payload.message.body);
-      debugger;
       return {
         ...state,
         messages: [

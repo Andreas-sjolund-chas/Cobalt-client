@@ -202,6 +202,7 @@ class Workspaces extends Component {
                 <FlexContainer fullWidth="1">
                   {this.state.currentPage === 0 ? (
                     <Overview
+                      isFetching={this.props.workspaces.isFetching}
                       data={
                         this.props.workspaces.workspaces[
                           this.state.selectedWorkspaceId
@@ -214,6 +215,7 @@ class Workspaces extends Component {
                   )}
                   {this.state.currentPage === 1 ? (
                     <Members
+                      isFetching={this.props.workspaces.isFetching}
                       handleRemoveMember={this.handleRemoveMember}
                       handleSubmit={this.handleAddMemberSubmit}
                       data={
@@ -233,6 +235,7 @@ class Workspaces extends Component {
                   )}
                   {this.state.currentPage === 2 ? (
                     <Presentations
+                      isFetching={this.props.workspaces.isFetching}
                       data={
                         this.props.workspaces.workspaces[
                           this.state.selectedWorkspaceId
