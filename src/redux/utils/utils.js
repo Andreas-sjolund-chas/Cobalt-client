@@ -1,12 +1,6 @@
 /* Fetch does not trow error, this helps us to use catch  */
-export function handleResponse(response) {
-  if (!response.ok) {
-    response.json().then(function(error) {
-      const errObj = Object.assign({ newKey: error })
-      debugger
-      throw new Error(errObj.newKey)
-    })
-  }
+export const handleResponse = async response => {
+  const jsonResponse = await response.json();
 
-  return response.json();
+  return !response.ok ? Promise.reject(jsonResponse) : jsonResponse;
 };

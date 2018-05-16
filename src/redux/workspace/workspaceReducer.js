@@ -28,11 +28,11 @@ const workspaceReducer = (state = initialState, action) => {
     case FETCH_MEMBERS_SUCCESS:
       return {
         ...state,
+        isFetching: false,
         workspaces: state.workspaces.map(w => {
           if (w._id === action.payload.workspaceId) {
             w.members = action.payload.members;
           }
-
           return w;
         })
       };
