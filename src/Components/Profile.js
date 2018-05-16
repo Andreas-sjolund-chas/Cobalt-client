@@ -2,6 +2,7 @@ import React from "react";
 import { css, withStyles } from "../withStyles";
 import { withFormik } from "formik";
 import Yup from "yup";
+import axios from "axios";
 
 import FlexContainer from "../Containers/FlexContainer";
 import Button from "../Elements/Button";
@@ -37,7 +38,7 @@ const Profile = ({
           }}
         >
           <FlexContainer justify="center" style={{ height: "100%" }}>
-            <form onSubmit={handleSubmit}>
+            <form>
               <FlexContainer direction="row" justify="center">
                 <Avatar
                   size="xl"
@@ -49,7 +50,7 @@ const Profile = ({
                     type="file"
                     name="picture"
                     value={values.picture}
-                    onChange={handleChange}
+                    onChange={this.handleUploadFile}
                     onBlur={handleBlur}
                     style={{ width: "200px" }}
                   />
@@ -174,6 +175,15 @@ const Profile = ({
       </FlexContainer>
     </div>
   );
+};
+
+const handleUploadFile = event => {
+  const data = new FormData();
+  data.append("file", event.target.files[0]);
+
+  axios.post("/files", data).then(res => {
+    console.log(res);
+  });
 };
 
 const formikForm = withFormik({
