@@ -63,7 +63,8 @@ export default withStyles(({ colors, gradients }) => {
       top: "0",
       left: "0",
       height: "100%",
-      width: "100%"
+      width: "100%",
+      touchAction: "none"
     },
     icon: {
       width: "128px",

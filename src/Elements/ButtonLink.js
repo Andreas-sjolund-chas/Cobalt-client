@@ -19,8 +19,6 @@ const ButtonLink = ({
 export default withStyles(({ themes, text }) => {
   return {
     buttonLink: {
-      minWidth: "100px",
-      padding: "16px 24px",
       border: "none",
       borderRadius: "4px",
       margin: "12px 12px 12px 0px",
@@ -29,13 +27,23 @@ export default withStyles(({ themes, text }) => {
       color: "white",
       letterSpacing: "0.1rem",
       textAlign: "center",
-      fontSize: "12px",
+
       ":hover": {
         color: "white !important"
       },
       ":visited": {
         color: "white"
       }
+    },
+    small: {
+      fontSize: "8px",
+      padding: "10px 18px",
+      minWidth: "60px"
+    },
+    medium: {
+      fontSize: "12px",
+      padding: "16px 24px",
+      minWidth: "100px"
     },
 
     /* Color */

@@ -1,129 +1,144 @@
-# App Boilerplate
-This is the App boilerplate which will get you started. For any questions regarding the stack, please use our [#help](https://chasacademy.slack.com/messages/C61J8A678/#help) channel in Slack.
-
-Table of contents
-=================
+# Cobalt
 
 <!--ts-->
-   * [Directory Layout](#directory-layout)
-   * [Quickstart](#quickstart)
-   * [Usage](#usage)
-      * [Docker](#docker)
-      * [Bash Commands](#bash-commands)
-      * [Database](#database)
-      * [Users](#users)
+
+* [Directory Layout](#directory-layout)
+* [Quickstart](#quickstart)
+* [Installation](#installation)
+* [Usage](#usage)
+  * [Bash Commands](#bash-commands)
+* [Storybook](#storybook)
+* [Git](#git)
+  * [Branching](#branching)
+  * [Merging](#merging)
+  * [Releases](#releases)
+* [Retrospectives](#retrospectives)
+
 <!--te-->
 
+## Links
+
+[Live application](https://docs.google.com/document/d/1-92bxTM8nGuZrtYpmqrGB38ZoBNEBZ5O0U_xpF_lRxE/)
+
 ## Directory Layout
+
 ```bash
 ./
-├── /public/                     # Public directory, ready to be served by a web server
-├── /src/                        # Directory for the app code, a standard create-react-app with Redux and other goodies
-│   ├── /Assets/                 #
-│   ├── /Components/             #
-│   ├── /Config.dist/            #
-│   ├── /Lib/                    #
-│   ├── /Redux/                  #
-│   ├── /Tests/                  #
-│   ├── /Views/                  #
-│   ├── registerServiceWorker.js #
-│   └── index.js                 #
-├── .env.dist                    # Defines template for environment variables
-├── docker-compose.yml           # Defines Docker services, networks and volumes, do not touch unless you know what you are doing
-├── Dockerfile                   # Defines how Docker should build a custom image for the application, do not touch unless you know what you are doing
-└── README.md                    # The file you are reading right now
+├── /api                    # Directory for backend, see below for more detail (created when running /bin/install)
+├── /client                 # Directory for frontend, see below for more detail (created when running /bin/install)
+├── /client/src/elements    # Directory for smaller components
+├── /client/src/stories     # Directory for storybook stories
+├── docker-compose.yml      # Defines Docker services, networks and volumes, do not touch unless you know what you are doing
+└── README.md               # The file you are reading right now
 ```
+
+**NOTE**: The `api` and `client` folders are in fact separate repositories (git submodules):
+
+* Backend: [https://github.com/chas-academy/cobalt-api](https://github.com/chas-academy/cobalt-api)
+* Frontend: [https://github.com/chas-academy/cobalt-client](https://github.com/chas-academy/cobalt-client)
+
+This means when making changes to either you need to commit and push in the separate repositories.
 
 ## Quickstart
-It's best if this is started from the project root instead of inside the api repo, but if for some reason you want to work on the App independently you can run the project from this location. Here's how to do that:
 
-```
-yarn
-yarn start
-```
+## Install and Start the Apps
 
-Note: See **Bash Commands** section for Docker.
+1.  First download and install the [Docker Community Edition](https://www.docker.com/community-edition).
+2.  From the root of the project, run `bin/install`, this will clone and install all the different apps, configure the database etc. – take a break while this runs.
+3.  If the installation process is successful, both the API and client services shall be started and accesible locally at:
 
-To generate the `./client/src/Assets/Styles/Style.css`,
-open another terminal console then on the `root` directory of the project,
-run the following command:
-
-```
-yarn run watch-css
-```
-
-The command above works only in Mac with the `fsevents` module installed.
-Run the command below as an alternative:
-
-```
-yarn run build-css
-```
-
-Note: You must run the command above manually everytime you made changes to `.scss` files.
-All the `*.scss` files shall be compiled to `*.css` but only the `Style.css` is included in the repository.
-
-Access the app at <http://localhost:7771>.
+* API: <http://localhost:7770>
+* APP: <http://localhost:7771>
 
 # Usage
 
-## Settings
-
-### Environment Vars
-
-Copy `.env.dist` to `.env` and change the values of the environment variables if needed.
-
-```
-REACT_APP_SITE_NAME=React App Boilerplate
-REACT_APP_API_BASE_URL=http://localhost:7770
-REACT_APP_API_SIGN_IN_URL=http://localhost:7770/sign-in
-REACT_APP_API_SIGN_OUT_URL=http://localhost:7770/sign-out
-REACT_APP_API_VERIFY_TOKEN_URL=http://localhost:7770/verify-token
-REACT_APP_API_JWT_SECRET=jwtsecretcode
-```
-
-### Config Files
-
-Copy `./src/Config.dist` folder to `Config` and change the configurations if needed.
-
-## Docker
-
-Download and install the [Docker Community Edition](https://www.docker.com/community-edition).
-
-Note: See **Bash Commands** section for Docker.
-
-The `yarn run watch-css` command should be running on a separate terminal console for client app.
-
 ## Bash Commands
 
-On the `root` directory of the project, run the following commands:
+For easier access, you can run these following commands from the the `root` of the project.
 
-Note: To view the Docker containers, open another terminal console then enter `docker ps`.
+| Command                                | Description                                                    |
+| -------------------------------------- | -------------------------------------------------------------- |
+| `./bin/install`                        | Clone the apps, build the Docker containers, and initialise db |
+| `./bin/reinstall`                      | Delete the apps and run the installation process               |
+| `./bin/update`                         | Pulls the latest changes from API and client                   |
+| `./bin/start`                          | Start all the services (API, client, and database)             |
+| `./bin/stop`                           | Stop all the services                                          |
+| `./bin/console <container ID or Name>` | Access the terminal console of the API or client containers    |
 
-### Docker
+Note: To manage separate Docker instance for API or client,
+open another terminal console and change the project directory from `root` to `api` or `client` and run the commands above.
 
-| Command                                | Description                                                            |
-|----------------------------------------|------------------------------------------------------------------------|
-| `./bin/install`                        | Build the Docker container and start the app                           |
-| `./bin/reinstall`                      | Rebuild the Docker container with the current branch and start the app |
-| `./bin/start`                          | Start the client app service                                           |
-| `./bin/stop`                           | Stop the client app service                                            |
-| `./bin/console <container ID or Name>` | Access the terminal console of the container                           |
+# Storybook
 
-### CSS
+### Starting storybook locally
 
-| Command           | Description                                                         |
-|-------------------|---------------------------------------------------------------------|
-| `./bin/css/watch` | Watch and compile *.scss files on file changes (for Mac users only) |
-| `./bin/css/build` | Manually compile *.scss files                                       |
+1.  `cd client`
+2.  `npm run storybook` or `yarn run storybook` - Runs at http://localhost:9009
 
-## Users
+# Git
 
-| Name              | Email                  | Description |
-|-------------------|------------------------|-------------|
-| Super Admin User  | `superadmin@email.com` | Has wildcard access |
-| Admin User        | `admin@email.com`      | Has wildcard access but `Admin › Users › Delete` is excluded |
-| Common User       | `user@email.com`       | Can access `My Profile`, `Admin › Dashboard`, `Users`, `Users › View, and Settings` |
-| Referrer User     | `referrer@email.com`   | When `redirect` is set without the domain, e.i. `/admin/dashboard`, user shall be redirected to internal page if no location path (referrer) found on the Sign In page |
-| Redirect User     | `redirect@email.com`   | When `redirect` is set with complete URL, e.i. `https://github.com/anthub-services`, user shall be redirected to external page if no location path (referrer) found on the Sign In page |
-| Blocked User      | `blocked@email.com`    | User is signed in but the account is blocked |
-| Unauthorized User | `<any invalid email>`  | Simply enter wrong `email` and/or `password` |
+### Branching
+
+From develop: `git checkout -b <github-issue-id>-feature/<your-feature-name>`
+
+For git to work properly with waffle.io features should be name as shown below:
+
+`<github-issue-id>-feature/<your-feature-name>`
+
+> Example: `12-feature/button-defualt`
+
+### Merging
+
+1.  `git checkout develop`
+2.  `git pull`
+3.  `git checkout <feature-branch>`
+4.  `git rebase develop`
+5.  Resolve conflicts
+6.  `git add` Add your resolved conflicts
+7.  `git rebase --continue`
+8.  Repeat step 6 and 7 until message: 'No rebase in progress?' appears
+9.  `git push -f`
+10. Add pullrequest on github
+
+### Releases
+
+Release branches should always be named as shown below:
+
+`release/`major`.`minor`.`patch
+
+> Example: `release/1.2.0`
+
+#### Creation
+
+`git checkout -b release/0.2.0 develop`
+
+#### Sharing the release branch
+
+1.  `git checkout release/0.2.0`
+2.  `git push origin release/0.2.0`
+
+#### Get latest changes for a release branch
+
+`git pull --rebase origin release/0.2.0`
+
+#### Finalize and tag a release branch
+
+1.  `git checkout master`
+2.  `git merge --no-ff release/0.2.0`
+3.  `git tag -a 0.2.0`
+4.  `git checkout develop`
+5.  `git merge --no-ff release/0.2.0`
+6.  When all the previous steps are done delete the branch with: `git branch -d release/0.2.0`
+7.  If the branch was pushed to github delete the remote with: `git push origin :release/0.2.0`
+
+#### Push the merged branches and tag
+
+`git push origin master`
+
+`git push origin develop`
+
+`git push origin --tags`
+
+# Retrospectives
+
+2018-04-20: [Retrospective, Fri 18 Apr](https://docs.google.com/document/d/1-92bxTM8nGuZrtYpmqrGB38ZoBNEBZ5O0U_xpF_lRxE/)
