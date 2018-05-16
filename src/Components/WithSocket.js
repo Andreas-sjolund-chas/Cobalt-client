@@ -18,32 +18,10 @@ const withSocket = WrappedComponent => {
 
       this.state = {
         isLoading: true,
-        data: {
-          // sessionId: sessionId,
-          // presentation: {
-          //   name: "Session name",
-          //   description: "Session description"
-          // },
-          // settings: {
-          //   threshold: 50,
-          //   maxAttendees: 50,
-          //   engagementDescription: "Engagement description"
-          // },
-          // status: {
-          //   hasStarted: false,
-          //   hasEnded: false,
-          //   isPaused: false,
-          //   time: 0
-          // },
-          // engagement: {
-          //   average: 0,
-          //   positive: 50,
-          //   negative: 50
-          // },
-          // attendees: 0
-        }
+        likes: [],
+        data: {}
       };
-
+      this.counter = 0;
       this.sessionId = sessionId;
       this.socket = io(process.env.REACT_APP_API_BASE_URL);
       this.startSession = this.startSession.bind(this);
@@ -51,7 +29,9 @@ const withSocket = WrappedComponent => {
       this.pauseSession = this.pauseSession.bind(this);
       this.requestSave = this.requestSave.bind(this);
       this.switchData = this.switchData.bind(this);
+      this.handleBalloonDelete = this.handleBalloonDelete.bind(this);
       this.listenForEvents = this.listenForEvents.bind(this);
+      console.log("constructor: ", this.state);
     }
 
     componentDidMount() {
@@ -94,6 +74,27 @@ const withSocket = WrappedComponent => {
           data: data
         });
       });
+
+      this.socket.on("sendLike", data => {
+        this.setState(
+          {
+            likes: [
+              {
+                startPos: `${this.setRandomStartPosition()}%`,
+                key: this.counter
+              },
+              ...this.state.likes
+            ]
+          },
+          () => {
+            this.counter++;
+          }
+        );
+      });
+    }
+
+    setRandomStartPosition() {
+      return Math.floor(Math.random() * 100);
     }
 
     updateSession() {
@@ -160,6 +161,12 @@ const withSocket = WrappedComponent => {
       });
     }
 
+    handleBalloonDelete(id) {
+      this.setState({
+        likes: this.state.likes.filter(like => like.key !== id)
+      });
+    }
+
     switchData() {
       this.setState(
         {
@@ -176,7 +183,6 @@ const withSocket = WrappedComponent => {
     }
 
     render() {
-      console.log(this.state.isLoading);
       if (this.state.isLoading) return <Loader fillColor="dawn" size="large" />;
 
       if (this.state.shouldRedirect) return <Redirect to="/" />;
@@ -190,6 +196,7 @@ const withSocket = WrappedComponent => {
           getPercentageFromAvg={this.getPercentageFromAvg}
           switchData={this.switchData}
           requestSave={this.requestSave}
+          handleBalloonDelete={this.handleBalloonDelete}
           {...this.state}
           {...this.props}
         />

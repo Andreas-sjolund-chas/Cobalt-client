@@ -8,6 +8,7 @@ import Notification from "../../Elements/Notification";
 import Heading from "../../Elements/Heading";
 import Paragraph from "../../Elements/Paragraph";
 import Input from "../../Elements/Input";
+import Balloon from "../../Elements/Balloon";
 import Warning from "./Warning";
 import Engagement from "./Engagement";
 import Timer from "./Timer";
@@ -26,6 +27,19 @@ const LiveSessionHost = ({ styles, ...props }) => {
 
   return (
     <div {...css(styles.LiveSessionHost)}>
+      <div {...css(styles.balloonContainer)}>
+        {props.likes.map((like, key) => (
+          <Balloon
+            key={like.key}
+            id={like.key}
+            handleDelete={props.handleBalloonDelete}
+            pos={{
+              marginLeft: like.startPos,
+              zIndex: `${9999 + like.key}`
+            }}
+          />
+        ))}
+      </div>
       <div {...css(styles.interface)}>
         <FlexContainer
           justify="between"
@@ -83,8 +97,15 @@ export default withStyles(({ themes, text, colors }) => {
       alignItems: "center",
       flexDirection: "column"
     },
+    balloonContainer: {
+      zIndex: "9999",
+      position: "absolute",
+      width: "100vw",
+      height: "100vh",
+      overflow: "hidden"
+    },
     interface: {
-      zIndex: "999",
+      zIndex: "10000",
       padding: "0px 16px",
       position: "absolute",
       width: "100%",
