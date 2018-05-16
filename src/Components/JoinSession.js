@@ -7,6 +7,7 @@ import FlexContainer from "../Containers/FlexContainer";
 import Button from "../Elements/Button";
 import Heading from "../Elements/Heading";
 import Input from "../Elements/Input";
+import Qrscanner from "../Components/Qrscanner";
 
 class JoinSession extends React.Component {
   constructor({ styles, ...props }) {
@@ -18,6 +19,7 @@ class JoinSession extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleQRCode = this.handleQRCode.bind(this);
   }
 
   handleSubmit(e) {
@@ -30,6 +32,14 @@ class JoinSession extends React.Component {
 
   handleChange(e) {
     this.setState({ code: e.target.value });
+  }
+
+  handleQRCode(qrCode) {
+    this.setState({
+      code: qrCode
+    });
+
+    this.handleSubmit(null);
   }
 
   render() {
@@ -92,6 +102,7 @@ class JoinSession extends React.Component {
             >
               JOIN
             </Button>
+            <Qrscanner passQRCode={this.handleQRCode} />
           </FlexContainer>
         </form>
       </FlexContainer>
