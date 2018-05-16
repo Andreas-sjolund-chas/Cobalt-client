@@ -33,7 +33,9 @@ export default withStyles(({ themes, colors }) => {
     },
     cross: {
       position: "absolute",
-      right: "2.5rem"
+      right: "1.5rem",
+      top: "1rem",
+      cursor: "pointer"
     },
 
     /* Appearance */
