@@ -18,4 +18,5 @@ storiesOf("Icon", module)
   ))
   .add("large", () => (
     <Icon icon="fas fa-envelope" size="large" fillColor="danger" />
-  ));
+  ))
+));

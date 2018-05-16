@@ -22,6 +22,7 @@ import {
   faSpinner,
   faExternalLinkAlt,
   faCopy
+  faEdit,
 } from "@fortawesome/fontawesome-free-solid";
 
 const Icon = ({
@@ -90,6 +91,8 @@ const Icon = ({
       break;
     case "fas fa-copy":
       faIcon = faCopy;
+    case "fas fa-edit":
+      faIcon = faEdit;
       break;
     default:
       faIcon = faQuestion;

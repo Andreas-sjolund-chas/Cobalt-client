@@ -17,6 +17,7 @@ import Notifications from "../Components/Notifications";
 import Client from "../Views/Client";
 import Qrscanner from "../Components/Qrscanner";
 import QrCodeWindow from "../Components/QrCodeWindow";
+import Contact from "../Views/Contact";
 
 /* Actions */
 import { removeOldNotification } from "../redux/notifications/actions";
@@ -50,6 +51,8 @@ const LiveSessionHostWithSocket = withSocket(LiveSessionHost);
 class App extends React.Component {
   constructor(props) {
     super(props);
+
+    this.Contact = withPublicRoot(Contact);
 
     this.removeNotifications = this.removeNotifications.bind(this);
   }
@@ -104,6 +107,9 @@ class App extends React.Component {
               />
             )}
           />
+
+          <Route exact path="/contact" component={this.Contact} />
+
           <Route path="/session/:sessionId" component={Client} />
           <PrivateRoute
             authenticated={isAuthenticated}
