@@ -54,6 +54,10 @@ class App extends React.Component {
     this.props.verifyAuth();
   }
 
+  componentDidUpdate() {
+    this.props.verifyAuth();
+  }
+
   removeNotifications(id) {
     this.props.removeOldNotification(id);
   }
