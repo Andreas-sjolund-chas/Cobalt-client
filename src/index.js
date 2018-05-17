@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import registerServiceWorker from "./registerServiceWorker";
 
 import WebFont from "webfontloader";
 
@@ -14,5 +13,3 @@ WebFont.load({
 });
 
 ReactDOM.render(<Root />, document.getElementById("app"));
-
-registerServiceWorker();
