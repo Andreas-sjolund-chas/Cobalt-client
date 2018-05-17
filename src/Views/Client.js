@@ -8,7 +8,6 @@ import Paragraph from "../Elements/Paragraph";
 import Loader from "../Elements/Loader";
 import FlexContainer from "../Containers/FlexContainer";
 import VoteSlider from "../Components/VoteSlider";
-import Modal from "../Components/Modal";
 
 import balloon from "../assets/balloon.svg";
 
