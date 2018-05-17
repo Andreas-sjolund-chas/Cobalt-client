@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
@@ -24,7 +24,8 @@ import requireAuth from "../Components/RequireAuth";
 import withPublicRoot from "../Containers/PublicRoot";
 
 const mapStateToProps = state => ({
-  notifications: state.notifications.messages
+  notifications: state.notifications.messages,
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 const mapDispatchToProps = dispatch => {
@@ -33,6 +34,23 @@ const mapDispatchToProps = dispatch => {
       dispatch(removeOldNotification(notifications))
   };
 };
+
+function PrivateRoute({ component: Component, authenticated, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        authenticated === true ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{ pathname: "/login", state: { from: props.location } }}
+          />
+        )
+      }
+    />
+  );
+}
 
 class App extends React.Component {
   constructor(props) {
@@ -53,6 +71,8 @@ class App extends React.Component {
   }
 
   render() {
+    const { isAuthenticated } = this.props;
+
     return (
       <div className="App">
         <Notifications
@@ -62,12 +82,29 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={this.LandingPage} />
           <Route exact path="/login" component={this.Login} />
-          <Route exact path="/createsession" component={this.CreateSession} />
+          <PrivateRoute
+            authenticated={isAuthenticated}
+            exact
+            path="/createsession"
+            component={CreateSession}
+          />
           <Route exact path="/signup" component={this.SignUp} />
           <Route path="/session/:sessionId" component={Client} />
-          <Route path="/host/:sessionId" component={this.LiveSessionHost} />
-          <Route path="/lobby" component={this.Lobby} />
-          <Route path="/dashboard" component={this.Dashboard} />
+          <PrivateRoute
+            authenticated={isAuthenticated}
+            path="/host/:sessionId"
+            component={LiveSessionHost}
+          />
+          <PrivateRoute
+            authenticated={isAuthenticated}
+            path="/lobby"
+            component={Lobby}
+          />
+          <PrivateRoute
+            authenticated={isAuthenticated}
+            path="/dashboard"
+            component={Dashboard}
+          />
           <Route path="/pricing" component={this.PricingArea} />
           <Route path="*" component={NotFound} />
         </Switch>
