@@ -49,11 +49,7 @@ export const verifyAuth = () => dispatch => {
   dispatch(requestAuthStart());
 
   fetch(`${process.env.REACT_APP_API_BASE_URL}/api/auth`, {
-    credentials: "include",
-    headers: {
-      "X-Requested-With": null,
-      "If-None-Match": null
-    }
+    credentials: "include"
   })
     .then(handleResponse)
     .then(data => dispatch(requestAuthSuccess(data)))
