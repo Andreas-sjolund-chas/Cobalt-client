@@ -10,6 +10,8 @@ import FlexContainer from "../Containers/FlexContainer";
 import VoteSlider from "../Components/VoteSlider";
 import Modal from "../Components/Modal";
 
+import balloon from "../assets/balloon.svg";
+
 import io from "socket.io-client";
 const withSocket = WrappedComponent => {
   return class extends React.Component {
@@ -36,6 +38,7 @@ const withSocket = WrappedComponent => {
       } = this.props;
 
       this.handleClick = this.handleClick.bind(this);
+      this.handleLike = this.handleLike.bind(this);
       this.preventBounce = this.preventBounce.bind(this);
 
       this.sessionId = sessionId;
@@ -85,6 +88,16 @@ const withSocket = WrappedComponent => {
       });
     }
 
+    handleLike = () => {
+      console.log("Clicked Like");
+      this.socket.emit("attendeeLike", {
+        session: this.sessionId,
+        payload: {
+          type: "like"
+        }
+      });
+    };
+
     handleVote = value =>
       this.socket.emit("attendeePayload", {
         session: this.sessionId,
@@ -105,6 +118,7 @@ const withSocket = WrappedComponent => {
         <WrappedComponent
           handleVote={this.handleVote}
           handleClick={this.handleClick}
+          handleLike={this.handleLike}
           data={this.state.data}
           windowSize={this.state.windowSize}
           {...this.props}
@@ -172,6 +186,10 @@ const Client = ({
         position: windowSize.width < 420 ? "fixed" : ""
       }}
     >
+      <span {...css(styles.likeButton)} onClick={props.handleLike}>
+        {" "}
+        <img src={balloon} width="48px" />
+      </span>
       <FlexContainer
         justify="center"
         align="center"
@@ -226,7 +244,7 @@ const Client = ({
 
 const ClientWithSocket = withSocket(Client);
 
-export default withStyles(({ themes, colors }) => {
+export default withStyles(({ themes, colors, shadow }) => {
   return {
     client: {
       backgroundColor: colors.nightsky,
@@ -252,6 +270,27 @@ export default withStyles(({ themes, colors }) => {
       backgroundColor: colors.sand,
       animation: "fade 0.5s ease",
       willChange: "transform, opacity"
+    },
+    likeButton: {
+      display: "block",
+      padding: "10px",
+      borderRadius: "50%",
+      backgroundColor: colors.carbon,
+      color: "white",
+      position: "absolute",
+      zIndex: "999",
+      left: "25px",
+      top: "25px",
+      cursor: "pointer",
+      overflow: "hidden",
+      boxShadow: shadow.shadow,
+      transition: "transform 0.3s ease",
+      ":hover": {
+        transform: "scale(1.05)"
+      },
+      ":nth-child(1n) img": {
+        animation: "sway 3s ease infinite"
+      }
     },
     spinner: {
       ":nth-child(1n) span": {

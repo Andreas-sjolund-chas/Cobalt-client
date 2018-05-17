@@ -38,7 +38,7 @@ export default withStyles(({ colors }) => {
       backgroundColor: "rgba(0,0,0,0.5)",
       color: "white",
       fontSize: "48px",
-      zIndex: "1000",
+      zIndex: "10000",
       animation: "fade 0.5s ease",
       willChange: "transform"
     },
