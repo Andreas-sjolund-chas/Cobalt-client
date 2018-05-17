@@ -7,7 +7,6 @@ import Footer from "../Components/Footer";
 import NotFound from "../Views/NotFound";
 import SocketClient from "../Views/Client";
 import LiveSessionHost from "../Views/LiveSessionHost/LiveSessionHost";
-import Lobby from "../Views/LiveSessionHost/Lobby";
 import Dashboard from "../Views/Dashboard/Dashboard";
 import Login from "../Views/Login";
 import LandingPage from "../Views/LandingPage";
@@ -22,6 +21,7 @@ import Client from "../Views/Client";
 import withSocket from "../Components/WithSocket";
 import requireAuth from "../Components/RequireAuth";
 import withPublicRoot from "../Containers/PublicRoot";
+import PrivateRoute from "../Components/PrivateRoute";
 
 const mapStateToProps = state => ({
   notifications: state.notifications.messages,
@@ -35,34 +35,16 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-function PrivateRoute({ component: Component, authenticated, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        authenticated === true ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{ pathname: "/login", state: { from: props.location } }}
-          />
-        )
-      }
-    />
-  );
-}
+const LandingPageWithPublic = withPublicRoot(LandingPage);
+const LoginWithPublic = withPublicRoot(Login);
+const SignUpWithPublic = withPublicRoot(SignUp);
+const PricingAreaWithPublic = withPublicRoot(PricingArea);
+const LiveSessionHostWithSocket = withSocket(LiveSessionHost);
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.LandingPage = withPublicRoot(LandingPage);
-    this.Login = withPublicRoot(Login);
-    this.SignUp = withPublicRoot(SignUp);
-    this.PricingArea = withPublicRoot(PricingArea);
-    this.CreateSession = requireAuth(CreateSession);
-    this.LiveSessionHost = withSocket(LiveSessionHost);
-    this.Dashboard = requireAuth(Dashboard);
-    this.Lobby = requireAuth(Lobby);
+
     this.removeNotifications = this.removeNotifications.bind(this);
   }
 
@@ -80,32 +62,56 @@ class App extends React.Component {
           removeNotifications={this.removeNotifications}
         />
         <Switch>
-          <Route exact path="/" component={this.LandingPage} />
-          <Route exact path="/login" component={this.Login} />
-          <PrivateRoute
-            authenticated={isAuthenticated}
+          <Route
             exact
-            path="/createsession"
-            component={CreateSession}
+            path="/"
+            render={routeProps => (
+              <LandingPageWithPublic
+                {...routeProps}
+                authenticated={isAuthenticated}
+              />
+            )}
           />
-          <Route exact path="/signup" component={this.SignUp} />
+          <Route
+            exact
+            path="/login"
+            render={routeProps => (
+              <LoginWithPublic
+                {...routeProps}
+                authenticated={isAuthenticated}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/signup"
+            render={routeProps => (
+              <SignUpWithPublic
+                {...routeProps}
+                authenticated={isAuthenticated}
+              />
+            )}
+          />
           <Route path="/session/:sessionId" component={Client} />
           <PrivateRoute
             authenticated={isAuthenticated}
             path="/host/:sessionId"
-            component={LiveSessionHost}
-          />
-          <PrivateRoute
-            authenticated={isAuthenticated}
-            path="/lobby"
-            component={Lobby}
+            component={LiveSessionHostWithSocket}
           />
           <PrivateRoute
             authenticated={isAuthenticated}
             path="/dashboard"
             component={Dashboard}
           />
-          <Route path="/pricing" component={this.PricingArea} />
+          <Route
+            path="/pricing"
+            render={routeProps => (
+              <PricingAreaWithPublic
+                {...routeProps}
+                authenticated={isAuthenticated}
+              />
+            )}
+          />
           <Route path="*" component={NotFound} />
         </Switch>
       </div>
