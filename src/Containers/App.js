@@ -15,6 +15,7 @@ import CreateSession from "../Views/CreateSession";
 import SignUp from "../Views/SignUp";
 import Notifications from "../Components/Notifications";
 import { removeOldNotification } from "../redux/notifications/actions";
+import { verifyAuth } from "../redux/auth/actions";
 import Client from "../Views/Client";
 
 /* HOC */
@@ -31,7 +32,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     removeOldNotification: notifications =>
-      dispatch(removeOldNotification(notifications))
+      dispatch(removeOldNotification(notifications)),
+    verifyAuth: _ => dispatch(verifyAuth())
   };
 };
 
@@ -48,12 +50,18 @@ class App extends React.Component {
     this.removeNotifications = this.removeNotifications.bind(this);
   }
 
+  componentWillMount() {
+    this.props.verifyAuth();
+  }
+
   removeNotifications(id) {
     this.props.removeOldNotification(id);
   }
 
   render() {
     const { isAuthenticated } = this.props;
+
+    console.log(isAuthenticated);
 
     return (
       <div className="App">
