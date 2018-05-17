@@ -9,7 +9,6 @@ class Modal extends React.Component {
     super(props);
 
     this.modalRef = React.createRef();
-    this.closeButtonRef = React.createRef();
 
     this.killModal = this.killModal.bind(this);
     this.handleIconKillModal = this.handleIconKillModal.bind(this);
