@@ -51,6 +51,7 @@ export const verifyAuth = () => dispatch => {
   fetch(`${process.env.REACT_APP_API_BASE_URL}/api/auth`, {
     credentials: "include",
     headers: {
+      "X-Requested-With": null,
       "If-None-Match": null
     }
   })
