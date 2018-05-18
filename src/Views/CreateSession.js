@@ -42,13 +42,24 @@ class CreateSession extends React.Component {
   }
 
   handleSubmit(data) {
-    let newObj = {};
+    // let newObj = {};
 
-    for (const [key, value] of data.entries()) {
-      newObj[key] = value;
-    }
+    // for (const [key, value] of data.entries()) {
+    //   newObj[key] = value;
+    // }
 
-    this.props.requestNewSession(newObj);
+    const dataObj = {
+      name: data.get("name"),
+      maxAttendees: data.get("maxAttendees"),
+      threshold: data.get("threshold"),
+      descriptionPositive: data.get("descriptionPositive"),
+      descriptionNegative: data.get("descriptionNegative"),
+      message: data.get("message"),
+      comments: data.get("comments"),
+      isAverage: data.get("isAverage")
+    };
+
+    this.props.requestNewSession(dataObj);
   }
 
   componentWillUnmount() {
@@ -56,7 +67,6 @@ class CreateSession extends React.Component {
   }
 
   closeModal(e, shouldClose) {
-    debugger;
     this.setState({
       isModalHidden: shouldClose
     });
