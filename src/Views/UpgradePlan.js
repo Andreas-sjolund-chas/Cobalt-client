@@ -64,7 +64,7 @@ class UpgradePlan extends React.Component {
 
   componentWillMount() {
     this.setState({
-      workspaceName: this.props.workspaceName || "Some Name"
+      workspaceName: this.props.workspaceName || "Unnamed workspace"
     });
   }
 
@@ -74,21 +74,28 @@ class UpgradePlan extends React.Component {
     });
   }
 
-  handleButtonClick() {
-    console.log(
-      `Plan:::${this.state.activeCard.name}, Price:::${
-        this.state.activeCard.price
-      }`
-    );
+  handleButtonClick(e) {
+    this.props.createWorkspace({
+      type: this.state.activeCard.name,
+      price: this.state.activeCard.price,
+      name: this.state.workspaceName
+    });
+
+    this.props.closeModal(e);
   }
 
   render() {
     return (
-      <Modal withOverlay withAnimation appearance="white">
+      <Modal
+        closeModal={this.props.closeModal}
+        withOverlay
+        withAnimation
+        appearance="white"
+      >
         <Icon
           icon="fas fa-times"
           fillColor="white"
-          onClick={() => console.log("this is where we call props.closeModal")}
+          onClick={e => this.props.closeModal(e)}
           style={{
             borderRadius: "4px",
             width: "25px",
@@ -145,16 +152,20 @@ class UpgradePlan extends React.Component {
           </div>
           <div {...css(this.styles.button)}>
             {this.state.activeCard.id ? (
-              <Button
-                appearance="success"
-                onClick={() => this.handleButtonClick()}
-              >
-                Upgrade Plan
-              </Button>
+              <div>
+                <Button onClick={e => this.props.go(e, 1)}>Go Back</Button>
+                <Button
+                  appearance="success"
+                  onClick={e => this.handleButtonClick(e)}
+                >
+                  Upgrade Plan
+                </Button>
+              </div>
             ) : (
-              <Button disabled onClick={() => this.handleButtonClick()}>
-                Upgrade Plan
-              </Button>
+              <div>
+                <Button onClick={e => this.props.go(e, 1)}>Go Back</Button>
+                <Button disabled>Upgrade Plan</Button>
+              </div>
             )}
           </div>
         </FlexContainer>
