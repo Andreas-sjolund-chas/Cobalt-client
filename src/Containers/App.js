@@ -7,6 +7,7 @@ import Footer from "../Components/Footer";
 import NotFound from "../Views/NotFound";
 import SocketClient from "../Views/Client";
 import LiveSessionHost from "../Views/LiveSessionHost/LiveSessionHost";
+import Summary from "../Views/LiveSessionHost/Summary";
 import Dashboard from "../Views/Dashboard/Dashboard";
 import Login from "../Views/Login";
 import LandingPage from "../Views/LandingPage";
@@ -61,8 +62,6 @@ class App extends React.Component {
   render() {
     const { isAuthenticated } = this.props;
 
-    console.log(isAuthenticated);
-
     return (
       <div className="App">
         <Notifications
@@ -101,6 +100,8 @@ class App extends React.Component {
             )}
           />
           <Route path="/session/:sessionId" component={Client} />
+          <Route path="/summary" component={Summary} />
+
           <PrivateRoute
             authenticated={isAuthenticated}
             path="/host/:sessionId"
