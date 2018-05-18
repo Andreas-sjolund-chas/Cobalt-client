@@ -7,10 +7,42 @@ import {
   ADD_MEMBER_SUCCESS,
   REMOVE_MEMBER_START,
   REMOVE_MEMBER_ERROR,
-  REMOVE_MEMBER_SUCCESS
+  REMOVE_MEMBER_SUCCESS,
+  ADD_WORKSPACE_START,
+  ADD_WORKSPACE_SUCCESS,
+  ADD_WORKSPACE_FAIL
 } from "./constants";
 
-import { formatResponse, checkStatus, handleResponse } from "../utils/utils";
+import { handleResponse } from "../utils/utils";
+
+// Create new workspace
+
+export const addNewWorkspaceStart = () => ({
+  type: ADD_WORKSPACE_START
+});
+export const addNewWorkspaceSuccess = data => ({
+  type: ADD_WORKSPACE_SUCCESS,
+  payload: data
+});
+export const addNewWorkspaceFail = () => ({
+  type: ADD_WORKSPACE_FAIL
+});
+
+export const addNewWorkspace = data => dispatch => {
+  dispatch(addNewWorkspaceStart());
+
+  fetch(`${process.env.REACT_APP_API_BASE_URL}/api/workspace/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    credentials: "include",
+    body: JSON.stringify(data)
+  })
+    .then(handleResponse)
+    .then(data => dispatch(addNewWorkspaceSuccess(data)))
+    .catch(err => dispatch(addNewWorkspaceFail(err)));
+};
 
 // Fetch members
 export const fetchMembersStart = () => ({
