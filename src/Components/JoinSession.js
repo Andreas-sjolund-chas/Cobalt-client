@@ -7,36 +7,52 @@ import FlexContainer from "../Containers/FlexContainer";
 import Button from "../Elements/Button";
 import Heading from "../Elements/Heading";
 import Input from "../Elements/Input";
+import Qrscanner from "../Components/Qrscanner";
 
 class JoinSession extends React.Component {
   constructor({ styles, ...props }) {
     super(props);
     this.state = {
       code: "",
-      fireRedirect: false
+      fireRedirect: false,
+      fireQrRedirect: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleQrSubmit = this.handleQrSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleQRCode = this.handleQRCode.bind(this);
   }
 
   handleSubmit(e) {
     this.setState({ fireRedirect: true });
-    /** TODO: Handle submit here
-     *  use "this.state.code" to get the code
-     *
-     */
+  }
+
+  handleQrSubmit(e) {
+    this.setState({ fireQrRedirect: true });
   }
 
   handleChange(e) {
     this.setState({ code: e.target.value });
   }
 
+  handleQRCode(qrCode) {
+    this.setState({
+      qrCode: qrCode
+    });
+
+    this.handleQrSubmit(null);
+  }
+
   render() {
-    const { fireRedirect } = this.state;
+    const { fireRedirect, fireQrRedirect } = this.state;
 
     if (fireRedirect) {
       return <Redirect to={`/session/${this.state.code}`} />;
+    }
+
+    if (fireQrRedirect) {
+      return (window.location = this.state.qrCode);
     }
 
     return (
@@ -92,6 +108,7 @@ class JoinSession extends React.Component {
             >
               JOIN
             </Button>
+            <Qrscanner passQRCode={this.handleQRCode} />
           </FlexContainer>
         </form>
       </FlexContainer>

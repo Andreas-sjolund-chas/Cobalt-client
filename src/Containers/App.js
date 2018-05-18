@@ -15,6 +15,8 @@ import CreateSession from "../Views/CreateSession";
 import SignUp from "../Views/SignUp";
 import Notifications from "../Components/Notifications";
 import Client from "../Views/Client";
+import Qrscanner from "../Components/Qrscanner";
+import QrCodeWindow from "../Components/QrCodeWindow";
 
 /* Actions */
 import { removeOldNotification } from "../redux/notifications/actions";
@@ -122,6 +124,10 @@ class App extends React.Component {
               />
             )}
           />
+          <Route path="/qr/:sessionId" component={QrCodeWindow} />
+          <Route path="/lobby" component={this.Lobby} />
+          <Route path="/dashboard" component={this.Dashboard} />
+          <Route path="/scanner" component={Qrscanner} />
           <Route path="*" component={NotFound} />
         </Switch>
       </div>
