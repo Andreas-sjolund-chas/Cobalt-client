@@ -13,7 +13,7 @@ import Loader from "../../../Elements/Loader";
 
 const Members = ({
   data,
-  owner,
+  user,
   isFetching,
   workspace,
   handleSubmit,
@@ -21,12 +21,20 @@ const Members = ({
   styles,
   ...props
 }) => {
+  data.members.sort(function(a, b) {
+    return a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
+  });
+
+  data.members.sort(function(a, b) {
+    return a._id === data.owner ? 1 : b._id === data.owner ? 1 : 0;
+  });
+
   return !isFetching && data ? (
     <div {...css(styles.members)}>
       <List {...css(styles.list)}>
-        {data.members.map(member => {
+        {data.members.map((member, i) => {
           return (
-            <ListItem {...css(styles.listItem)}>
+            <ListItem key={i} {...css(styles.listItem)}>
               <FlexContainer direction="row" align="center" justify="between">
                 <Paragraph size="sub" style={{ marginBottom: "0px" }}>
                   {member.name}
@@ -37,7 +45,7 @@ const Members = ({
                 </Paragraph>
                 {data.owner === member._id ? (
                   <span {...css(styles.owner)}>OWNER</span>
-                ) : (
+                ) : data.owner === user ? (
                   <Icon
                     onClick={e => handleRemoveMember(member._id, workspace._id)}
                     icon="fas fa-times"
@@ -45,13 +53,19 @@ const Members = ({
                     size="medium"
                     style={{ cursor: "pointer" }}
                   />
+                ) : (
+                  ""
                 )}
               </FlexContainer>
             </ListItem>
           );
         })}
       </List>
-      <AddMember data={data} handleAddMemberSubmit={handleSubmit} />
+      {data.owner === user ? (
+        <AddMember data={data} handleAddMemberSubmit={handleSubmit} />
+      ) : (
+        ""
+      )}
     </div>
   ) : (
     <div {...css(styles.loader)}>
