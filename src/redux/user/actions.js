@@ -19,7 +19,7 @@ export const requestUserFail = err => ({
 export const requestUser = id => dispatch => {
   dispatch(requestUserStart());
 
-  fetch(`${process.env.REACT_APP_API_BASE_URL}/api/user/${id}`, {
+  fetch(`${process.env.REACT_APP_API_BASE_URL}/api/user/`, {
     method: "GET",
     credentials: "include",
     headers: {
