@@ -7,6 +7,8 @@ import ReactDOM from "react-dom";
 
 import Card from "../Elements/Card";
 import Heading from "../Elements/Heading";
+import Button from "../Elements/Button";
+import FlexContainer from "../Containers/FlexContainer";
 
 const url = window.location.href;
 
@@ -16,16 +18,24 @@ class QrCodeWindow extends Component {
     this.href = window.location.href;
     this.sessionId = this.href.substr(this.href.lastIndexOf("/") + 1);
   }
+
   render() {
     const { styles } = this.props;
 
     return (
-      <Card style={{ height: "calc(100% - 48px)", width: "100%" }}>
+      <Card
+        style={{
+          height: "calc(100% - 48px)",
+          width: "100%"
+        }}
+      >
         <Heading {...css(styles.logo)} size="2">
           Feed<span>.io</span>
         </Heading>
         <QRCode
-          value={this.sessionId}
+          value={`${process.env.REACT_APP_CLIENT_BASE_URL}/session/${
+            this.sessionId
+          }`}
           renderAs="svg"
           size="100%"
           style={{

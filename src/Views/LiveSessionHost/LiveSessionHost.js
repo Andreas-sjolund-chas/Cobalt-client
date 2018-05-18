@@ -66,11 +66,29 @@ const LiveSessionHost = ({ styles, ...props }) => {
           <Heading size="2" appearance="white">
             {props.data.attendees} attendees
           </Heading>
-          <CopyTextfield
-            url={`${process.env.REACT_APP_CLIENT_BASE_URL}/session/${
-              props.data.sessionId
-            }`}
-          />
+          <FlexContainer direction="row">
+            <Button
+              appearance="secondary"
+              onClick={event => {
+                const size = window.innerHeight * 0.75;
+                event.preventDefault();
+                window.open(
+                  `${process.env.REACT_APP_CLIENT_BASE_URL}/qr/${
+                    props.data.sessionId
+                  }`,
+                  "Popup",
+                  `location,status,resizable,centerscreen,width=${size},height=${size}`
+                );
+              }}
+            >
+              Show QR-code
+            </Button>
+            <CopyTextfield
+              url={`${process.env.REACT_APP_CLIENT_BASE_URL}/session/${
+                props.data.sessionId
+              }`}
+            />
+          </FlexContainer>
         </FlexContainer>
       </div>
       {props.data.status.isPaused ? <Paused {...props} /> : ""}

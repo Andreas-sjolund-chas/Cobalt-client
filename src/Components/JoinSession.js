@@ -14,20 +14,22 @@ class JoinSession extends React.Component {
     super(props);
     this.state = {
       code: "",
-      fireRedirect: false
+      fireRedirect: false,
+      fireQrRedirect: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleQrSubmit = this.handleQrSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleQRCode = this.handleQRCode.bind(this);
   }
 
   handleSubmit(e) {
     this.setState({ fireRedirect: true });
-    /** TODO: Handle submit here
-     *  use "this.state.code" to get the code
-     *
-     */
+  }
+
+  handleQrSubmit(e) {
+    this.setState({ fireQrRedirect: true });
   }
 
   handleChange(e) {
@@ -36,17 +38,21 @@ class JoinSession extends React.Component {
 
   handleQRCode(qrCode) {
     this.setState({
-      code: qrCode
+      qrCode: qrCode
     });
 
-    this.handleSubmit(null);
+    this.handleQrSubmit(null);
   }
 
   render() {
-    const { fireRedirect } = this.state;
+    const { fireRedirect, fireQrRedirect } = this.state;
 
     if (fireRedirect) {
       return <Redirect to={`/session/${this.state.code}`} />;
+    }
+
+    if (fireQrRedirect) {
+      return (window.location = this.state.qrCode);
     }
 
     return (
