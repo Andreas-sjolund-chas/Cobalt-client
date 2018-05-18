@@ -42,12 +42,6 @@ class CreateSession extends React.Component {
   }
 
   handleSubmit(data) {
-    // let newObj = {};
-
-    // for (const [key, value] of data.entries()) {
-    //   newObj[key] = value;
-    // }
-
     const dataObj = {
       name: data.get("name"),
       maxAttendees: data.get("maxAttendees"),
