@@ -13,10 +13,12 @@ import Input from "../../Elements/Input";
 import Overview from "./Workspaces/Overview";
 import Members from "./Workspaces/Members";
 import Presentations from "./Workspaces/Presentations";
+import UpgradePlan from "../UpgradePlan";
 import {
   addNewWorkspaceMember,
   removeMemberFromWorkspace,
-  requestMembers
+  requestMembers,
+  addNewWorkspace
 } from "../../redux/workspace/actions";
 
 const mapDispatchToProps = dispatch => {
@@ -24,7 +26,8 @@ const mapDispatchToProps = dispatch => {
     addNewWorkspaceMember: data => dispatch(addNewWorkspaceMember(data)),
     removeMemberFromWorkspace: data =>
       dispatch(removeMemberFromWorkspace(data)),
-    requestMembers: data => dispatch(requestMembers(data))
+    requestMembers: data => dispatch(requestMembers(data)),
+    addNewWorkspace: data => dispatch(addNewWorkspace(data))
   };
 };
 
@@ -37,7 +40,8 @@ class Workspaces extends Component {
       newWorkspaceModal: false,
       workspaceModal: false,
       currentPage: 0,
-      selectedWorkspaceId: undefined
+      selectedWorkspaceId: undefined,
+      newWorkspaceModalPage: 1
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -46,16 +50,17 @@ class Workspaces extends Component {
     this.handleAddMemberSubmit = this.handleAddMemberSubmit.bind(this);
     this.fetchMembers = this.fetchMembers.bind(this);
     this.handleRemoveMember = this.handleRemoveMember.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleNewWorkspaceClick = this.handleNewWorkspaceClick.bind(this);
   }
 
   fetchMembers(workspaceId) {
     this.props.requestMembers(workspaceId);
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    let formData = new FormData(e.target);
-    let workspaceName = formData.get("workspaceName");
+  handleSubmit(data) {
+    debugger;
+    this.props.addNewWorkspace(data);
   }
 
   handleAddMemberSubmit(data) {
@@ -73,7 +78,8 @@ class Workspaces extends Component {
     e.currentTarget.tagName === "BUTTON"
       ? this.setState({
           modalShowing: true,
-          newWorkspaceModal: true
+          newWorkspaceModal: true,
+          newWorkspaceModalPage: 1
         })
       : this.setState({
           modalShowing: true,
@@ -99,7 +105,20 @@ class Workspaces extends Component {
     });
   }
 
+  handleNewWorkspaceClick(e, num) {
+    this.setState({
+      newWorkspaceModalPage: num
+    });
+  }
+
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
   render() {
+    console.log(this.props);
     return (
       <div {...css(this.styles.workspaces)}>
         {this.state.modalShowing ? (
@@ -129,19 +148,30 @@ class Workspaces extends Component {
               {...css(this.props.styles.closeModal)}
             />
             {this.state.newWorkspaceModal ? (
-              <div>
-                <Heading size="2">Create new workspace</Heading>
-                <form
-                  {...css(this.styles.addWorkspace)}
-                  onSubmit={e => this.handleSubmit(e)}
-                >
-                  <Input
-                    name="workspaceName"
-                    style={{ margin: "20px 0 0 0 " }}
-                    placeholder="Give your new workspace a name..."
+              <div {...css(this.styles.addWorkspace)}>
+                {this.state.newWorkspaceModalPage === 1 ? (
+                  <div>
+                    <Heading size="2">Create new workspace</Heading>
+                    <Input
+                      name="workspaceName"
+                      style={{ margin: "20px 0 0 0 " }}
+                      placeholder="Give your new workspace a name..."
+                      onChange={e => this.handleChange(e)}
+                    />
+                    <Button onClick={e => this.handleNewWorkspaceClick(e, 2)}>
+                      Choose your plan
+                    </Button>
+                  </div>
+                ) : this.state.newWorkspaceModalPage === 2 ? (
+                  <UpgradePlan
+                    workspaceName={this.state.workspaceName}
+                    go={this.handleNewWorkspaceClick}
+                    closeModal={this.closeModal}
+                    createWorkspace={this.handleSubmit}
                   />
-                  <Button>Submit</Button>
-                </form>
+                ) : (
+                  ""
+                )}
               </div>
             ) : (
               <FlexContainer appearance="white" style={{ minWidth: "500px" }}>
@@ -223,7 +253,7 @@ class Workspaces extends Component {
                           this.state.selectedWorkspaceId
                         ]
                       }
-                      owner={this.props.data.name}
+                      user={this.props.data.user._id}
                       workspace={
                         this.props.workspaces.workspaces[
                           this.state.selectedWorkspaceId
