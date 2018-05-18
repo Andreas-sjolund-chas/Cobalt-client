@@ -8,7 +8,10 @@ import {
   REMOVE_MEMBER_START,
   REMOVE_MEMBER_ERROR,
   REMOVE_MEMBER_SUCCESS,
-  ADD_WORKSPACES
+  ADD_WORKSPACES,
+  ADD_WORKSPACE_START,
+  ADD_WORKSPACE_SUCCESS,
+  ADD_WORKSPACE_FAIL
 } from "./constants";
 
 const initialState = {
@@ -26,6 +29,7 @@ const workspaceReducer = (state = initialState, action) => {
     case FETCH_MEMBERS_ERROR:
       return { ...state, isFetching: false };
     case FETCH_MEMBERS_SUCCESS:
+      debugger;
       return {
         ...state,
         isFetching: false,
@@ -66,7 +70,19 @@ const workspaceReducer = (state = initialState, action) => {
           return w;
         })
       };
-
+    case ADD_WORKSPACE_START:
+      return { ...state, isFetching: true };
+    case ADD_WORKSPACE_SUCCESS:
+      return {
+        ...state,
+        workspaces: [...state.workspaces, action.payload.workspace],
+        isFetching: false
+      };
+    case ADD_WORKSPACE_FAIL:
+      return {
+        ...state,
+        isFetching: false
+      };
     default:
       return state;
   }
