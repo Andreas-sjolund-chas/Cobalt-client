@@ -8,10 +8,19 @@ import ListItemWithIcon from "../../../Elements/ListItemWithIcon";
 import ButtonLink from "../../../Elements/ButtonLink";
 
 const Overview = ({ styles, ...props }) => {
+  console.log(props.data._id);
   return (
     <FlexContainer fullWidth="1">
       <div {...css(styles.owner)}>
-        <Paragraph size="sub">Owner: {props.owner}</Paragraph>
+        <Paragraph size="normal">Workspace Name: {props.data.name}</Paragraph>
+        <Paragraph size="sub">
+          Owner:{" "}
+          {props.data.members.map(member => {
+            if (props.data.owner === member._id) {
+              return member.name;
+            }
+          })}
+        </Paragraph>
         <Paragraph size="sub">Plan: {props.data.subscription.type}</Paragraph>
       </div>
       <div {...css(styles.billing)}>
@@ -34,7 +43,7 @@ const Overview = ({ styles, ...props }) => {
           })}
         </List> */}
       </div>
-      <ButtonLink to="/">Upgrade Plan</ButtonLink> {/*Change me later*/}
+      {/*<ButtonLink to="/">Upgrade Plan</ButtonLink> Change me later*/}
     </FlexContainer>
   );
 };
