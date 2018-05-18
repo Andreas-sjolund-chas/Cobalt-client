@@ -29,7 +29,6 @@ const workspaceReducer = (state = initialState, action) => {
     case FETCH_MEMBERS_ERROR:
       return { ...state, isFetching: false };
     case FETCH_MEMBERS_SUCCESS:
-      debugger;
       return {
         ...state,
         isFetching: false,

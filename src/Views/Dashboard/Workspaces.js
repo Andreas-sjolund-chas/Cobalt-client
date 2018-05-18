@@ -59,7 +59,6 @@ class Workspaces extends Component {
   }
 
   handleSubmit(data) {
-    debugger;
     this.props.addNewWorkspace(data);
   }
 
