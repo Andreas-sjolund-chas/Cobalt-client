@@ -65,13 +65,15 @@ class Modal extends React.Component {
               icon="fas fa-times"
               fillColor="white"
               style={{
-                borderRadius: "2px",
-                width: "20px",
-                height: "20px",
+                borderRadius: "4px",
+                width: "25px",
+                height: "25px",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                cursor: "pointer"
+                cursor: "pointer",
+                alignSelf: "flex-end",
+                position: "absolute"
               }}
               {...css(this.props.styles.closeModal)}
             />

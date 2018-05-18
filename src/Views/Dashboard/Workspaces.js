@@ -87,8 +87,8 @@ class Workspaces extends Component {
         });
   };
 
-  closeModal = e => {
-    if (e) {
+  closeModal = (e, shouldClose) => {
+    if (shouldClose) {
       this.setState({
         modalShowing: false,
         newWorkspaceModal: false,
@@ -117,7 +117,6 @@ class Workspaces extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div {...css(this.styles.workspaces)}>
         {this.state.modalShowing ? (
@@ -127,7 +126,7 @@ class Workspaces extends Component {
             appearance="white"
             closeModal={this.closeModal}
           >
-            <Icon
+            {/*<Icon
               icon="fas fa-times"
               fillColor="white"
               onClick={e => this.closeModal(e)}
@@ -145,7 +144,7 @@ class Workspaces extends Component {
                 right: "20px"
               }}
               {...css(this.props.styles.closeModal)}
-            />
+            />*/}
             {this.state.newWorkspaceModal ? (
               <div {...css(this.styles.addWorkspace)}>
                 {this.state.newWorkspaceModalPage === 1 ? (

@@ -92,25 +92,6 @@ class UpgradePlan extends React.Component {
         withAnimation
         appearance="white"
       >
-        <Icon
-          icon="fas fa-times"
-          fillColor="white"
-          onClick={e => this.props.closeModal(e)}
-          style={{
-            borderRadius: "4px",
-            width: "25px",
-            height: "25px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            cursor: "pointer",
-            alignSelf: "flex-end",
-            position: "absolute",
-            top: "20px",
-            right: "20px"
-          }}
-          {...css(this.props.styles.closeModal)}
-        />
         <FlexContainer>
           <Heading size="2">Workspace name: {this.state.workspaceName}</Heading>
           <div {...css(this.styles.upgradePlan)}>
