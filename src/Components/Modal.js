@@ -3,22 +3,37 @@ import { css, withStyles } from "../withStyles";
 
 import FlexContainer from "../Containers/FlexContainer";
 
+const setWrapperRef = node => {
+  this.wrapperRef = node;
+};
+const killModal = e => {
+  if (this.wrapperRef && !this.wrapperRef.contains(e.target)) {
+    return true;
+  }
+  return false;
+};
+
 const Modal = ({
   withOverlay = false,
   withAnimation = false,
+  appearance = "default",
   styles,
+  closeModal,
   ...props
 }) => (
   <div
+    onClick={e => (closeModal ? closeModal(killModal(e)) : "")}
     {...css(withOverlay === true && styles.overlayColor, styles.overlay)}
     {...props}
   >
     <div
+      ref={setWrapperRef}
       {...css(
         withAnimation === true && styles.animation,
         styles.rounded,
         styles.shadow,
-        styles.modal
+        styles.modal,
+        styles[appearance]
       )}
     >
       <FlexContainer>{props.children}</FlexContainer>
@@ -29,10 +44,15 @@ const Modal = ({
 export default withStyles(({ colors, rounded, shadow }) => {
   return {
     modal: {
-      backgroundColor: colors.carbon,
       padding: "40px",
       zIndex: "100",
       position: "relative"
+    },
+    default: {
+      backgroundColor: colors.carbon
+    },
+    white: {
+      backgroundColor: "#FFF"
     },
     overlay: {
       width: "100%",
@@ -44,6 +64,13 @@ export default withStyles(({ colors, rounded, shadow }) => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center"
+    },
+
+    default: {
+      backgroundColor: colors.carbon
+    },
+    white: {
+      backgroundColor: "#FFF"
     },
     overlayColor: {
       backgroundColor: "rgba(0, 0, 0, 0.7)"
