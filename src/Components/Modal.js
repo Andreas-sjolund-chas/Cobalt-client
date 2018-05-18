@@ -2,46 +2,88 @@ import React from "react";
 import { css, withStyles } from "../withStyles";
 
 import FlexContainer from "../Containers/FlexContainer";
+import Icon from "../Elements/Icon";
 
-const setWrapperRef = node => {
-  this.wrapperRef = node;
-};
-const killModal = e => {
-  if (this.wrapperRef && !this.wrapperRef.contains(e.target)) {
-    return true;
+class Modal extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.modalRef = React.createRef();
+
+    this.killModal = this.killModal.bind(this);
+    this.handleIconKillModal = this.handleIconKillModal.bind(this);
   }
-  return false;
-};
 
-const Modal = ({
-  withOverlay = false,
-  withAnimation = false,
-  appearance = "default",
-  styles,
-  closeModal,
-  ...props
-}) => (
-  <div
-    onClick={e => (closeModal ? closeModal(killModal(e)) : "")}
-    {...css(withOverlay === true && styles.overlayColor, styles.overlay)}
-    {...props}
-  >
-    <div
-      ref={setWrapperRef}
-      {...css(
-        withAnimation === true && styles.animation,
-        styles.rounded,
-        styles.shadow,
-        styles.modal,
-        styles[appearance]
-      )}
-    >
-      <FlexContainer>{props.children}</FlexContainer>
-    </div>
-  </div>
-);
+  killModal(e) {
+    this.props.closeModal &&
+      this.props.closeModal(e, e.target.contains(this.modalRef));
+  }
 
-export default withStyles(({ colors, rounded, shadow }) => {
+  handleIconKillModal(e) {
+    e.stopPropagation();
+
+    this.props.closeModal && this.props.closeModal(null, true);
+  }
+
+  render() {
+    const {
+      withOverlay = false,
+      withAnimation = false,
+      appearance = "default",
+      styles,
+      closeModal,
+      ...props
+    } = this.props;
+
+    return (
+      <div
+        onClick={this.killModal}
+        {...css(withOverlay === true && styles.overlayColor, styles.overlay)}
+        {...props}
+      >
+        <div
+          ref={modalRef => (this.modalRef = modalRef)}
+          {...css(
+            withAnimation === true && styles.animation,
+            styles.rounded,
+            styles.shadow,
+            styles.modal,
+            styles[appearance]
+          )}
+        >
+          <FlexContainer
+            align="end"
+            style={{
+              width: "100%",
+              position: "absolute",
+              top: "12px",
+              right: "12px"
+            }}
+          >
+            <Icon
+              onClick={this.handleIconKillModal}
+              icon="fas fa-times"
+              fillColor="white"
+              style={{
+                borderRadius: "2px",
+                width: "20px",
+                height: "20px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                cursor: "pointer"
+              }}
+              {...css(this.props.styles.closeModal)}
+            />
+          </FlexContainer>
+          <FlexContainer>{props.children}</FlexContainer>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default withStyles(({ colors, rounded, shadow, themes }) => {
   return {
     modal: {
       padding: "40px",
@@ -79,6 +121,7 @@ export default withStyles(({ colors, rounded, shadow }) => {
       animation: "fade 0.5s ease"
     },
     rounded: rounded,
-    shadow: shadow
+    shadow: shadow,
+    closeModal: themes.danger
   };
 })(Modal);
