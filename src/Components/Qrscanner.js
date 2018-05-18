@@ -16,16 +16,12 @@ class Qrscanner extends Component {
     this.openImageDialog = this.openImageDialog.bind(this);
   }
   handleScan(result) {
-    alert(result)
     if (result) {
       this.setState({ result });
       this.props.passQRCode(result);
     }
   }
-  handleError(err) {
-    alert(err);
-    console.error(err);
-  }
+  handleError(err) {}
   openImageDialog(event) {
     event.preventDefault();
 
