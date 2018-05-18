@@ -14,9 +14,11 @@ import PricingArea from "../Views/PricingArea";
 import CreateSession from "../Views/CreateSession";
 import SignUp from "../Views/SignUp";
 import Notifications from "../Components/Notifications";
+import Client from "../Views/Client";
+
+/* Actions */
 import { removeOldNotification } from "../redux/notifications/actions";
 import { verifyAuth } from "../redux/auth/actions";
-import Client from "../Views/Client";
 
 /* HOC */
 import withSocket from "../Components/WithSocket";

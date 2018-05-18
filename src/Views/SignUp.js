@@ -12,8 +12,6 @@ let SignUp = ({ styles, dispatch, ...props }) => {
     dispatch(requestSignup(data));
   };
 
-  console.log(props.success);
-
   if (props.success) {
     return <Redirect to="/login" />;
   }

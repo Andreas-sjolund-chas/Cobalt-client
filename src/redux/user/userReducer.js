@@ -14,6 +14,7 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case REQUEST_USER_START:
+      console.log("FETCHING...");
       return { ...state, isFetching: true };
     case REQUEST_USER_SUCCESS:
       return {
