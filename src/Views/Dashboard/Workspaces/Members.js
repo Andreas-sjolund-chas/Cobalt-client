@@ -31,7 +31,50 @@ const Members = ({
 
   return !isFetching && data ? (
     <div {...css(styles.members)}>
-      <List {...css(styles.list)}>
+      <table {...css(styles.table)}>
+        <thead>
+          <td style={{ paddingLeft: "10px" }}>
+            <Paragraph size="normal">Name</Paragraph>
+          </td>
+          <td>
+            <Paragraph size="normal">Email</Paragraph>
+          </td>
+          <td />
+        </thead>
+        <tbody>
+          {data.members.map((member, i) => {
+            return (
+              <tr key={i} {...css(styles.tableRow)}>
+                <td style={{ paddingLeft: "10px" }}>
+                  <Paragraph size="sub">{member.name}</Paragraph>
+                </td>
+                <td>
+                  <Paragraph size="sub">{member.email}</Paragraph>
+                </td>
+                <td>
+                  {data.owner === member._id ? (
+                    <span {...css(styles.owner)}>OWNER</span>
+                  ) : data.owner === user ? (
+                    <Icon
+                      onClick={e =>
+                        handleRemoveMember(member._id, workspace._id)
+                      }
+                      icon="fas fa-times"
+                      fillColor="danger"
+                      size="medium"
+                      style={{ cursor: "pointer" }}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+
+      {/*<List {...css(styles.list)}>
         {data.members.map((member, i) => {
           return (
             <ListItem key={i} {...css(styles.listItem)}>
@@ -60,7 +103,7 @@ const Members = ({
             </ListItem>
           );
         })}
-      </List>
+      </List>*/}
       {data.owner === user ? (
         <AddMember data={data} handleAddMemberSubmit={handleSubmit} />
       ) : (
@@ -97,6 +140,24 @@ export default withStyles(({ themes, colors, rounded }) => {
     loader: {
       marginTop: "100px",
       marginBottom: "100px"
+    },
+    table: {
+      width: "100%",
+      ":nth-child(1n) thead": {
+        borderBottom: "1px solid black",
+        border: "borderCollapse",
+        ":nth-child(1n) td": {
+          paddingBottom: "10px"
+        }
+      }
+    },
+    tableRow: {
+      ":nth-child(1n) td": {
+        padding: "15px 15px 15px 0"
+      },
+      ":nth-child(even)": {
+        backgroundColor: colors.sand
+      }
     }
   };
 })(Members);
