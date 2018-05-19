@@ -3,13 +3,6 @@ import { css, withStyles } from "../withStyles";
 import { Redirect } from "react-router-dom";
 import ContactForm from "../Components/ContactForm";
 
-const handleResponse = response => {
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-  return response.json();
-};
-
 const Contact = ({ styles, ...props }) => {
 
   return (
