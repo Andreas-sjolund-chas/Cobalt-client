@@ -8,9 +8,17 @@ let ProfileView = ({ styles, dispatch, ...props }) => {
   const updateRequest = data => {
     dispatch(requestUserUpdate(data));
   };
+
+  const handleAvatarChange = data => {
+    console.log(data);
+    debugger;
+  };
   return (
     <div {...css(styles.Profile)}>
-      <Profile updateRequest={updateRequest} />
+      <Profile
+        updateRequest={updateRequest}
+        handleAvatarChange={handleAvatarChange}
+      />
     </div>
   );
 };

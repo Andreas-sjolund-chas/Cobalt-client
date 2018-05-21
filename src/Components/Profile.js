@@ -21,8 +21,16 @@ const Profile = ({
   handleBlur,
   isSubmitting,
   updateRequest,
+  handleAvatarChange,
   ...props
 }) => {
+  const handleUploadFile = event => {
+    event.preventDefault();
+    debugger;
+    const data = new FormData(event.target);
+
+    handleAvatarChange(data);
+  };
   return (
     <div {...css(styles, styles.profile)}>
       <FlexContainer
@@ -38,7 +46,7 @@ const Profile = ({
           }}
         >
           <FlexContainer justify="center" style={{ height: "100%" }}>
-            <form onSubmit={handleSubmit}>
+            <form>
               <FlexContainer direction="row" justify="center">
                 <Avatar
                   size="xl"
@@ -48,19 +56,16 @@ const Profile = ({
                 <FlexContainer justify="center">
                   <Input
                     type="file"
-                    name="picture"
-                    value={values.picture}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
+                    name="file"
+                    onChange={handleUploadFile}
                     style={{ width: "200px" }}
                   />
-                  <Button appearance="secondary">Change Picture</Button>
                 </FlexContainer>
               </FlexContainer>
             </form>
           </FlexContainer>
         </Card>
-        <form onSubmit={handleSubmit}>
+        <form>
           <FlexContainer
             style={{
               width: "100%",
@@ -182,8 +187,7 @@ const formikForm = withFormik({
     return {
       name: "",
       email: "",
-      password: "",
-      picture: ""
+      password: ""
     };
   },
   validationSchema: Yup.object().shape({
@@ -210,11 +214,6 @@ const formikForm = withFormik({
     if (values.password == "") {
       delete values.password;
     }
-
-    if (values.picture == "") {
-      delete values.picture;
-    }
-
     props.updateRequest(values);
   }
 })(Profile);
