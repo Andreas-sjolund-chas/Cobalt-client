@@ -21,16 +21,28 @@ const Preferences = ({ styles }) => (
       <FlexContainer
         direction="row"
         justify="between"
-        style={{ width: "450px", marginBottom: "20px" }}
+        style={{ width: "420px", marginBottom: "20px" }}
       >
+        {/** Here is possible feature to implement in the future, setting max attendees  **/
+        /*
         <FlexContainer align="start">
-          <Paragraph size="sub">Max attendees</Paragraph>
+        <Paragraph size="sub">Max attendees</Paragraph>
+        <Input
+        type="number"
+        name="maxAttendees"
+        icon="fas fa-users"
+        iconFillColor="white"
+        iconBackground="primary"
+        />
+        </FlexContainer>
+        */}
+
+        <FlexContainer align="start">
+          <Paragraph size="sub">Lobby message</Paragraph>
           <Input
-            type="number"
-            name="maxAttendees"
-            icon="fas fa-users"
-            iconFillColor="white"
-            iconBackground="primary"
+            name="message"
+            placeholder="Ex. Welcome to my lecture!"
+            style={{ marginLeft: "0px", marginTop: "0px", width: "200px" }}
           />
         </FlexContainer>
 
@@ -53,43 +65,44 @@ const Preferences = ({ styles }) => (
       >
         <FlexContainer justify="around" align="start">
           <Paragraph size="sub">Engagement descriptions</Paragraph>
-          <Input
-            name="descriptionPositive"
-            placeholder="Are you able to follow..?"
-            style={{ marginLeft: "0px", marginTop: "0px", width: "200px" }}
-          />
-          <Input
-            name="descriptionNegative"
-            placeholder="Are you not able to follow..?"
-            style={{ marginLeft: "0px", marginTop: "5px", width: "200px" }}
-          />
-        </FlexContainer>
-
-        <FlexContainer align="start">
-          <Paragraph size="sub">Lobby message</Paragraph>
-          <Input
-            name="message"
-            placeholder="Ex. Welcome to my lecture!"
-            style={{ marginLeft: "0px", marginTop: "0px", width: "200px" }}
-          />
+          <FlexContainer
+            direction="row"
+            justify="between"
+            style={{ width: "450px", marginBottom: "20px" }}
+          >
+            <Input
+              name="descriptionPositive"
+              placeholder="Are you able to follow..?"
+              style={{ marginLeft: "0px", marginTop: "0px", width: "200px" }}
+            />
+            <Input
+              name="descriptionNegative"
+              placeholder="Are you not able to follow..?"
+              style={{ marginLeft: "0px", marginTop: "0px", width: "200px" }}
+            />
+          </FlexContainer>
         </FlexContainer>
       </FlexContainer>
 
-      <FlexContainer
+      {/** Here is possible feature to implement in the future,
+       allowing comments and setting avarage as percentage **/
+      /*
+        <FlexContainer
         direction="row"
         justify="between"
         style={{ marginBottom: "20px", width: "450px", paddingRight: "18px" }}
-      >
+        >
         <FlexContainer direction="row">
-          <Checkbox name="comments" />
-          <Paragraph size="sub">Allow comments</Paragraph>
+        <Checkbox name="comments" />
+        <Paragraph size="sub">Allow comments</Paragraph>
         </FlexContainer>
-
+        
         <FlexContainer direction="row">
-          <Checkbox name="isAverage" />
-          <Paragraph size="sub">Show average as percentage</Paragraph>
+        <Checkbox name="isAverage" />
+        <Paragraph size="sub">Show average as percentage</Paragraph>
         </FlexContainer>
-      </FlexContainer>
+        </FlexContainer>
+      */}
     </FlexContainer>
   </div>
 );
