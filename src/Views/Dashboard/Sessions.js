@@ -12,6 +12,7 @@ import SessionItem from "../../Components/SessionItem";
 import openBoxIcon from "../../assets/open-box.svg";
 
 import { requestDeleteSession } from "../../redux/session/actions";
+import { requestUser } from "../../redux/user/actions";
 
 class Sessions extends React.Component {
   constructor({ styles, ...props }) {
@@ -34,6 +35,8 @@ class Sessions extends React.Component {
 
   handleDelete() {
     this.props.dispatch(requestDeleteSession(this.state.session._id));
+    this.props.dispatch(requestUser());
+    this.setState({ showModal: false });
   }
 
   renderSessions(data, completed) {
