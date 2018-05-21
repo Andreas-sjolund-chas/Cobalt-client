@@ -174,20 +174,7 @@ export default withStyles(({ themes, text, colors, shadow }) => {
         alignItems: "center",
         padding: "10px",
         transition: "color 0.3s ease",
-        position: "relative",
-        ":hover": {
-          color: "#FFF",
-          cursor: "pointer"
-        },
-        ":hover::before": {
-          content: '""',
-          width: "6px",
-          height: "100%",
-          backgroundColor: colors.danger,
-          left: "0",
-          top: "0",
-          position: "absolute"
-        }
+        position: "relative"
       },
       ":nth-child(1n) li span": {
         padding: "6px 12px !important"
