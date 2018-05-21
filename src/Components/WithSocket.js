@@ -157,7 +157,10 @@ const withSocket = WrappedComponent => {
       this.socket.emit("presenterRequestsSave", {
         sessionId: this.state.data.sessionId,
         timeStamp: time,
-        value: this.state.data.engagement
+        likes: this.state.likes.length,
+        attendees: this.state.data.attendees,
+        value: this.state.data.engagement,
+        impressions: this.state.data.impressions
       });
     }
 
