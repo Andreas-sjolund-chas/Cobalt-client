@@ -2,6 +2,8 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { css, withStyles } from "../withStyles";
 
+import { handleResponse } from "../redux/utils/utils";
+
 import Button from "../Elements/Button";
 import Heading from "../Elements/Heading";
 import Paragraph from "../Elements/Paragraph";
@@ -27,7 +29,9 @@ const withSocket = WrappedComponent => {
         windowSize: {
           width: window.innerWidth,
           height: window.innerHeight
-        }
+        },
+        isLoading: true,
+        doesNotExist: undefined
       };
 
       const {
@@ -45,6 +49,29 @@ const withSocket = WrappedComponent => {
     }
 
     componentWillMount() {
+      fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/api/session/${this.sessionId}`
+      )
+        .then(handleResponse)
+        .then(res => {
+          this.setState({
+            data: {
+              status: {
+                ...this.state.data.status,
+                hasEnded: res.presentation.hasEnded
+              }
+            },
+            doesNotExist: false,
+            isLoading: false
+          });
+        })
+        .catch(err => {
+          this.setState({
+            doesNotExist: true,
+            isLoading: false
+          });
+        });
+
       this.updateWindowSize();
       this.updateWindowSize = this.updateWindowSize.bind(this);
     }
@@ -110,9 +137,14 @@ const withSocket = WrappedComponent => {
     };
 
     render() {
-      if (this.state.fireRedirect) {
+      if (this.state.isLoading) {
+        return <Loader />;
+      }
+
+      if (this.state.fireRedirect || this.state.doesNotExist) {
         return <Redirect to={"/"} />;
       }
+
       return (
         <WrappedComponent
           handleVote={this.handleVote}
