@@ -9,41 +9,63 @@ import ButtonLink from "../../Elements/ButtonLink";
 import Card from "../../Elements/Card";
 import CopyTextfield from "../../Elements/CopyTextfield";
 
-const data = require("../../stories/Components/data.json");
+// const data = require("../../stories/Components/data.json");
 
-const EndSession = ({ styles, ...props }) => {
-  const fetchData = () => {
-    fetch(process.env.REACT_APP_API_BASE_URL + "/api/session/" + "HJqkV050f", {
+class Summary extends React.Component {
+  constructor({ styles, ...props }) {
+    super(props);
+    this.state = {
+      received: false,
+      data: null
+    };
+    this.fetchData = this.fetchData.bind(this);
+  }
+
+  componentWillMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
+    fetch(process.env.REACT_APP_API_BASE_URL + "/api/session/" + "ry5nomgy7", {
       method: "GET",
       credentials: "include"
     })
       .then(res => res.json())
-      .then(res => console.log(res));
-  };
+      .then(res => {
+        console.log(res.presentation.data);
+        this.setState({
+          received: true,
+          data: res.presentation.data
+        });
+      });
+  }
 
-  fetchData();
+  render() {
+    if (!this.state.received) {
+      return "Fetching..";
+    }
+    return (
+      <div {...css(this.props.styles.summary)}>
+        <FlexContainer flex="1" align="center" justify="center">
+          <Heading size="1">Nice job!</Heading>
+          <Heading size="2">Here's some statistics about your session!</Heading>
 
-  return (
-    <div {...css(styles.summary)}>
-      <FlexContainer flex="1" align="center" justify="center">
-        <Heading size="1">Nice job!</Heading>
-        <Heading size="2">Here's some statistics about your session!</Heading>
-
-        <Card appearance="white" style={{ maxWidth: "960px", margin: "20px" }}>
-          <SessionGraph data={data} isAverage threshold="30" />
-        </Card>
-        <Card appearance="white" style={{ maxWidth: "960px", margin: "20px" }}>
-          <SessionGraph data={data} threshold="30" />
-        </Card>
-        <FlexContainer direction="row">
-          <ButtonLink to="/dashboard" appearance="danger">
-            Return to dashboard
-          </ButtonLink>
+          <Card
+            appearance="white"
+            style={{ maxWidth: "960px", margin: "20px" }}
+          >
+            <SessionGraph data={this.state.data} isAverage threshold="30" />
+          </Card>
+          <FlexContainer direction="row">
+            <ButtonLink to="/dashboard" appearance="danger">
+              Return to dashboard
+            </ButtonLink>
+          </FlexContainer>
         </FlexContainer>
-      </FlexContainer>
-    </div>
-  );
-};
+      </div>
+    );
+  }
+}
 
 export default withStyles(({ colors }) => {
   return {
@@ -61,4 +83,4 @@ export default withStyles(({ colors }) => {
       marginBottom: "48px"
     }
   };
-})(EndSession);
+})(Summary);
