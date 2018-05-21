@@ -135,6 +135,20 @@ const Client = ({
   styles,
   ...props
 }) => {
+  if (data.status.hasEnded) {
+    return (
+      <div {...css(styles.message)}>
+        <FlexContainer flex="1" align="center" justify="center">
+          <Heading size="2">The session has ended</Heading>
+          <Paragraph>Thank you for participating</Paragraph>
+          <Button onClick={handleClick} appearance="secondary">
+            LEAVE SESSION
+          </Button>
+        </FlexContainer>
+      </div>
+    );
+  }
+
   if (!data.status.hasStarted) {
     return (
       <div {...css(styles.message)}>
@@ -158,20 +172,6 @@ const Client = ({
             This session is currently paused
           </Heading>
           <Paragraph>Wait for the host to resume the session</Paragraph>
-        </FlexContainer>
-      </div>
-    );
-  }
-
-  if (data.status.hasEnded) {
-    return (
-      <div {...css(styles.message)}>
-        <FlexContainer flex="1" align="center" justify="center">
-          <Heading size="2">The session has ended</Heading>
-          <Paragraph>Thank you for participating</Paragraph>
-          <Button onClick={handleClick} appearance="secondary">
-            LEAVE SESSION
-          </Button>
         </FlexContainer>
       </div>
     );
