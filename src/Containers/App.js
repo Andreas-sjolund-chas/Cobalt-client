@@ -1,6 +1,11 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+
+import _debounce from "lodash.debounce";
+
+import { MobileContext } from "./MobileContext";
+
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 
@@ -52,85 +57,106 @@ class App extends React.Component {
     super(props);
 
     this.removeNotifications = this.removeNotifications.bind(this);
+    this.updateMobile = _debounce(this.updateMobile, 200).bind(this);
+
+    this.state = {
+      isMobile: this.updateMobile()
+    };
   }
 
   componentWillMount() {
     this.props.verifyAuth();
   }
 
+  componentDidMount() {
+    window.addEventListener("resize", this.updateMobile);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateMobile);
+  }
+
   removeNotifications(id) {
     this.props.removeOldNotification(id);
+  }
+
+  updateMobile() {
+    const isMobile = window.innerWidth < 480;
+
+    if (this.state.isMobile !== isMobile) {
+      this.setState({ isMobile });
+    }
   }
 
   render() {
     const { isAuthenticated } = this.props;
 
-    console.log(isAuthenticated);
-
     return (
-      <div className="App">
-        <Notifications
-          notifications={this.props.notifications}
-          removeNotifications={this.removeNotifications}
-        />
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={routeProps => (
-              <LandingPageWithPublic
-                {...routeProps}
-                authenticated={isAuthenticated}
-              />
-            )}
+      <MobileContext.Provider value={this.state}>
+        <div className="App">
+          <Notifications
+            notifications={this.props.notifications}
+            removeNotifications={this.removeNotifications}
           />
-          <Route
-            exact
-            path="/login"
-            render={routeProps => (
-              <LoginWithPublic
-                {...routeProps}
-                authenticated={isAuthenticated}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/signup"
-            render={routeProps => (
-              <SignUpWithPublic
-                {...routeProps}
-                authenticated={isAuthenticated}
-              />
-            )}
-          />
-          <Route path="/session/:sessionId" component={Client} />
-          <PrivateRoute
-            authenticated={isAuthenticated}
-            path="/host/:sessionId"
-            component={LiveSessionHostWithSocket}
-          />
-          <PrivateRoute
-            authenticated={isAuthenticated}
-            path="/dashboard"
-            component={Dashboard}
-          />
-          <Route
-            path="/pricing"
-            render={routeProps => (
-              <PricingAreaWithPublic
-                {...routeProps}
-                authenticated={isAuthenticated}
-              />
-            )}
-          />
-          <Route path="/qr/:sessionId" component={QrCodeWindow} />
-          <Route path="/lobby" component={this.Lobby} />
-          <Route path="/dashboard" component={this.Dashboard} />
-          <Route path="/scanner" component={Qrscanner} />
-          <Route path="*" component={NotFound} />
-        </Switch>
-      </div>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={routeProps => (
+                <LandingPageWithPublic
+                  {...routeProps}
+                  authenticated={isAuthenticated}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/login"
+              render={routeProps => (
+                <LoginWithPublic
+                  {...routeProps}
+                  authenticated={isAuthenticated}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/signup"
+              render={routeProps => (
+                <SignUpWithPublic
+                  {...routeProps}
+                  authenticated={isAuthenticated}
+                />
+              )}
+            />
+            <Route path="/session/:sessionId" component={Client} />
+            <PrivateRoute
+              authenticated={isAuthenticated}
+              path="/host/:sessionId"
+              component={LiveSessionHostWithSocket}
+            />
+            <PrivateRoute
+              authenticated={isAuthenticated}
+              path="/dashboard"
+              component={Dashboard}
+            />
+            <Route
+              path="/pricing"
+              render={routeProps => (
+                <PricingAreaWithPublic
+                  {...routeProps}
+                  authenticated={isAuthenticated}
+                />
+              )}
+            />
+            <Route path="/qr/:sessionId" component={QrCodeWindow} />
+            <Route path="/lobby" component={this.Lobby} />
+            <Route path="/dashboard" component={this.Dashboard} />
+            <Route path="/scanner" component={Qrscanner} />
+            <Route path="*" component={NotFound} />
+          </Switch>
+        </div>
+      </MobileContext.Provider>
     );
   }
 }
