@@ -88,9 +88,11 @@ class Modal extends React.Component {
 export default withStyles(({ colors, rounded, shadow, themes }) => {
   return {
     modal: {
+      margin: "25px",
       padding: "40px",
       zIndex: "100",
-      position: "relative"
+      position: "relative",
+      maxWidth: "100%"
     },
     default: {
       backgroundColor: colors.carbon
