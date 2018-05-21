@@ -134,7 +134,7 @@ class Dashboard extends React.Component {
             <Route
               exact
               path={`${this.props.match.url}/profile`}
-              component={Profile}
+              render={() => <Profile user={user} />}
             />
             <Route
               exact

@@ -22,14 +22,13 @@ const Profile = ({
   isSubmitting,
   updateRequest,
   handleAvatarChange,
+  user,
   ...props
 }) => {
   const handleUploadFile = event => {
     event.preventDefault();
-    debugger;
-    const data = new FormData(event.target);
-
-    handleAvatarChange(data);
+    const file = event.target.files[0];
+    handleAvatarChange(file);
   };
   return (
     <div {...css(styles, styles.profile)}>
@@ -50,7 +49,7 @@ const Profile = ({
               <FlexContainer direction="row" justify="center">
                 <Avatar
                   size="xl"
-                  image="https://avatars1.githubusercontent.com/u/24225542?s=460&v=4"
+                  image={user.user.avatar}
                   style={{ margin: "24px" }}
                 />
                 <FlexContainer justify="center">
@@ -65,7 +64,7 @@ const Profile = ({
             </form>
           </FlexContainer>
         </Card>
-        <form>
+        <form onSubmit={handleSubmit}>
           <FlexContainer
             style={{
               width: "100%",
@@ -97,7 +96,7 @@ const Profile = ({
                     value={values.name}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    placeholder="ManChildMan"
+                    placeholder={user.user.name}
                   />
                 </FlexContainer>
                 <FlexContainer
@@ -122,7 +121,7 @@ const Profile = ({
                     value={values.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    placeholder="Man@child.com"
+                    placeholder={user.user.email}
                   />
                 </FlexContainer>
                 <FlexContainer

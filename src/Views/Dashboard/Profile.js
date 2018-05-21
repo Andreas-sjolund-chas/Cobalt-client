@@ -3,6 +3,7 @@ import { css, withStyles } from "../../withStyles";
 import Profile from "../../Components/Profile";
 import { connect } from "react-redux";
 import { requestUserUpdate } from "../../redux/user/actions";
+import { requestAvatarUpdate } from "../../redux/user/actions";
 
 let ProfileView = ({ styles, dispatch, ...props }) => {
   const updateRequest = data => {
@@ -10,12 +11,12 @@ let ProfileView = ({ styles, dispatch, ...props }) => {
   };
 
   const handleAvatarChange = data => {
-    console.log(data);
-    debugger;
+    dispatch(requestAvatarUpdate(data));
   };
   return (
     <div {...css(styles.Profile)}>
       <Profile
+        user={props.user}
         updateRequest={updateRequest}
         handleAvatarChange={handleAvatarChange}
       />

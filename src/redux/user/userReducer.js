@@ -1,7 +1,10 @@
 import {
   REQUEST_USER_START,
   REQUEST_USER_SUCCESS,
-  REQUEST_USER_FAIL
+  REQUEST_USER_FAIL,
+  REQUEST_AVATAR_UPDATE_START,
+  REQUEST_AVATAR_UPDATE_SUCCESS,
+  REQUEST_AVATAR_UPDATE_FAIL
 } from "./constants";
 
 const initialState = {
@@ -32,6 +35,26 @@ const userReducer = (state = initialState, action) => {
         isFetching: false,
         message: action.payload.message
       };
+    case REQUEST_AVATAR_UPDATE_START:
+      return { ...state, isFetching: true };
+    case REQUEST_AVATAR_UPDATE_SUCCESS:
+      debugger;
+      return {
+        ...state,
+        user: action.payload.user,
+        isAuthenticated: true,
+        isFetching: false,
+        message: action.payload.message
+      };
+    case REQUEST_AVATAR_UPDATE_FAIL:
+      return {
+        ...state,
+        user: {},
+        isAuthenticated: false,
+        isFetching: false,
+        message: action.payload.message
+      };
+
     default:
       return state;
   }
