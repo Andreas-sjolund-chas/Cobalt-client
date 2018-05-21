@@ -83,9 +83,7 @@ export const requestDeleteSession = id => dispatch => {
     credentials: "include"
   })
     .then(handleResponse)
-    .then(data => {
-      dispatch(requestDeleteSessionSuccess(data));
-    })
+    .then(data => dispatch(requestDeleteSessionSuccess(data)))
     .catch(err => dispatch(requestDeleteSessionFail(err)));
 };
 
