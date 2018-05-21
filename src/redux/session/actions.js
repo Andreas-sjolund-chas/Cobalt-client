@@ -8,6 +8,8 @@ import {
   SESSION_CREATED
 } from "./constants";
 
+import { requestUser } from "../user/actions";
+
 export const requestSessionStart = () => ({ type: REQUEST_SESSION_START });
 export const requestSessionSuccess = data => ({
   type: REQUEST_SESSION_SUCCESS,
@@ -67,6 +69,7 @@ export const requestNewSession = data => dispatch => {
   })
     .then(handleResponse)
     .then(data => dispatch(requestSessionSuccess(data)))
+    .then(() => dispatch(requestUser()))
     .catch(err => dispatch(requestSessionFail(err)));
 };
 
@@ -80,7 +83,9 @@ export const requestDeleteSession = id => dispatch => {
     credentials: "include"
   })
     .then(handleResponse)
-    .then(data => dispatch(requestDeleteSessionSuccess(data)))
+    .then(data => {
+      dispatch(requestDeleteSessionSuccess(data));
+    })
     .catch(err => dispatch(requestDeleteSessionFail(err)));
 };
 

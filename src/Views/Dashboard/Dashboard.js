@@ -56,6 +56,7 @@ class Dashboard extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     const { styles, auth, user } = this.props;
     let path = this.props.location.pathname.slice(11);
     return (
