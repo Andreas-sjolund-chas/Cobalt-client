@@ -100,8 +100,11 @@ class App extends React.Component {
             )}
           />
           <Route path="/session/:sessionId" component={Client} />
-          <Route path="/summary" component={Summary} />
-
+          <PrivateRoute
+            authenticated={isAuthenticated}
+            path="/summary/:sessionId"
+            component={Summary}
+          />
           <PrivateRoute
             authenticated={isAuthenticated}
             path="/host/:sessionId"
