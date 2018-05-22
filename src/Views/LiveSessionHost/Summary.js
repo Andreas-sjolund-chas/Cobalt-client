@@ -1,6 +1,7 @@
 import React from "react";
 import { css, withStyles } from "../../withStyles";
 
+import { connect } from "react-redux";
 import CountUp from "react-countup";
 import moment from "moment";
 
@@ -11,46 +12,39 @@ import Button from "../../Elements/Button";
 import SessionGraph from "../../Components/SessionGraph";
 import ButtonLink from "../../Elements/ButtonLink";
 import Card from "../../Elements/Card";
+import Loader from "../../Elements/Loader";
 import CopyTextfield from "../../Elements/CopyTextfield";
+
+import { requestSessionData } from "../../redux/session/actions";
 
 class Summary extends React.Component {
   constructor({ styles, ...props }) {
     super(props);
-    this.state = {
-      received: false,
-      data: null
-    };
-    this.fetchData = this.fetchData.bind(this);
+
+    const {
+      match: {
+        params: { sessionId }
+      }
+    } = this.props;
+
+    this.sessionId = sessionId;
   }
 
   componentWillMount() {
-    this.fetchData();
-  }
-
-  fetchData() {
-    fetch(process.env.REACT_APP_API_BASE_URL + "/api/session/" + "rkVuo8g1m", {
-      method: "GET",
-      credentials: "include"
-    })
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          received: true,
-          data: res.presentation.data,
-          title: res.presentation.name,
-          duration: moment.duration(res.presentation.duration, "seconds")
-        });
-      });
+    this.props.dispatch(requestSessionData(this.sessionId));
   }
 
   render() {
-    if (!this.state.received) {
-      return "Fetching..";
+    const { isFetching, session } = this.props.session;
+
+    if (session.data.length <= 0 || isFetching) {
+      return <Loader />;
     }
 
     console.log(this.props);
 
-    let totals = this.state.data[this.state.data.length - 1];
+    let duration = moment.duration(session.duration, "seconds");
+    let totals = session.data[session.data.length - 1];
 
     return (
       <div {...css(this.props.styles.summary)}>
@@ -61,18 +55,16 @@ class Summary extends React.Component {
           style={{ maxWidth: "960px" }}
         >
           <header {...css(this.props.styles.hero)}>
-            <Heading size="1" appearance="white">
-              {this.state.title}
+            <Heading size="1" appearance="dawn">
+              {session.name}
             </Heading>
           </header>
           <section {...css(this.props.styles.statContainer)}>
-            <Heading size="5" appearance="white">
+            <Heading size="5" appearance="dawn">
               Session duration:
             </Heading>
-            <Heading size="2" appearance="white">
-              {moment
-                .utc(this.state.duration.asMilliseconds())
-                .format("HH:mm:ss")}
+            <Heading size="2" appearance="dawn">
+              {moment.utc(duration.asMilliseconds()).format("HH:mm:ss")}
             </Heading>
           </section>
           <FlexContainer
@@ -85,30 +77,30 @@ class Summary extends React.Component {
             <section {...css(this.props.styles.statContainer)}>
               <span {...css(this.props.styles.stats)}>
                 <CountUp start={0} end={totals.likes} />
-                <Paragraph appearance="white"> likes </Paragraph>
+                <Paragraph appearance="dawn"> likes </Paragraph>
               </span>
             </section>
             <section {...css(this.props.styles.statContainer)}>
               <span {...css(this.props.styles.stats)}>
                 <CountUp start={0} end={totals.attendees} />
-                <Paragraph appearance="white"> Attendees </Paragraph>
+                <Paragraph appearance="dawn"> Attendees </Paragraph>
               </span>
             </section>
             <section {...css(this.props.styles.statContainer)}>
               <span {...css(this.props.styles.stats)}>
                 <CountUp start={0} end={totals.impressions} />
-                <Paragraph appearance="white"> Impressions </Paragraph>
+                <Paragraph appearance="dawn"> Impressions </Paragraph>
               </span>
             </section>
           </FlexContainer>
-          <Heading size="4" appearance="white">
+          <Heading size="4" appearance="dawn">
             Average engagement over time
           </Heading>
           <Card appearance="white">
-            <SessionGraph data={this.state.data} isAverage threshold="30" />
+            <SessionGraph data={session.data} isAverage threshold="30" />
           </Card>
           <FlexContainer direction="row" align="center" justify="center">
-            <ButtonLink to="/dashboard" appearance="danger">
+            <ButtonLink to="/dashboard" appearance="secondary">
               Return to dashboard
             </ButtonLink>
           </FlexContainer>
@@ -118,6 +110,16 @@ class Summary extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+    session: state.session,
+    user: state.user
+  };
+};
+
+Summary = connect(mapStateToProps)(Summary);
+
 export default withStyles(({ colors }) => {
   return {
     summary: {
@@ -125,12 +127,12 @@ export default withStyles(({ colors }) => {
       flexDirection: "column",
       justifyContent: "start",
       alignItems: "center",
-      backgroundColor: colors.carbon,
+      backgroundColor: colors.sand,
       minHeight: "100vh",
       animation: "fade 0.5s ease"
     },
     hero: {
-      padding: "45px 0px",
+      padding: "20px 0px",
       textAlign: "center"
     },
     statContainer: {
@@ -141,7 +143,7 @@ export default withStyles(({ colors }) => {
     stats: {
       fontSize: "98px",
       fontWeight: "600",
-      color: "white"
+      color: "dawn"
     },
     icon: {
       width: "128px",
