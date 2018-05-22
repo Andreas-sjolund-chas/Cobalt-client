@@ -43,13 +43,10 @@ class CreateSession extends React.Component {
   }
 
   componentWillMount() {
-    this.setState(
-      {
-        ...this.state,
-        workspaces: this.props.workspaces
-      },
-      () => console.log(this.state)
-    );
+    this.setState({
+      ...this.state,
+      workspaces: this.props.workspaces
+    });
   }
 
   handleSubmit(data) {
