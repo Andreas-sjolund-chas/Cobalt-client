@@ -85,8 +85,8 @@ class Dashboard extends React.Component {
                 <Heading size="2" style={{ margin: "0" }}>
                   {path == "profile"
                     ? "Profile"
-                    : path == "upgrade"
-                      ? "Upgrade Plan"
+                    : path == "workspaces"
+                      ? "Workspaces"
                       : path == "settings"
                         ? "Settings"
                         : "Sessions"}
@@ -97,20 +97,10 @@ class Dashboard extends React.Component {
             </FlexContainer>
             <FlexContainer direction="row" align="center" justify="end">
               <ButtonLink
-                to={`${this.props.match.url}/workspaces`}
-                appearance="primary"
-              >
-                My Workspaces
-              </ButtonLink>
-              <ButtonLink
                 to={`${this.props.match.url}/new`}
                 appearance="secondary"
               >
-                {this.state.width <= 768 ? (
-                  <Icon icon="fas fa-tag" fillColor="white" size="medium" />
-                ) : (
-                  "New Session"
-                )}
+                New Session
               </ButtonLink>
               <Avatar
                 size="medium"

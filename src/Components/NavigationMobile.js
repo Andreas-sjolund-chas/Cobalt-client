@@ -68,10 +68,10 @@ const NavigationMobile = ({ styles, colors, match, ...props }) => {
             onClick={props.toggleNavigation}
             activeStyle={activeLink}
             exact
-            to={`${match.url}/upgrade`}
+            to={`${match.url}/workspaces`}
           >
             <li>
-              <Icon fillColor="dawn" icon="fas fa-tag" />Upgrade plan
+              <Icon fillColor="dawn" icon="fas fa-briefcase" />Workspaces
             </li>
           </NavLink>
           <NavLink
