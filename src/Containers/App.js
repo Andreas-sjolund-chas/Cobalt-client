@@ -17,6 +17,7 @@ import Notifications from "../Components/Notifications";
 import Client from "../Views/Client";
 import Qrscanner from "../Components/Qrscanner";
 import QrCodeWindow from "../Components/QrCodeWindow";
+import Contact from "../Views/Contact";
 import DevelopersPage from "../Views/DevelopersPage";
 import AboutPage from "../Views/AboutPage";
 
@@ -54,6 +55,8 @@ const AboutPageWithPublic = withPublicRoot(AboutPage);
 class App extends React.Component {
   constructor(props) {
     super(props);
+
+    this.Contact = withPublicRoot(Contact);
     this.removeNotifications = this.removeNotifications.bind(this);
   }
 
@@ -107,6 +110,9 @@ class App extends React.Component {
               />
             )}
           />
+
+          <Route exact path="/contact" component={this.Contact} />
+
           <Route path="/session/:sessionId" component={Client} />
           <PrivateRoute
             authenticated={isAuthenticated}
