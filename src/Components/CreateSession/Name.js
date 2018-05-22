@@ -8,7 +8,7 @@ import Input from "../../Elements/Input";
 
 const Name = ({ workspace, styles, ...props }) => {
   let workspaceList = workspace.map(function(work) {
-    return <option value={work}>{work}</option>;
+    return <option value={work._id}>{work.name}</option>;
   });
   return (
     <FlexContainer align="start">
