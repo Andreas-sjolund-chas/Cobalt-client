@@ -85,8 +85,8 @@ class Dashboard extends React.Component {
                 <Heading size="2" style={{ margin: "0" }}>
                   {path == "profile"
                     ? "Profile"
-                    : path == "upgrade"
-                      ? "Upgrade Plan"
+                    : path == "workspaces"
+                      ? "Workspaces"
                       : path == "settings"
                         ? "Settings"
                         : "Sessions"}
