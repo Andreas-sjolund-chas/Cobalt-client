@@ -1,5 +1,4 @@
 import React from "react";
-import { css, withStyles } from "../withStyles";
 
 import { withFormik } from "formik";
 import Yup from "yup";
@@ -14,7 +13,6 @@ class AddMember extends React.Component {
   constructor(
     handleChange,
     handleSubmit,
-    handleAddMemberSubmit,
     values,
     errors,
     touched,
@@ -27,10 +25,8 @@ class AddMember extends React.Component {
 
   render() {
     const {
-      data,
       handleChange,
       handleSubmit,
-      handleAddMemberSubmit,
       values,
       errors,
       touched,

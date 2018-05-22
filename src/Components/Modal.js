@@ -92,12 +92,6 @@ export default withStyles(({ colors, rounded, shadow, themes }) => {
       zIndex: "100",
       position: "relative"
     },
-    default: {
-      backgroundColor: colors.carbon
-    },
-    white: {
-      backgroundColor: "#FFF"
-    },
     overlay: {
       width: "100%",
       height: "100%",

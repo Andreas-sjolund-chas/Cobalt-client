@@ -5,7 +5,6 @@ import { Redirect } from "react-router-dom";
 import FlexContainer from "../Containers/FlexContainer";
 import Modal from "./Modal";
 import Button from "../Elements/Button";
-import Icon from "../Elements/Icon";
 import Loader from "../Elements/Loader";
 
 class Wizard extends React.Component {

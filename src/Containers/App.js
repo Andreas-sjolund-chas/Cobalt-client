@@ -1,18 +1,15 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
 
 import NotFound from "../Views/NotFound";
-import SocketClient from "../Views/Client";
+
 import LiveSessionHost from "../Views/LiveSessionHost/LiveSessionHost";
 import Summary from "../Views/LiveSessionHost/Summary";
 import Dashboard from "../Views/Dashboard/Dashboard";
 import Login from "../Views/Login";
 import LandingPage from "../Views/LandingPage";
 import PricingArea from "../Views/PricingArea";
-import CreateSession from "../Views/CreateSession";
 import SignUp from "../Views/SignUp";
 import Notifications from "../Components/Notifications";
 import Client from "../Views/Client";
@@ -28,7 +25,6 @@ import { verifyAuth } from "../redux/auth/actions";
 
 /* HOC */
 import withSocket from "../Components/WithSocket";
-import requireAuth from "../Components/RequireAuth";
 import withPublicRoot from "../Containers/PublicRoot";
 import PrivateRoute from "../Components/PrivateRoute";
 

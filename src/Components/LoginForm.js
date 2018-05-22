@@ -188,17 +188,8 @@ const formikForm = withFormik({
       .required("Password is required")
   }),
   handleSubmit(values, { props, resetForm, setErrors, setSubmitting }) {
-    //TODO: send a request to db and check if the email and password is correct
+    //Send a request to db and check if the email and password is correct
     props.loginRequest(values);
-    // setTimeout(() => {
-    //   if (values.email === "test@test.com") {
-    //     setErrors({ email: "That email is invalid" });
-    //   } else {
-    //     console.log(values);
-    //     resetForm();
-    //   }
-    //   setSubmitting(false);
-    // }, 2000);
   }
 })(LoginForm);
 

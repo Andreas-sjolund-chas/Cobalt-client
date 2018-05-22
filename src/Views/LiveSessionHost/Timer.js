@@ -13,7 +13,7 @@ class Timer extends React.Component {
   }
 
   componentDidMount() {
-    let timerId = setInterval(this.displayTime, 1000);
+    this.timerId = setInterval(this.displayTime, 1000);
   }
 
   displayTime() {
@@ -38,6 +38,9 @@ class Timer extends React.Component {
   }
 
   render() {
+    if (this.props.data.status.hasEnded) {
+      clearInterval(this.timerId);
+    }
     return (
       <div {...css(this.styles.timer)}>
         <span>{this.state.time}</span>

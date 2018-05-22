@@ -22,7 +22,7 @@ class Balloon extends React.Component {
         {...css(styles.balloon)}
         style={pos}
       >
-        <img src={balloon} width="92px" />
+        <img src={balloon} alt="heart-balloon" width="92px" />
       </span>
     );
   }

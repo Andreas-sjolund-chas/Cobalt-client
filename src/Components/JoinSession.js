@@ -11,7 +11,7 @@ import Qrscanner from "../Components/Qrscanner";
 
 class JoinSession extends React.Component {
   constructor({ styles, ...props }) {
-    super(props);
+    super(...props);
     this.state = {
       code: "",
       fireRedirect: false,
@@ -108,7 +108,11 @@ class JoinSession extends React.Component {
             >
               JOIN
             </Button>
-            <Qrscanner passQRCode={this.handleQRCode} />
+            <Media query={{ maxWidth: 1024 }}>
+              {matches =>
+                matches ? <Qrscanner passQRCode={this.handleQRCode} /> : ""
+              }
+            </Media>
           </FlexContainer>
         </form>
       </FlexContainer>

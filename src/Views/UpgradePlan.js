@@ -8,7 +8,6 @@ import FlexContainer from "../Containers/FlexContainer";
 import ListItemWithIcon from "../Elements/ListItemWithIcon";
 import Button from "../Elements/Button";
 import Modal from "../Components/Modal";
-import Icon from "../Elements/Icon";
 
 const mockCards = [
   {

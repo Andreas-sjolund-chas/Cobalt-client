@@ -4,7 +4,6 @@ import { CSSTransitionGroup } from "react-transition-group";
 import Media from "react-media";
 
 import Notification from "../Elements/Notification";
-import FlexContainer from "../Containers/FlexContainer";
 
 class Notifications extends Component {
   constructor({ styles, position = "bottomRight", ...props }) {
@@ -12,7 +11,6 @@ class Notifications extends Component {
     this.styles = styles;
     this.position = position;
 
-    this.removeNotification;
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -26,6 +24,30 @@ class Notifications extends Component {
     );
 
     return (
+      <div {...css(this.styles.notifications, this.styles[this.position])}>
+        <CSSTransitionGroup
+          transitionName="notification"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}
+        >
+          {notifications.map(notification => {
+            return (
+              notification.body && (
+                <Notification
+                  appearance={notification.type}
+                  timer={setTimeout(() => {
+                    this.props.removeNotifications(notification.id);
+                  }, 5000)}
+                  key={notification.id}
+                  handleClick={e => this.handleClick(notification.id, e)}
+                >
+                  {notification.body}
+                </Notification>
+              )
+            );
+          })}
+        </CSSTransitionGroup>
+      </div>
       <Media query={{ maxWidth: 480 }}>
         {matches => (
           <div
