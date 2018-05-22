@@ -37,16 +37,16 @@ const SessionGraph = ({
   const formatter = value =>
     isAverage
       ? value === -threshold / 10
-        ? "Threshold"
+        ? "!"
         : value
       : value === threshold
-        ? "Threshold"
+        ? "!"
         : value;
 
   const renderAverage = () => (
     <LineChart
       data={data}
-      margin={{ top: 15, right: 35, left: 35, bottom: 15 }}
+      margin={{ top: 15, right: 15, left: 15, bottom: 15 }}
     >
       <XAxis dataKey="timeStamp" />
       <RCTooltip content={<SessionTooltip />} />
@@ -87,7 +87,7 @@ const SessionGraph = ({
   );
 
   return (
-    <FlexContainer style={{ height: "320px" }}>
+    <FlexContainer style={{ height: "240px" }}>
       <ResponsiveContainer height="100%" width="100%">
         {isAverage ? renderAverage() : renderPercent()}
       </ResponsiveContainer>

@@ -115,7 +115,6 @@ const withSocket = WrappedComponent => {
     }
 
     handleLike = () => {
-      console.log("Clicked Like");
       this.socket.emit("attendeeLike", {
         session: this.sessionId,
         payload: {
