@@ -1,10 +1,8 @@
 import React from "react";
 import { css, withStyles } from "../withStyles";
-
 import FlexContainer from "../Containers/FlexContainer";
 import Avatar from "../Elements/Avatar";
 import Heading from "../Elements/Heading";
-import Paragraph from "../Elements/Paragraph";
 
 const Developers = ({ styles, ...props }) => {
   return (

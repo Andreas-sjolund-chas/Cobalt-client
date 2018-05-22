@@ -91,6 +91,7 @@ const Icon = ({
       break;
     case "fas fa-copy":
       faIcon = faCopy;
+      break;
     case "fas fa-edit":
       faIcon = faEdit;
       break;

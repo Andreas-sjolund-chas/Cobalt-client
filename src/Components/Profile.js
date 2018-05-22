@@ -202,15 +202,15 @@ const formikForm = withFormik({
       .min(6, "Password must be 6 characters or longer")
   }),
   handleSubmit(values, { props, resetForm, setErrors, setSubmitting }) {
-    if (values.name == "") {
+    if (values.name === "") {
       delete values.name;
     }
 
-    if (values.email == "") {
+    if (values.email === "") {
       delete values.email;
     }
 
-    if (values.password == "") {
+    if (values.password === "") {
       delete values.password;
     }
     props.updateRequest(values);

@@ -1,6 +1,5 @@
 import React from "react";
 import { css, withStyles } from "../withStyles";
-import { Link } from "react-router-dom";
 import Media from "react-media";
 
 import { withFormik } from "formik";
@@ -243,7 +242,7 @@ const handleErrorResponse = response => {
   return response.json();
 };
 
-const sendMessage = (values) => {
+const sendMessage = values => {
   return new Promise((resolve, reject) => {
     fetch(`${process.env.REACT_APP_API_BASE_URL}/api/message`, {
       method: "POST",
@@ -255,16 +254,16 @@ const sendMessage = (values) => {
     })
       .then(handleErrorResponse)
       .then(resolve)
-      .catch(reject)
+      .catch(reject);
   });
-}
+};
 
 const formikForm = withFormik({
   mapPropsToValues() {
     return {
       name: "",
       email: "",
-      message: "",
+      message: ""
     };
   },
   validationSchema: Yup.object().shape({
@@ -288,10 +287,10 @@ const formikForm = withFormik({
         resetForm();
         setSubmitting(false);
       })
-      .catch((error) => {
+      .catch(error => {
         // TODO: Implement setErrors(...)
         setSubmitting(false);
-      })
+      });
   }
 })(ContactForm);
 
