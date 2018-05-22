@@ -20,8 +20,16 @@ const Profile = ({
   touched,
   handleBlur,
   isSubmitting,
+  updateRequest,
+  handleAvatarChange,
+  user,
   ...props
 }) => {
+  const handleUploadFile = event => {
+    event.preventDefault();
+    const file = event.target.files[0];
+    handleAvatarChange(file);
+  };
   return (
     <div {...css(styles, styles.profile)}>
       <FlexContainer
@@ -37,23 +45,20 @@ const Profile = ({
           }}
         >
           <FlexContainer justify="center" style={{ height: "100%" }}>
-            <form onSubmit={handleSubmit}>
+            <form>
               <FlexContainer direction="row" justify="center">
                 <Avatar
                   size="xl"
-                  image="https://avatars1.githubusercontent.com/u/24225542?s=460&v=4"
+                  image={user.user.avatar}
                   style={{ margin: "24px" }}
                 />
                 <FlexContainer justify="center">
                   <Input
                     type="file"
-                    name="picture"
-                    value={values.picture}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
+                    name="file"
+                    onChange={handleUploadFile}
                     style={{ width: "200px" }}
                   />
-                  <Button appearance="secondary">Change Picture</Button>
                 </FlexContainer>
               </FlexContainer>
             </form>
@@ -91,7 +96,7 @@ const Profile = ({
                     value={values.name}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    placeholder="ManChildMan"
+                    placeholder={user.user.name}
                   />
                 </FlexContainer>
                 <FlexContainer
@@ -116,7 +121,7 @@ const Profile = ({
                     value={values.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    placeholder="Man@child.com"
+                    placeholder={user.user.email}
                   />
                 </FlexContainer>
                 <FlexContainer
@@ -146,9 +151,9 @@ const Profile = ({
                     New Password
                   </Heading>
                   <Input
-                    name="newpassword"
+                    name="password"
                     type="password"
-                    value={values.newpassword}
+                    value={values.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     placeholder="New Password"
@@ -159,7 +164,7 @@ const Profile = ({
                 >
                   {errors.password &&
                     touched.password && (
-                      <Paragraph size="sub">{errors.newpassword}</Paragraph>
+                      <Paragraph size="sub">{errors.password}</Paragraph>
                     )}
                 </FlexContainer>
               </FlexContainer>
@@ -181,8 +186,7 @@ const formikForm = withFormik({
     return {
       name: "",
       email: "",
-      newpassword: "",
-      picture: ""
+      password: ""
     };
   },
   validationSchema: Yup.object().shape({
@@ -195,23 +199,21 @@ const formikForm = withFormik({
     password: Yup.string()
       .trim("Your password should'nt include leading or trailing whitespace")
       .strict(false)
-      .min(6, "Password must be 6 characters or longer"),
-    newpassword: Yup.string()
-      .trim("Your password should'nt include leading or trailing whitespace")
-      .strict(false)
       .min(6, "Password must be 6 characters or longer")
   }),
-  handleSubmit(values, { resetForm, setErrors, setSubmitting }) {
-    //TODO: send a request to db and check if the email already exists
-    setTimeout(() => {
-      if (values.email === "test@test.com") {
-        setErrors({ email: "That email is already registered" });
-      } else {
-        console.log(values);
-        resetForm();
-      }
-      setSubmitting(false);
-    }, 2000);
+  handleSubmit(values, { props, resetForm, setErrors, setSubmitting }) {
+    if (values.name == "") {
+      delete values.name;
+    }
+
+    if (values.email == "") {
+      delete values.email;
+    }
+
+    if (values.password == "") {
+      delete values.password;
+    }
+    props.updateRequest(values);
   }
 })(Profile);
 
