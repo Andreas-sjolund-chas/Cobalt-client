@@ -97,20 +97,10 @@ class Dashboard extends React.Component {
             </FlexContainer>
             <FlexContainer direction="row" align="center" justify="end">
               <ButtonLink
-                to={`${this.props.match.url}/workspaces`}
-                appearance="primary"
-              >
-                My Workspaces
-              </ButtonLink>
-              <ButtonLink
                 to={`${this.props.match.url}/new`}
                 appearance="secondary"
               >
-                {this.state.width <= 768 ? (
-                  <Icon icon="fas fa-tag" fillColor="white" size="medium" />
-                ) : (
-                  "New Session"
-                )}
+                New Session
               </ButtonLink>
               <Avatar
                 size="medium"
