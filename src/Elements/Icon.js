@@ -21,8 +21,8 @@ import {
   faExclamationTriangle,
   faSpinner,
   faExternalLinkAlt,
-  faCopy
   faEdit,
+  faCopy
 } from "@fortawesome/fontawesome-free-solid";
 
 const Icon = ({
