@@ -37,12 +37,12 @@ class Modal extends React.Component {
 
     return (
       <div
+        ref={modalRef => (this.modalRef = modalRef)}
         onClick={this.killModal}
         {...css(withOverlay === true && styles.overlayColor, styles.overlay)}
         {...props}
       >
         <div
-          ref={modalRef => (this.modalRef = modalRef)}
           {...css(
             withAnimation === true && styles.animation,
             styles.rounded,

@@ -81,7 +81,7 @@ class UpgradePlan extends React.Component {
       name: this.state.workspaceName
     });
 
-    this.props.closeModal(e);
+    this.props.closeModal(e, true);
   }
 
   render() {

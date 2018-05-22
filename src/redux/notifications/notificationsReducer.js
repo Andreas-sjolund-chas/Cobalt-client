@@ -4,7 +4,8 @@ import {
 } from "../signup/constants";
 import {
   REQUEST_SESSION_SUCCESS,
-  REQUEST_SESSION_FAIL
+  REQUEST_SESSION_FAIL,
+  REQUEST_DELETE_SESSION_SUCCESS
 } from "../session/constants";
 import { REQUEST_LOGOUT_SUCCESS, REQUEST_LOGOUT_FAIL } from "../auth/constants";
 import {
@@ -25,6 +26,7 @@ const notificationsReducer = (state = initialState, action) => {
     case REQUEST_SIGNUP_SUCCESS:
     case REQUEST_SIGNUP_FAIL:
     case REQUEST_SESSION_SUCCESS:
+    case REQUEST_DELETE_SESSION_SUCCESS:
     case REQUEST_SESSION_FAIL:
     case ADD_MEMBER_ERROR:
     case ADD_MEMBER_SUCCESS:

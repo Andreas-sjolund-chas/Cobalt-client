@@ -35,9 +35,13 @@ const Navigation = ({ styles, colors, match, ...props }) => {
               <Icon fillColor="dawn" icon="fas fa-user" />My profile
             </li>
           </NavLink>
-          <NavLink activeStyle={activeLink} exact to={`${match.url}/upgrade`}>
+          <NavLink
+            activeStyle={activeLink}
+            exact
+            to={`${match.url}/workspaces`}
+          >
             <li>
-              <Icon fillColor="dawn" icon="fas fa-tag" />Upgrade plan
+              <Icon fillColor="dawn" icon="fas fa-briefcase" />Workspaces
             </li>
           </NavLink>
           <NavLink activeStyle={activeLink} exact to={`${match.url}/settings`}>
