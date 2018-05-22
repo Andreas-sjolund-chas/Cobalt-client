@@ -55,14 +55,7 @@ class CreateSession extends React.Component {
       isAverage: data.get("isAverage")
     };
 
-<<<<<<< HEAD
     this.props.requestNewSession(dataObj);
-=======
-    for (const [key, value] of data.entries()) {
-      newObj[key] = value;
-    }
-    this.props.requestNewSession(newObj);
->>>>>>> fixed workspace styling
   }
 
   componentWillUnmount() {
