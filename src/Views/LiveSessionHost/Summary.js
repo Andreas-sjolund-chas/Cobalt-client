@@ -8,12 +8,10 @@ import moment from "moment";
 import FlexContainer from "../../Containers/FlexContainer";
 import Heading from "../../Elements/Heading";
 import Paragraph from "../../Elements/Paragraph";
-import Button from "../../Elements/Button";
 import SessionGraph from "../../Components/SessionGraph";
 import ButtonLink from "../../Elements/ButtonLink";
 import Card from "../../Elements/Card";
 import Loader from "../../Elements/Loader";
-import CopyTextfield from "../../Elements/CopyTextfield";
 
 import { requestSessionData } from "../../redux/session/actions";
 
@@ -40,8 +38,6 @@ class Summary extends React.Component {
     if (session.data.length <= 0 || isFetching) {
       return <Loader />;
     }
-
-    console.log(this.props);
 
     let duration = moment.duration(session.duration, "seconds");
     let totals = session.data[session.data.length - 1];

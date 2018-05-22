@@ -4,7 +4,6 @@ import { css, withStyles } from "../../withStyles";
 import FlexContainer from "../../Containers/FlexContainer";
 import Heading from "../../Elements/Heading";
 import Paragraph from "../../Elements/Paragraph";
-import Button from "../../Elements/Button";
 import ButtonLink from "../../Elements/ButtonLink";
 
 const EndSession = ({ styles, ...props }) => {

@@ -19,7 +19,6 @@ const initialState = {
 };
 
 const sessionReducer = (state = initialState, action) => {
-  console.log(action.type);
   switch (action.type) {
     case REQUEST_SESSION_START:
       return { ...state, isFetching: true };

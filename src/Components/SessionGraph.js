@@ -1,6 +1,6 @@
 import React from "react";
 
-import { css, withStyles } from "../withStyles";
+import { withStyles } from "../withStyles";
 
 import FlexContainer from "../Containers/FlexContainer";
 import Tooltip from "../Elements/Tooltip";
@@ -11,8 +11,7 @@ import {
   Line,
   XAxis,
   YAxis,
-  Tooltip as RCTooltip,
-  Legend
+  Tooltip as RCTooltip
 } from "recharts";
 
 const SessionTooltip = ({ active, payload, label, ...props }) =>
