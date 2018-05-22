@@ -70,13 +70,13 @@ export const requestUserUpdate = data => dispatch => {
 
 export const requestAvatarUpdate = data => dispatch => {
   dispatch(requestAvatarUpdateStart());
-  const test = new FormData();
-  test.append("file", data);
+  const file = new FormData();
+  file.append("file", data);
 
   fetch(`${process.env.REACT_APP_API_BASE_URL}/api/upload/avatar`, {
     method: "POST",
     credentials: "include",
-    body: test
+    body: file
   })
     .then(handleResponse)
     .then(data => {
