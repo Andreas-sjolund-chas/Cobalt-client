@@ -24,30 +24,6 @@ class Notifications extends Component {
     );
 
     return (
-      <div {...css(this.styles.notifications, this.styles[this.position])}>
-        <CSSTransitionGroup
-          transitionName="notification"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}
-        >
-          {notifications.map(notification => {
-            return (
-              notification.body && (
-                <Notification
-                  appearance={notification.type}
-                  timer={setTimeout(() => {
-                    this.props.removeNotifications(notification.id);
-                  }, 5000)}
-                  key={notification.id}
-                  handleClick={e => this.handleClick(notification.id, e)}
-                >
-                  {notification.body}
-                </Notification>
-              )
-            );
-          })}
-        </CSSTransitionGroup>
-      </div>
       <Media query={{ maxWidth: 480 }}>
         {matches => (
           <div
@@ -63,8 +39,8 @@ class Notifications extends Component {
               transitionLeaveTimeout={500}
             >
               {notifications.map(notification => {
-                if (notification.body) {
-                  return (
+                return (
+                  notification.body && (
                     <Notification
                       appearance={notification.type}
                       timer={setTimeout(() => {
@@ -75,8 +51,8 @@ class Notifications extends Component {
                     >
                       {notification.body}
                     </Notification>
-                  );
-                }
+                  )
+                );
               })}
             </CSSTransitionGroup>
           </div>
