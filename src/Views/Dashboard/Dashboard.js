@@ -15,6 +15,7 @@ import CreateSession from "../CreateSession";
 import Upgrade from "./Upgrade";
 import Profile from "./Profile";
 import Settings from "./Settings";
+import Workspaces from "./Workspaces";
 
 import { requestUser } from "../../redux/user/actions";
 import { requestLogout } from "../../redux/auth/actions";
@@ -84,8 +85,8 @@ class Dashboard extends React.Component {
                 <Heading size="2" style={{ margin: "0" }}>
                   {path == "profile"
                     ? "Profile"
-                    : path == "upgrade"
-                      ? "Upgrade Plan"
+                    : path == "workspaces"
+                      ? "Workspaces"
                       : path == "settings"
                         ? "Settings"
                         : "Sessions"}
@@ -99,11 +100,7 @@ class Dashboard extends React.Component {
                 to={`${this.props.match.url}/new`}
                 appearance="secondary"
               >
-                {this.state.width <= 768 ? (
-                  <Icon icon="fas fa-tag" fillColor="white" size="medium" />
-                ) : (
-                  "New Session"
-                )}
+                New Session
               </ButtonLink>
               <Avatar
                 size="medium"
@@ -127,7 +124,7 @@ class Dashboard extends React.Component {
             <Route
               exact
               path={`${this.props.match.url}/profile`}
-              component={Profile}
+              render={() => <Profile user={user} />}
             />
             <Route
               exact
@@ -138,6 +135,11 @@ class Dashboard extends React.Component {
               exact
               path={`${this.props.match.url}/settings`}
               component={Settings}
+            />
+            <Route
+              exact
+              path={`${this.props.match.url}/workspaces`}
+              render={() => <Workspaces data={user} />}
             />
           </Switch>
         </div>

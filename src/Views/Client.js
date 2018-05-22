@@ -2,13 +2,14 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { css, withStyles } from "../withStyles";
 
+import { handleResponse } from "../redux/utils/utils";
+
 import Button from "../Elements/Button";
 import Heading from "../Elements/Heading";
 import Paragraph from "../Elements/Paragraph";
 import Loader from "../Elements/Loader";
 import FlexContainer from "../Containers/FlexContainer";
 import VoteSlider from "../Components/VoteSlider";
-import Modal from "../Components/Modal";
 
 import balloon from "../assets/balloon.svg";
 
@@ -28,7 +29,9 @@ const withSocket = WrappedComponent => {
         windowSize: {
           width: window.innerWidth,
           height: window.innerHeight
-        }
+        },
+        isLoading: true,
+        doesNotExist: undefined
       };
 
       const {
@@ -46,6 +49,29 @@ const withSocket = WrappedComponent => {
     }
 
     componentWillMount() {
+      fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/api/session/${this.sessionId}`
+      )
+        .then(handleResponse)
+        .then(res => {
+          this.setState({
+            data: {
+              status: {
+                ...this.state.data.status,
+                hasEnded: res.presentation.hasEnded
+              }
+            },
+            doesNotExist: false,
+            isLoading: false
+          });
+        })
+        .catch(err => {
+          this.setState({
+            doesNotExist: true,
+            isLoading: false
+          });
+        });
+
       this.updateWindowSize();
       this.updateWindowSize = this.updateWindowSize.bind(this);
     }
@@ -110,9 +136,14 @@ const withSocket = WrappedComponent => {
     };
 
     render() {
-      if (this.state.fireRedirect) {
+      if (this.state.isLoading) {
+        return <Loader />;
+      }
+
+      if (this.state.fireRedirect || this.state.doesNotExist) {
         return <Redirect to={"/"} />;
       }
+
       return (
         <WrappedComponent
           handleVote={this.handleVote}
@@ -135,6 +166,20 @@ const Client = ({
   styles,
   ...props
 }) => {
+  if (data.status.hasEnded) {
+    return (
+      <div {...css(styles.message)}>
+        <FlexContainer flex="1" align="center" justify="center">
+          <Heading size="2">The session has ended</Heading>
+          <Paragraph>Thank you for participating</Paragraph>
+          <Button onClick={handleClick} appearance="secondary">
+            LEAVE SESSION
+          </Button>
+        </FlexContainer>
+      </div>
+    );
+  }
+
   if (!data.status.hasStarted) {
     return (
       <div {...css(styles.message)}>
@@ -158,20 +203,6 @@ const Client = ({
             This session is currently paused
           </Heading>
           <Paragraph>Wait for the host to resume the session</Paragraph>
-        </FlexContainer>
-      </div>
-    );
-  }
-
-  if (data.status.hasEnded) {
-    return (
-      <div {...css(styles.message)}>
-        <FlexContainer flex="1" align="center" justify="center">
-          <Heading size="2">The session has ended</Heading>
-          <Paragraph>Thank you for participating</Paragraph>
-          <Button onClick={handleClick} appearance="secondary">
-            LEAVE SESSION
-          </Button>
         </FlexContainer>
       </div>
     );

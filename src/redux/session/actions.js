@@ -11,6 +11,8 @@ import {
   SESSION_CREATED
 } from "./constants";
 
+import { requestUser } from "../user/actions";
+
 export const requestSessionDataStart = () => ({
   type: REQUEST_SESSION_DATA_START
 });
@@ -93,6 +95,7 @@ export const requestNewSession = data => dispatch => {
   })
     .then(handleResponse)
     .then(data => dispatch(requestSessionSuccess(data)))
+    .then(() => dispatch(requestUser()))
     .catch(err => dispatch(requestSessionFail(err)));
 };
 

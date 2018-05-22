@@ -19,7 +19,10 @@ import {
   faBoxes,
   faQuestion,
   faExclamationTriangle,
-  faSpinner
+  faSpinner,
+  faExternalLinkAlt,
+  faEdit,
+  faCopy
 } from "@fortawesome/fontawesome-free-solid";
 
 const Icon = ({
@@ -82,6 +85,14 @@ const Icon = ({
       break;
     case "fas fa-spinner":
       faIcon = faSpinner;
+      break;
+    case "fas fa-external-link-alt":
+      faIcon = faExternalLinkAlt;
+      break;
+    case "fas fa-copy":
+      faIcon = faCopy;
+    case "fas fa-edit":
+      faIcon = faEdit;
       break;
     default:
       faIcon = faQuestion;
