@@ -17,6 +17,7 @@ import Notifications from "../Components/Notifications";
 import Client from "../Views/Client";
 import Qrscanner from "../Components/Qrscanner";
 import QrCodeWindow from "../Components/QrCodeWindow";
+import AboutPage from "../Views/AboutPage";
 
 /* Actions */
 import { removeOldNotification } from "../redux/notifications/actions";
@@ -46,11 +47,11 @@ const LoginWithPublic = withPublicRoot(Login);
 const SignUpWithPublic = withPublicRoot(SignUp);
 const PricingAreaWithPublic = withPublicRoot(PricingArea);
 const LiveSessionHostWithSocket = withSocket(LiveSessionHost);
+const AboutPageWithPublic = withPublicRoot(AboutPage);
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-
     this.removeNotifications = this.removeNotifications.bind(this);
   }
 
@@ -128,6 +129,8 @@ class App extends React.Component {
           <Route path="/lobby" component={this.Lobby} />
           <Route path="/dashboard" component={this.Dashboard} />
           <Route path="/scanner" component={Qrscanner} />
+          <Route path="/pricing" component={this.PricingArea} />
+          <Route path="/about" component={AboutPageWithPublic} />
           <Route path="*" component={NotFound} />
         </Switch>
       </div>
