@@ -15,13 +15,7 @@ const Footer = ({ size = "medium", styles, ...props }) => (
           <Link to="about">About</Link>
         </ListItem>
         <ListItem>
-          <Link to="press">Press</Link>
-        </ListItem>
-        <ListItem>
           <Link to="developers">Developers</Link>
-        </ListItem>
-        <ListItem>
-          <Link to="channels">Channels</Link>
         </ListItem>
       </List>
     </Media>
@@ -44,7 +38,7 @@ export default withStyles(({ themes, text }) => {
       ":nth-child(1n) ul": {
         maxWidth: "400px",
         width: "100%",
-        justifyContent: "space-between",
+        justifyContent: "flex-start",
         margin: 0
       },
       ":nth-child(1n) li:last-child": {
