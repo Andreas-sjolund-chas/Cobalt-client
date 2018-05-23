@@ -38,7 +38,6 @@ const userReducer = (state = initialState, action) => {
     case REQUEST_AVATAR_UPDATE_START:
       return { ...state, isFetching: true };
     case REQUEST_AVATAR_UPDATE_SUCCESS:
-      debugger;
       return {
         ...state,
         user: action.payload.user,

@@ -101,10 +101,7 @@ class Dashboard extends React.Component {
               >
                 New Session
               </ButtonLink>
-              <Avatar
-                size="medium"
-                image="https://avatars1.githubusercontent.com/u/24225542?s=460&v=4"
-              />
+              <Avatar size="medium" image={user.user.avatar} />
             </FlexContainer>
           </div>
           <Switch location={this.props.location}>
