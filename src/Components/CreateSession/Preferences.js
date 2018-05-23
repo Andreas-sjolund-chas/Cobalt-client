@@ -7,104 +7,109 @@ import Paragraph from "../../Elements/Paragraph";
 import Input from "../../Elements/Input";
 // import Checkbox from "../../Elements/Checkbox";
 
+import { MobileContext } from "../../Containers/MobileContext";
+
 const Preferences = ({ styles }) => (
-  <div {...css(styles.preferences)}>
-    <FlexContainer align="start">
-      <Heading appearance="primary" size="2">
-        Preferences
-      </Heading>
-      <Paragraph size="normal">
-        Here you can set some preferred settings for your session.
-      </Paragraph>
-      <Paragraph>Don't worry, you can change them before starting!</Paragraph>
-
-      <FlexContainer
-        direction="row"
-        justify="between"
-        style={{ width: "420px", marginBottom: "20px" }}
-      >
-        {/** Here is possible feature to implement in the future, setting max attendees  **/
-        /*
+  <MobileContext.Consumer>
+    {({ isMobile }) => (
+      <div {...css(styles.preferences)}>
         <FlexContainer align="start">
-        <Paragraph size="sub">Max attendees</Paragraph>
-        <Input
-        type="number"
-        name="maxAttendees"
-        icon="fas fa-users"
-        iconFillColor="white"
-        iconBackground="primary"
-        />
-        </FlexContainer>
-        */}
-
-        <FlexContainer align="start">
-          <Paragraph size="sub">Lobby message</Paragraph>
-          <Input
-            name="message"
-            placeholder="Ex. Welcome to my lecture!"
-            style={{ marginLeft: "0px", marginTop: "0px", width: "200px" }}
-          />
-        </FlexContainer>
-
-        <FlexContainer align="start">
-          <Paragraph size="sub">Warning threshold</Paragraph>
-          <Input
-            name="threshold"
-            icon="fas fa-exclamation-triangle"
-            iconFillColor="white"
-            iconBackground="primary"
-          />
-        </FlexContainer>
-      </FlexContainer>
-
-      <FlexContainer
-        direction="row"
-        align="start"
-        justify="between"
-        style={{ width: "450px", marginBottom: "20px" }}
-      >
-        <FlexContainer justify="around" align="start">
-          <Paragraph size="sub">Engagement descriptions</Paragraph>
+          <Heading appearance="primary" size="2">
+            Preferences
+          </Heading>
+          <Paragraph size="normal">
+            Here you can set some preferred settings for your session.
+          </Paragraph>
+          <Paragraph>
+            Don't worry, you can change them before starting!
+          </Paragraph>
           <FlexContainer
             direction="row"
             justify="between"
-            style={{ width: "450px", marginBottom: "20px" }}
+            fullWidth="1"
+            wrap
+            align="center"
+            style={{ marginBottom: "20px" }}
           >
-            <Input
-              name="descriptionPositive"
-              placeholder="Are you able to follow..?"
-              style={{ marginLeft: "0px", marginTop: "0px", width: "200px" }}
-            />
-            <Input
-              name="descriptionNegative"
-              placeholder="Are you not able to follow..?"
-              style={{ marginLeft: "0px", marginTop: "0px", width: "200px" }}
-            />
+            <FlexContainer
+              flex="1"
+              align="start"
+              style={{ marginBottom: "8px" }}
+            >
+              <Paragraph size="sub">Lobby message</Paragraph>
+              <Input
+                name="message"
+                placeholder="Ex. Welcome to my lecture!"
+                style={{ marginLeft: "0px", marginTop: "0px" }}
+              />
+            </FlexContainer>
+
+            <FlexContainer
+              flex="1"
+              align="start"
+              style={{
+                marginBottom: "8px",
+                marginLeft: !isMobile && "25px"
+              }}
+            >
+              <Paragraph size="sub">Warning threshold</Paragraph>
+              <Input
+                name="threshold"
+                placeholder="A number between 1-100"
+                icon="fas fa-exclamation-triangle"
+                iconFillColor="white"
+                iconBackground="primary"
+              />
+            </FlexContainer>
+          </FlexContainer>
+
+          <FlexContainer
+            direction="row"
+            justify="between"
+            fullWidth="1"
+            align="center"
+            wrap
+          >
+            <Paragraph style={{ flexBasis: "100%" }}>
+              Engagement descriptions
+            </Paragraph>
+            <FlexContainer
+              align="start"
+              flex="1"
+              style={{ marginBottom: "8px" }}
+            >
+              <Paragraph size="sub">Up</Paragraph>
+              <Input
+                name="descriptionPositive"
+                placeholder="Are you able to follow..?"
+                style={{
+                  marginLeft: "0px",
+                  minWidth: "130px",
+                  marginTop: "0px"
+                }}
+              />
+            </FlexContainer>
+            <FlexContainer
+              align="start"
+              flex="1"
+              style={{
+                marginBottom: "8px",
+                minWidth: "130px",
+                marginLeft: !isMobile && "25px"
+              }}
+            >
+              <Paragraph size="sub">Down</Paragraph>
+              <Input
+                name="descriptionNegative"
+                placeholder="Are you not able to follow..?"
+                style={{ marginLeft: "0px", marginTop: "0px" }}
+              />
+            </FlexContainer>
           </FlexContainer>
         </FlexContainer>
-      </FlexContainer>
-
-      {/** Here is possible feature to implement in the future,
-       allowing comments and setting avarage as percentage **/
-      /*
-        <FlexContainer
-        direction="row"
-        justify="between"
-        style={{ marginBottom: "20px", width: "450px", paddingRight: "18px" }}
-        >
-        <FlexContainer direction="row">
-        <Checkbox name="comments" />
-        <Paragraph size="sub">Allow comments</Paragraph>
-        </FlexContainer>
-        
-        <FlexContainer direction="row">
-        <Checkbox name="isAverage" />
-        <Paragraph size="sub">Show average as percentage</Paragraph>
-        </FlexContainer>
-        </FlexContainer>
-      */}
-    </FlexContainer>
-  </div>
+      </div>
+    )}
+  </MobileContext.Consumer>
 );
 
 export default withStyles(() => {
