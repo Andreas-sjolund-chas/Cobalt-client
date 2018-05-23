@@ -13,7 +13,7 @@ const Card = ({
   />
 );
 
-export default withStyles(({ themes, shadow, rounded }) => {
+export default withStyles(({ colors, themes, shadow, rounded }) => {
   return {
     card: {
       padding: "40px",
@@ -29,6 +29,13 @@ export default withStyles(({ themes, shadow, rounded }) => {
     carbon: themes.carbon,
     white: {
       backgroundColor: "#FFF"
+    },
+
+    primaryBackground: {
+      backgroundColor: colors.primary
+    },
+    secondaryBackground: {
+      backgroundColor: colors.secondary
     },
 
     /* Shadow */

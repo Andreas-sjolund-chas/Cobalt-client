@@ -45,7 +45,7 @@ const Header = ({ styles, ...props }) => (
           }
         </Media>
 
-        {props.isAuthenticated != true ? (
+        {props.isAuthenticated !== true ? (
           <Media query={{ maxWidth: 480 }}>
             {matches => (
               <FlexContainer direction="row">

@@ -4,7 +4,6 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import SignUpForm from "../Components/SignUpForm";
-import FlexContainer from "../Containers/FlexContainer";
 import { requestSignup } from "../redux/signup/actions";
 
 let SignUp = ({ styles, dispatch, ...props }) => {

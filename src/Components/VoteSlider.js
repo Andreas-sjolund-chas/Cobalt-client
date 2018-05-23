@@ -59,7 +59,6 @@ class VoteSlider extends React.Component {
       return heightToDivide / 2;
     };
     let voteCircleSize = WIDTH * 0.2;
-    let GRAVITY = 1;
     let isDraggable = false;
     let onCoolDown = false;
     const cooldownTime = 15;
@@ -106,7 +105,7 @@ class VoteSlider extends React.Component {
         }
         const testInterval = setInterval(() => {
           changeCurrentVote();
-          if (circleAnimation.getReset() == false) {
+          if (circleAnimation.getReset() === false) {
             clearInterval(testInterval);
           }
         }, 100);
@@ -240,8 +239,8 @@ class VoteSlider extends React.Component {
     const circleAnimation = CircleAnimation();
 
     function moveToMiddle() {
-      parseInt(arcPosition.y) < HEIGHT / 2 + 2 &&
-      parseInt(arcPosition.y) > HEIGHT / 2 - 2
+      parseInt(arcPosition.y, 10) < HEIGHT / 2 + 2 &&
+      parseInt(arcPosition.y, 10) > HEIGHT / 2 - 2
         ? circleAnimation.reset()
         : circleAnimation.animate();
     }
@@ -250,9 +249,9 @@ class VoteSlider extends React.Component {
       return p1 + (p2 - p1) * t;
     }
 
-    function easeInOut(t) {
-      return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-    }
+    // function easeInOut(t) {
+    //   return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+    // }
 
     function redraw() {
       requestAnimationFrame(redraw);

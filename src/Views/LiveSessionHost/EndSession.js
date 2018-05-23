@@ -4,9 +4,7 @@ import { css, withStyles } from "../../withStyles";
 import FlexContainer from "../../Containers/FlexContainer";
 import Heading from "../../Elements/Heading";
 import Paragraph from "../../Elements/Paragraph";
-import Button from "../../Elements/Button";
 import ButtonLink from "../../Elements/ButtonLink";
-import CopyTextfield from "../../Elements/CopyTextfield";
 
 const EndSession = ({ styles, ...props }) => {
   console.log(props);

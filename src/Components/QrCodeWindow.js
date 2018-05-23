@@ -3,14 +3,11 @@ import React, { Component } from "react";
 import { css, withStyles } from "react-with-styles";
 
 import QRCode from "qrcode.react";
-import ReactDOM from "react-dom";
 
 import Card from "../Elements/Card";
 import Heading from "../Elements/Heading";
-import Button from "../Elements/Button";
-import FlexContainer from "../Containers/FlexContainer";
 
-const url = window.location.href;
+// const url = window.location.href;
 
 class QrCodeWindow extends Component {
   constructor(props) {

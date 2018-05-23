@@ -1,10 +1,8 @@
 import React from "react";
 import { css, withStyles } from "../withStyles";
-import { Redirect } from "react-router-dom";
 import ContactForm from "../Components/ContactForm";
 
 const Contact = ({ styles, ...props }) => {
-
   return (
     <div {...css(styles.content)}>
       <ContactForm />

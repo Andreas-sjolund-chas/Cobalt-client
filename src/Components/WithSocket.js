@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
 import io from "socket.io-client";
 
 import Loader from "../Elements/Loader";

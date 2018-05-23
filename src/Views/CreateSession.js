@@ -69,28 +69,23 @@ class CreateSession extends React.Component {
   render() {
     const { isFetching, newSessionCreated, session } = this.props;
 
-    {
-      return !this.state.isModalHidden ? (
-        newSessionCreated ? (
-          <Modal closeModal={this.closeModal} withOverlay>
-            <SessionStarted sessionId={session.sessionId} />
-            <ButtonLink
-              to={"/host/" + session.sessionId}
-              appearance="secondary"
-            >
-              GO TO PRESENTATION LOBBY
-            </ButtonLink>
-          </Modal>
-        ) : (
-          <Wizard handleSubmit={this.handleSubmit} isLoading={isFetching}>
-            <Name />
-            <Preferences />
-          </Wizard>
-        )
+    return !this.state.isModalHidden ? (
+      newSessionCreated ? (
+        <Modal closeModal={this.closeModal} withOverlay>
+          <SessionStarted sessionId={session.sessionId} />
+          <ButtonLink to={"/host/" + session.sessionId} appearance="secondary">
+            GO TO PRESENTATION LOBBY
+          </ButtonLink>
+        </Modal>
       ) : (
-        <Redirect to="/dashboard" />
-      );
-    }
+        <Wizard handleSubmit={this.handleSubmit} isLoading={isFetching}>
+          <Name />
+          <Preferences />
+        </Wizard>
+      )
+    ) : (
+      <Redirect to="/dashboard" />
+    );
   }
 }
 

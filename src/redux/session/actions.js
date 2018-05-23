@@ -68,8 +68,6 @@ export const requestNewSession = data => dispatch => {
     threshold,
     descriptionPositive,
     descriptionNegative,
-    comments,
-    isAverage,
     name,
     message
   } = data;
