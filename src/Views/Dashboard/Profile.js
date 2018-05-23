@@ -4,6 +4,7 @@ import Profile from "../../Components/Profile";
 import { connect } from "react-redux";
 import { requestUserUpdate } from "../../redux/user/actions";
 import { requestAvatarUpdate } from "../../redux/user/actions";
+import Loader from "../../Elements/Loader";
 
 let ProfileView = ({ styles, dispatch, ...props }) => {
   const updateRequest = data => {
@@ -13,7 +14,9 @@ let ProfileView = ({ styles, dispatch, ...props }) => {
   const handleAvatarChange = data => {
     dispatch(requestAvatarUpdate(data));
   };
-  return (
+  return props.isFetching ? (
+    <Loader />
+  ) : (
     <div {...css(styles.Profile)}>
       <Profile
         user={props.user}
@@ -25,7 +28,7 @@ let ProfileView = ({ styles, dispatch, ...props }) => {
 };
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isFetching: state.user.isFetching
 });
 
 ProfileView = connect(mapStateToProps)(ProfileView);
