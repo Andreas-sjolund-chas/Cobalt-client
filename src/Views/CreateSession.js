@@ -97,9 +97,14 @@ class CreateSession extends React.Component {
           </Wizard>
         )
       ) : (
-        <Redirect to="/dashboard" />
-      );
-    }
+        <Wizard handleSubmit={this.handleSubmit} isLoading={isFetching}>
+          <Name />
+          <Preferences />
+        </Wizard>
+      )
+    ) : (
+      <Redirect to="/dashboard" />
+    );
   }
 }
 

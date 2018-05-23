@@ -8,7 +8,6 @@ import Paragraph from "../../Elements/Paragraph";
 import Button from "../../Elements/Button";
 import Card from "../../Elements/Card";
 import Modal from "../../Components/Modal";
-import Icon from "../../Elements/Icon";
 import Input from "../../Elements/Input";
 import Overview from "./Workspaces/Overview";
 import Members from "./Workspaces/Members";
@@ -162,7 +161,7 @@ class Workspaces extends Component {
                 >
                   <div
                     {...css(
-                      this.state.currentPage == 0
+                      this.state.currentPage === 0
                         ? this.styles.buttonActive
                         : this.styles.buttonInactive
                     )}
@@ -177,7 +176,7 @@ class Workspaces extends Component {
                   </div>
                   <div
                     {...css(
-                      this.state.currentPage == 1
+                      this.state.currentPage === 1
                         ? this.styles.buttonActive
                         : this.styles.buttonInactive
                     )}
@@ -192,7 +191,7 @@ class Workspaces extends Component {
                   </div>
                   <div
                     {...css(
-                      this.state.currentPage == 2
+                      this.state.currentPage === 2
                         ? this.styles.buttonActive
                         : this.styles.buttonInactive
                     )}

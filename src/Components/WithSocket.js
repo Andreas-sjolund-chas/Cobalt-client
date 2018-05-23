@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
 import io from "socket.io-client";
 
 import Loader from "../Elements/Loader";
@@ -19,7 +18,27 @@ const withSocket = WrappedComponent => {
       this.state = {
         isLoading: true,
         likes: [],
-        data: {}
+        data: {
+          sessionId: null,
+          presentation: {
+            name: "No presentation name?",
+            description: "No description?"
+          },
+          status: {
+            hasStarted: false,
+            hasEnded: false,
+            isPaused: false,
+            time: 0
+          },
+          engagement: {
+            average: 0,
+            positive: 50,
+            negative: 50
+          },
+          impressions: 0,
+          likes: 0,
+          attendees: 0
+        }
       };
       this.counter = 0;
       this.sessionId = sessionId;
@@ -31,7 +50,6 @@ const withSocket = WrappedComponent => {
       this.switchData = this.switchData.bind(this);
       this.handleBalloonDelete = this.handleBalloonDelete.bind(this);
       this.listenForEvents = this.listenForEvents.bind(this);
-      console.log("constructor: ", this.state);
     }
 
     componentDidMount() {
@@ -62,7 +80,6 @@ const withSocket = WrappedComponent => {
               isLoading: false,
               shouldRedirect: true
             });
-            console.log("not the owner", err);
           });
       });
     }
@@ -97,6 +114,25 @@ const withSocket = WrappedComponent => {
       return Math.floor(Math.random() * 100);
     }
 
+    sessionTimer() {
+      setInterval(() => {
+        if (!this.state.data.status.isPaused) {
+          this.setState(
+            {
+              data: {
+                ...this.state.data,
+                status: {
+                  ...this.state.data.status,
+                  time: (this.state.data.status.time += 1)
+                }
+              }
+            },
+            this.updateSession
+          );
+        }
+      }, 1000);
+    }
+
     updateSession() {
       this.socket.emit("presenterPayload", {
         session: this.sessionId,
@@ -117,6 +153,7 @@ const withSocket = WrappedComponent => {
         },
         this.updateSession
       );
+      this.sessionTimer();
     }
 
     stopSession() {
@@ -157,7 +194,10 @@ const withSocket = WrappedComponent => {
       this.socket.emit("presenterRequestsSave", {
         sessionId: this.state.data.sessionId,
         timeStamp: time,
-        value: this.state.data.engagement
+        likes: this.state.data.likes,
+        attendees: this.state.data.attendees,
+        value: this.state.data.engagement,
+        impressions: this.state.data.impressions
       });
     }
 

@@ -115,7 +115,6 @@ const withSocket = WrappedComponent => {
     }
 
     handleLike = () => {
-      console.log("Clicked Like");
       this.socket.emit("attendeeLike", {
         session: this.sessionId,
         payload: {
@@ -219,7 +218,7 @@ const Client = ({
     >
       <span {...css(styles.likeButton)} onClick={props.handleLike}>
         {" "}
-        <img src={balloon} width="48px" />
+        <img src={balloon} alt="heart-balloon" width="48px" />
       </span>
       <FlexContainer
         justify="center"

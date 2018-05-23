@@ -23,6 +23,7 @@
     "moment": "^2.22.1",
     "qrcode.react": "^0.8.0",
     "react": "^16.2.0",
+    "react-countup": "^3.0.3",
     "react-dom": "^16.2.0",
     "react-media": "^1.8.0",
     "react-qr-reader": "^2.1.0",

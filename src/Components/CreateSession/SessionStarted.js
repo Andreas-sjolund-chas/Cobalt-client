@@ -1,17 +1,11 @@
 import React, { Component } from "react";
 import { css, withStyles } from "../../withStyles";
 import QRCode from "qrcode.react";
-import ReactDOM from "react-dom";
-import { Link } from "react-router-dom";
-
 import FlexContainer from "../../Containers/FlexContainer";
 import Heading from "../../Elements/Heading";
 import Paragraph from "../../Elements/Paragraph";
-import Button from "../../Elements/Button";
-import ButtonLink from "../../Elements/ButtonLink";
 import CopyTextfield from "../../Elements/CopyTextfield";
 import Icon from "../../Elements/Icon";
-import QrCodeWindow from "../QrCodeWindow";
 
 class SessionStarted extends Component {
   constructor({ styles, ...props }) {
@@ -54,7 +48,6 @@ class SessionStarted extends Component {
   }
 
   copyQrLink = sessionId => {
-    debugger;
     const text = `${process.env.REACT_APP_CLIENT_BASE_URL}/qr/${sessionId}`;
 
     const dummy = document.createElement("input");

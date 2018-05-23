@@ -21,6 +21,7 @@ import {
   faExclamationTriangle,
   faSpinner,
   faExternalLinkAlt,
+  faEdit,
   faCopy
 } from "@fortawesome/fontawesome-free-solid";
 
@@ -90,6 +91,9 @@ const Icon = ({
       break;
     case "fas fa-copy":
       faIcon = faCopy;
+      break;
+    case "fas fa-edit":
+      faIcon = faEdit;
       break;
     default:
       faIcon = faQuestion;

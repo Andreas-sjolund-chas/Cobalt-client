@@ -6,7 +6,6 @@ class Timer extends React.Component {
   constructor({ styles, ...props }) {
     super(...props);
     this.styles = styles;
-    this.counter = 0;
     this.displayTime = this.displayTime.bind(this);
     this.state = {
       time: "00:00"
@@ -14,24 +13,24 @@ class Timer extends React.Component {
   }
 
   componentDidMount() {
-    let timerId = setInterval(this.displayTime, 1000);
+    this.timerId = setInterval(this.displayTime, 1000);
   }
 
   displayTime() {
     if (this.props.data.status.isPaused) return;
-    if (this.counter % 10 === 1) {
+    if (this.props.data.status.time % 10 === 1) {
       this.props.requestSave(this.state.time);
     }
     let time =
-      this.counter >= 3600
+      this.props.data.status.time >= 3600
         ? moment()
             .hour(0)
             .minute(0)
-            .second(this.counter++)
+            .second(this.props.data.status.time)
             .format("h:mm:ss")
         : moment()
             .minute(0)
-            .second(this.counter++)
+            .second(this.props.data.status.time)
             .format("mm:ss");
     this.setState({
       time: time
@@ -39,6 +38,9 @@ class Timer extends React.Component {
   }
 
   render() {
+    if (this.props.data.status.hasEnded) {
+      clearInterval(this.timerId);
+    }
     return (
       <div {...css(this.styles.timer)}>
         <span>{this.state.time}</span>
