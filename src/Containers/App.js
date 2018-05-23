@@ -135,21 +135,12 @@ class App extends React.Component {
             <Route exact path="/contact" component={this.Contact} />
 
             <Route path="/session/:sessionId" component={Client} />
+            <PrivateRoute path="/summary/:sessionId" component={Summary} />
             <PrivateRoute
-              authenticated={isAuthenticated}
-              path="/summary/:sessionId"
-              component={Summary}
-            />
-            <PrivateRoute
-              authenticated={isAuthenticated}
               path="/host/:sessionId"
               component={LiveSessionHostWithSocket}
             />
-            <PrivateRoute
-              authenticated={isAuthenticated}
-              path="/dashboard"
-              component={Dashboard}
-            />
+            <PrivateRoute path="/dashboard" component={Dashboard} />
             <Route
               path="/pricing"
               render={routeProps => (
@@ -160,8 +151,6 @@ class App extends React.Component {
               )}
             />
             <Route path="/qr/:sessionId" component={QrCodeWindow} />
-            <Route path="/lobby" component={this.Lobby} />
-            <Route path="/dashboard" component={this.Dashboard} />
             <Route path="/scanner" component={Qrscanner} />
             <Route path="/developers" component={DevelopersPageWithPublic} />
             <Route path="/pricing" component={this.PricingArea} />
