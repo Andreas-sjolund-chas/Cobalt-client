@@ -118,15 +118,18 @@ const withSocket = WrappedComponent => {
     sessionTimer() {
       setInterval(() => {
         if (!this.state.data.status.isPaused) {
-          this.setState({
-            data: {
-              ...this.state.data,
-              status: {
-                ...this.state.data.status,
-                time: (this.state.data.status.time += 1)
+          this.setState(
+            {
+              data: {
+                ...this.state.data,
+                status: {
+                  ...this.state.data.status,
+                  time: (this.state.data.status.time += 1)
+                }
               }
-            }
-          });
+            },
+            this.updateSession
+          );
         }
       }, 1000);
     }
@@ -192,8 +195,7 @@ const withSocket = WrappedComponent => {
       this.socket.emit("presenterRequestsSave", {
         sessionId: this.state.data.sessionId,
         timeStamp: time,
-        currentTime: Date.now(),
-        likes: this.state.likes.length,
+        likes: this.state.data.likes,
         attendees: this.state.data.attendees,
         value: this.state.data.engagement,
         impressions: this.state.data.impressions

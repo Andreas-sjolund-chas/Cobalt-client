@@ -30,18 +30,16 @@ class Summary extends React.Component {
     this.sessionId = sessionId;
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(requestSessionData(this.sessionId));
   }
 
   render() {
     const { isFetching, session } = this.props.session;
 
-    if (session.data.length <= 0 || isFetching) {
+    if (!session.data || session.data.length <= 0 || isFetching) {
       return <Loader />;
     }
-
-    console.log(this.props);
 
     let duration = moment.duration(session.duration, "seconds");
     let totals = session.data[session.data.length - 1];
@@ -112,9 +110,7 @@ class Summary extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    auth: state.auth,
-    session: state.session,
-    user: state.user
+    session: state.session
   };
 };
 
