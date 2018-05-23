@@ -30,15 +30,12 @@ const userReducer = (state = initialState, action) => {
     case REQUEST_USER_FAIL:
       return {
         ...state,
-        user: {},
-        isAuthenticated: false,
         isFetching: false,
         message: action.payload.message
       };
     case REQUEST_AVATAR_UPDATE_START:
       return { ...state, isFetching: true };
     case REQUEST_AVATAR_UPDATE_SUCCESS:
-      debugger;
       return {
         ...state,
         user: action.payload.user,

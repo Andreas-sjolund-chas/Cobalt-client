@@ -17,7 +17,9 @@ import {
 import { REMOVE_OLD_NOTIFICATION } from "./constants";
 import {
   REQUEST_AVATAR_UPDATE_SUCCESS,
-  REQUEST_AVATAR_UPDATE_FAIL
+  REQUEST_AVATAR_UPDATE_FAIL,
+  REQUEST_USER_SUCCESS,
+  REQUEST_USER_FAIL
 } from "../user/constants";
 
 const initialState = {
@@ -40,6 +42,8 @@ const notificationsReducer = (state = initialState, action) => {
     case REQUEST_LOGOUT_FAIL:
     case REQUEST_AVATAR_UPDATE_SUCCESS:
     case REQUEST_AVATAR_UPDATE_FAIL:
+    case REQUEST_USER_SUCCESS:
+    case REQUEST_USER_FAIL:
       return {
         ...state,
         messages: [
