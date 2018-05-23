@@ -69,7 +69,8 @@ export const requestNewSession = data => dispatch => {
     descriptionPositive,
     descriptionNegative,
     name,
-    message
+    message,
+    workspace
   } = data;
 
   fetch(`${process.env.REACT_APP_API_BASE_URL}/api/session`, {
@@ -81,6 +82,7 @@ export const requestNewSession = data => dispatch => {
     body: JSON.stringify({
       name,
       description: message,
+      workspace: workspace,
       settings: {
         maxAttendees,
         threshold,
