@@ -15,6 +15,10 @@ import {
   REMOVE_MEMBER_ERROR
 } from "../workspace/constants";
 import { REMOVE_OLD_NOTIFICATION } from "./constants";
+import {
+  REQUEST_AVATAR_UPDATE_SUCCESS,
+  REQUEST_AVATAR_UPDATE_FAIL
+} from "../user/constants";
 
 const initialState = {
   messages: [],
@@ -34,6 +38,8 @@ const notificationsReducer = (state = initialState, action) => {
     case REMOVE_MEMBER_ERROR:
     case REQUEST_LOGOUT_SUCCESS:
     case REQUEST_LOGOUT_FAIL:
+    case REQUEST_AVATAR_UPDATE_SUCCESS:
+    case REQUEST_AVATAR_UPDATE_FAIL:
       return {
         ...state,
         messages: [
