@@ -22,6 +22,9 @@ const LiveSessionHost = ({ styles, ...props }) => {
     return <Lobby {...props} />;
   }
 
+  let percentage =
+    100 - props.getPercentageFromAvg(props.data.engagement.average);
+
   return (
     <div {...css(styles.LiveSessionHost)}>
       <div {...css(styles.balloonContainer)}>
@@ -91,8 +94,8 @@ const LiveSessionHost = ({ styles, ...props }) => {
       {props.data.status.isPaused ? <Paused {...props} /> : ""}
       <div {...css(styles.graphWrap)}>
         {/* TODO: Fix threshold when isAverage! */}
-        {props.data.engagement.negative > props.data.settings.threshold ? (
-          <Warning {...props} />
+        {100 - percentage < parseInt(props.data.settings.threshold) ? (
+          <Warning {...props} percentage={percentage} />
         ) : (
           <Engagement {...props} />
         )}
