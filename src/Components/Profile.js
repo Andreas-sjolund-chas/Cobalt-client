@@ -91,6 +91,7 @@ const Profile = ({
                     Name
                   </Heading>
                   <Input
+                    autoComplete="off"
                     name="name"
                     type="text"
                     value={values.name}
@@ -116,6 +117,7 @@ const Profile = ({
                     Email
                   </Heading>
                   <Input
+                    autoComplete="off"
                     name="email"
                     type="text"
                     value={values.email}
@@ -182,10 +184,10 @@ const Profile = ({
 };
 
 const formikForm = withFormik({
-  mapPropsToValues() {
+  mapPropsToValues({ user }) {
     return {
-      name: "",
-      email: "",
+      name: user.user.name,
+      email: user.user.email,
       password: ""
     };
   },
@@ -202,11 +204,11 @@ const formikForm = withFormik({
       .min(6, "Password must be 6 characters or longer")
   }),
   handleSubmit(values, { props, resetForm, setErrors, setSubmitting }) {
-    if (values.name === "") {
+    if (values.name === "" || values.name === props.user.user.name) {
       delete values.name;
     }
 
-    if (values.email === "") {
+    if (values.email === "" || values.email === props.user.user.email) {
       delete values.email;
     }
 
