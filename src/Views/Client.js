@@ -166,9 +166,6 @@ const Client = ({
   styles,
   ...props
 }) => {
-  {
-    console.log(data);
-  }
   if (data.status.hasEnded) {
     return (
       <div {...css(styles.message)}>
