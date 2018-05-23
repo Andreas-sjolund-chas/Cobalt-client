@@ -65,7 +65,7 @@ class Sessions extends React.Component {
   }
 
   render() {
-    const { styles } = this.props;
+    const { styles, data } = this.props;
 
     if (this.props.data.isFetching || !this.props.data.user.workspaces) {
       return (
@@ -75,10 +75,11 @@ class Sessions extends React.Component {
       );
     }
 
-    if (
-      this.props.data.user.workspaces &&
-      this.props.data.user.workspaces[0].presentations.length <= 0
-    ) {
+    const workspaces = data.user.workspaces.filter(
+      workspace => workspace.presentations.length
+    );
+
+    if (workspaces.length <= 0) {
       return (
         <div {...css(styles.centered)}>
           <FlexContainer justify="center" align="center">
