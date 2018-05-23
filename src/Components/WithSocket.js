@@ -28,6 +28,7 @@ const withSocket = WrappedComponent => {
             hasStarted: false,
             hasEnded: false,
             isPaused: false,
+            isAverage: true,
             time: 0
           },
           engagement: {
@@ -41,6 +42,7 @@ const withSocket = WrappedComponent => {
         }
       };
       this.counter = 0;
+      this.timerId = "";
       this.sessionId = sessionId;
       this.socket = io(process.env.REACT_APP_API_BASE_URL);
       this.startSession = this.startSession.bind(this);
@@ -115,7 +117,7 @@ const withSocket = WrappedComponent => {
     }
 
     sessionTimer() {
-      setInterval(() => {
+      this.timerId = setInterval(() => {
         if (!this.state.data.status.isPaused) {
           this.setState(
             {
@@ -157,6 +159,7 @@ const withSocket = WrappedComponent => {
     }
 
     stopSession() {
+      clearInterval(this.timerId);
       this.setState(
         {
           data: {
@@ -172,6 +175,10 @@ const withSocket = WrappedComponent => {
     }
 
     pauseSession() {
+      if (this.state.data.status.wasDisconnected) {
+        clearInterval(this.timerId);
+        this.sessionTimer();
+      }
       this.setState(
         {
           data: {
