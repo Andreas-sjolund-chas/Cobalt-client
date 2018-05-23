@@ -185,6 +185,12 @@ const Client = ({
       <div {...css(styles.message)}>
         <FlexContainer flex="1" align="center" justify="center">
           <Heading size="2" style={{ textAlign: "center" }}>
+            {data.presentation ? "Welcome to" : ""}
+          </Heading>
+          <Heading size="1" style={{ textAlign: "center" }}>
+            {data.presentation ? data.presentation.name : ""}
+          </Heading>
+          <Heading size="2" style={{ textAlign: "center" }}>
             Waiting for host to start session
           </Heading>
           <div {...css(styles.spinner)}>
