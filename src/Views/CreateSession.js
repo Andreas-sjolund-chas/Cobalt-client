@@ -1,5 +1,5 @@
 import React from "react";
-import { withStyles } from "../withStyles";
+
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
@@ -31,7 +31,7 @@ const mapStateToProps = ({
 });
 
 class CreateSession extends React.Component {
-  constructor({ styles, handleSubmit = null, ...props }) {
+  constructor({ handleSubmit = null, ...props }) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
 
@@ -78,27 +78,17 @@ class CreateSession extends React.Component {
   render() {
     const { isFetching, newSessionCreated, session, workspaces } = this.props;
 
-    {
-      return !this.state.isModalHidden ? (
-        newSessionCreated ? (
-          <Modal closeModal={this.closeModal} withOverlay>
-            <SessionStarted sessionId={session.sessionId} />
-            <ButtonLink
-              to={"/host/" + session.sessionId}
-              appearance="secondary"
-            >
-              GO TO PRESENTATION LOBBY
-            </ButtonLink>
-          </Modal>
-        ) : (
-          <Wizard handleSubmit={this.handleSubmit} isLoading={isFetching}>
-            <Name workspace={this.state.workspaces} />
-            <Preferences />
-          </Wizard>
-        )
+    return !this.state.isModalHidden ? (
+      newSessionCreated ? (
+        <Modal closeModal={this.closeModal} withOverlay>
+          <SessionStarted sessionId={session.sessionId} />
+          <ButtonLink to={"/host/" + session.sessionId} appearance="secondary">
+            GO TO PRESENTATION LOBBY
+          </ButtonLink>
+        </Modal>
       ) : (
         <Wizard handleSubmit={this.handleSubmit} isLoading={isFetching}>
-          <Name />
+          <Name workspace={this.state.workspaces} />
           <Preferences />
         </Wizard>
       )
@@ -108,10 +98,4 @@ class CreateSession extends React.Component {
   }
 }
 
-CreateSession = connect(mapStateToProps, mapDispatchToProps)(CreateSession);
-
-export default withStyles(({ colors }) => {
-  return {
-    createSession: {}
-  };
-})(CreateSession);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateSession);
