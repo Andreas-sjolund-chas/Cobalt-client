@@ -1,15 +1,13 @@
 import React from "react";
 import { css, withStyles } from "../withStyles";
 import moment from "moment";
-
-import Icon from "../Elements/Icon";
 import Card from "../Elements/Card";
 import Heading from "../Elements/Heading";
 import Paragraph from "../Elements/Paragraph";
 import Badge from "../Elements/Badge";
 import FlexContainer from "../Containers/FlexContainer";
 
-const stripStringLength = string => string.slice(0, 80) + "...";
+// const stripStringLength = string => string.slice(0, 80) + "...";
 
 const SessionItem = ({ styles, ...props }) => {
   return (

@@ -5,7 +5,7 @@ import FlexContainer from "../../Containers/FlexContainer";
 import Heading from "../../Elements/Heading";
 import Paragraph from "../../Elements/Paragraph";
 import Input from "../../Elements/Input";
-import Checkbox from "../../Elements/Checkbox";
+// import Checkbox from "../../Elements/Checkbox";
 
 import { MobileContext } from "../../Containers/MobileContext";
 

@@ -37,12 +37,12 @@ class Modal extends React.Component {
 
     return (
       <div
+        ref={modalRef => (this.modalRef = modalRef)}
         onClick={this.killModal}
         {...css(withOverlay === true && styles.overlayColor, styles.overlay)}
         {...props}
       >
         <div
-          ref={modalRef => (this.modalRef = modalRef)}
           {...css(
             withAnimation === true && styles.animation,
             styles.rounded,
@@ -93,12 +93,6 @@ export default withStyles(({ colors, rounded, shadow, themes }) => {
       zIndex: "100",
       position: "relative",
       maxWidth: "100%"
-    },
-    default: {
-      backgroundColor: colors.carbon
-    },
-    white: {
-      backgroundColor: "#FFF"
     },
     overlay: {
       width: "100%",

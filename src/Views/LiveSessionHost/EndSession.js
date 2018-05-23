@@ -4,11 +4,10 @@ import { css, withStyles } from "../../withStyles";
 import FlexContainer from "../../Containers/FlexContainer";
 import Heading from "../../Elements/Heading";
 import Paragraph from "../../Elements/Paragraph";
-import Button from "../../Elements/Button";
 import ButtonLink from "../../Elements/ButtonLink";
-import CopyTextfield from "../../Elements/CopyTextfield";
 
 const EndSession = ({ styles, ...props }) => {
+  console.log(props);
   return (
     <div {...css(styles.endSession)}>
       <FlexContainer flex="1" align="center" justify="center">
@@ -18,7 +17,12 @@ const EndSession = ({ styles, ...props }) => {
           gathered from your audience!
         </Paragraph>
         <FlexContainer direction="row">
-          <Button appearance="disabled">View summary</Button>
+          <ButtonLink
+            to={`/summary/${props.data.sessionId}`}
+            appearance="secondary"
+          >
+            View summary
+          </ButtonLink>
           <ButtonLink to="/dashboard" appearance="danger">
             Return
           </ButtonLink>

@@ -5,7 +5,6 @@ import { css, withStyles } from "../../withStyles";
 import FlexContainer from "../../Containers/FlexContainer";
 import Avatar from "../../Elements/Avatar";
 import Icon from "../../Elements/Icon";
-import Button from "../../Elements/Button";
 import Heading from "../../Elements/Heading";
 import ButtonLink from "../../Elements/ButtonLink";
 import Navigation from "../../Components/Navigation";
@@ -56,7 +55,7 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const { styles, auth, user } = this.props;
+    const { styles, user } = this.props;
     let path = this.props.location.pathname.slice(11);
     return (
       <div {...css(styles.dashboard)}>
@@ -83,11 +82,11 @@ class Dashboard extends React.Component {
               </span>
               {this.state.width > 468 ? (
                 <Heading size="2" style={{ margin: "0" }}>
-                  {path == "profile"
+                  {path === "profile"
                     ? "Profile"
-                    : path == "upgrade"
-                      ? "Upgrade Plan"
-                      : path == "settings"
+                    : path === "workspaces"
+                      ? "Workspaces"
+                      : path === "settings"
                         ? "Settings"
                         : "Sessions"}
                 </Heading>
@@ -97,20 +96,10 @@ class Dashboard extends React.Component {
             </FlexContainer>
             <FlexContainer direction="row" align="center" justify="end">
               <ButtonLink
-                to={`${this.props.match.url}/workspaces`}
-                appearance="primary"
-              >
-                My Workspaces
-              </ButtonLink>
-              <ButtonLink
                 to={`${this.props.match.url}/new`}
                 appearance="secondary"
               >
-                {this.state.width <= 768 ? (
-                  <Icon icon="fas fa-tag" fillColor="white" size="medium" />
-                ) : (
-                  "New Session"
-                )}
+                New Session
               </ButtonLink>
               <Avatar
                 size="medium"
@@ -134,7 +123,7 @@ class Dashboard extends React.Component {
             <Route
               exact
               path={`${this.props.match.url}/profile`}
-              component={Profile}
+              render={() => <Profile user={user} />}
             />
             <Route
               exact

@@ -2,6 +2,9 @@ import {
   REQUEST_SESSION_START,
   REQUEST_SESSION_SUCCESS,
   REQUEST_SESSION_FAIL,
+  REQUEST_SESSION_DATA_START,
+  REQUEST_SESSION_DATA_SUCCESS,
+  REQUEST_SESSION_DATA_FAIL,
   REQUEST_DELETE_SESSION_START,
   REQUEST_DELETE_SESSION_SUCCESS,
   REQUEST_DELETE_SESSION_FAIL,
@@ -49,6 +52,24 @@ const sessionReducer = (state = initialState, action) => {
         message: action.payload.message
       };
     case REQUEST_DELETE_SESSION_FAIL:
+      return {
+        ...state,
+        isFetching: false,
+        message: action.payload.message
+      };
+    case REQUEST_SESSION_DATA_START:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case REQUEST_SESSION_DATA_SUCCESS:
+      return {
+        ...state,
+        session: action.payload.presentation,
+        isFetching: false,
+        message: action.payload.message
+      };
+    case REQUEST_SESSION_DATA_FAIL:
       return {
         ...state,
         isFetching: false,

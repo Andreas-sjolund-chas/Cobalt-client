@@ -3,7 +3,6 @@ import { css, withStyles } from "../withStyles";
 import { Link } from "react-router-dom";
 import Media from "react-media";
 
-import FlexContainer from "../Containers/FlexContainer";
 import List from "../Elements/List";
 import ListItem from "../Elements/ListItem";
 
@@ -15,13 +14,7 @@ const Footer = ({ size = "medium", styles, ...props }) => (
           <Link to="about">About</Link>
         </ListItem>
         <ListItem>
-          <Link to="press">Press</Link>
-        </ListItem>
-        <ListItem>
           <Link to="developers">Developers</Link>
-        </ListItem>
-        <ListItem>
-          <Link to="channels">Channels</Link>
         </ListItem>
       </List>
     </Media>
@@ -44,7 +37,7 @@ export default withStyles(({ themes, text }) => {
       ":nth-child(1n) ul": {
         maxWidth: "400px",
         width: "100%",
-        justifyContent: "space-between",
+        justifyContent: "flex-start",
         margin: 0
       },
       ":nth-child(1n) li:last-child": {

@@ -1,16 +1,12 @@
 import React from "react";
-import { css, withStyles } from "../withStyles";
 import Heading from "../Elements/Heading";
-import Paragraph from "../Elements/Paragraph";
-import Button from "../Elements/Button";
 import List from "../Elements/List";
-import ListItem from "../Elements/ListItem";
 import ListItemWithIcon from "../Elements/ListItemWithIcon";
 import Icon from "../Elements/Icon";
 import Card from "../Elements/Card";
 import FlexContainer from "../Containers/FlexContainer";
 
-const SubscriptionCard = ({ styles, ...props }) => {
+const SubscriptionCard = ({ ...props }) => {
   return (
     <FlexContainer direction="row">
       {props.SubscriptionCards.map(card => {
@@ -68,8 +64,4 @@ const SubscriptionCard = ({ styles, ...props }) => {
   );
 };
 
-export default withStyles(({ themes, text }) => {
-  return {
-    subscriptionCard: {}
-  };
-})(SubscriptionCard);
+export default SubscriptionCard;

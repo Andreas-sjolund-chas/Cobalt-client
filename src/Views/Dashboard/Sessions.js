@@ -12,10 +12,11 @@ import SessionItem from "../../Components/SessionItem";
 import openBoxIcon from "../../assets/open-box.svg";
 
 import { requestDeleteSession } from "../../redux/session/actions";
+import { requestUser } from "../../redux/user/actions";
 
 class Sessions extends React.Component {
   constructor({ styles, ...props }) {
-    super(props);
+    super(...props);
     this.state = {
       showModal: false,
       sessionId: null
@@ -34,41 +35,25 @@ class Sessions extends React.Component {
 
   handleDelete() {
     this.props.dispatch(requestDeleteSession(this.state.session._id));
+    this.props.dispatch(requestUser());
+    this.setState({ showModal: false });
   }
 
-  renderSessions(data, completed) {
-    return data.map(workspace => {
-      return workspace.presentations.map((session, key) => {
-        if (!completed) {
-          if (!session.hasEnded) {
-            return (
-              <SessionItem
-                toggleModal={() => {
-                  this.toggleModal(session);
-                }}
-                key={key}
-                data={session}
-                workspace={workspace.name}
-              />
-            );
-          }
-        }
-        if (completed) {
-          if (session.hasEnded) {
-            return (
-              <SessionItem
-                toggleModal={() => {
-                  this.toggleModal(session);
-                }}
-                key={key}
-                data={session}
-                workspace={workspace.name}
-              />
-            );
-          }
-        }
-      });
-    });
+  renderSessions(data, onlyCompleted) {
+    return data.map(workspace =>
+      workspace.presentations
+        .filter(session => session.hasEnded === onlyCompleted)
+        .map((session, key) => (
+          <SessionItem
+            toggleModal={() => {
+              this.toggleModal(session);
+            }}
+            key={key}
+            data={session}
+            workspace={workspace.name}
+          />
+        ))
+    );
   }
 
   render() {

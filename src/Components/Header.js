@@ -34,9 +34,6 @@ const Header = ({ styles, ...props }) => (
                     <Link to="about">About</Link>
                   </ListItem>
                   <ListItem>
-                    <Link to="tour">Tour</Link>
-                  </ListItem>
-                  <ListItem>
                     <Link to="pricing">Pricing</Link>
                   </ListItem>
                   <ListItem>
@@ -48,7 +45,7 @@ const Header = ({ styles, ...props }) => (
           }
         </Media>
 
-        {props.isAuthenticated != true ? (
+        {props.isAuthenticated !== true ? (
           <Media query={{ maxWidth: 480 }}>
             {matches => (
               <FlexContainer direction="row">

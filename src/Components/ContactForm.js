@@ -1,6 +1,5 @@
 import React from "react";
 import { css, withStyles } from "../withStyles";
-import { Link } from "react-router-dom";
 import Media from "react-media";
 
 import { withFormik } from "formik";
@@ -11,25 +10,26 @@ import Button from "../Elements/Button";
 import Heading from "../Elements/Heading";
 import Paragraph from "../Elements/Paragraph";
 import Input from "../Elements/Input";
+import Textarea from "../Elements/Textarea";
 
-let SignUpForm = ({
+let ContactForm = ({
   styles,
   handleSubmit,
   handleChange,
+  handleBlur,
   values,
   errors,
   touched,
-  handleBlur,
   isSubmitting,
-  signupRequest,
+  contactRequest,
   ...props
 }) => {
   return (
-    <div {...css(styles, styles.signUpForm)}>
+    <div {...css(styles, styles.ContactForm)}>
       <FlexContainer>
         <Media query={{ minHeight: 400 }}>
           <Heading size="2" appearance="primary">
-            Sign up here
+            Contact
           </Heading>
         </Media>
         <Media query={{ maxWidth: 480 }}>
@@ -154,6 +154,7 @@ let SignUpForm = ({
                         </Paragraph>
                       )}
                   </FlexContainer>
+
                   <label
                     style={
                       matches
@@ -168,52 +169,53 @@ let SignUpForm = ({
                             color: "white"
                           }
                     }
-                    htmlFor="password"
+                    htmlFor="message"
                   >
-                    Password
+                    Message
                   </label>
-                  <Input
-                    name="password"
+
+                  <Textarea
+                    name="message"
                     appearance={
-                      !touched.password && !errors.password
+                      !touched.message && !errors.message
                         ? "primary"
-                        : touched.password && !errors.password
+                        : touched.message && !errors.message
                           ? "success"
-                          : touched.password && errors.password
+                          : touched.message && errors.message
                             ? "danger"
                             : "primary"
                     }
                     icon={
-                      !touched.password && !errors.password
-                        ? "fas fa-unlock"
-                        : touched.password && !errors.password
+                      !touched.message && !errors.message
+                        ? "fas fa-edit"
+                        : touched.message && !errors.message
                           ? "fas fa-check"
-                          : touched.password && errors.password
+                          : touched.message && errors.message
                             ? "fas fa-times"
-                            : "fas fa-unlock"
+                            : "fas fa-edit"
                     }
                     iconPosition="right"
                     iconBackground={
-                      !touched.password && !errors.password
+                      !touched.message && !errors.message
                         ? "primary"
-                        : touched.password && !errors.password
+                        : touched.message && !errors.message
                           ? "success"
-                          : touched.password && errors.password
+                          : touched.message && errors.message
                             ? "danger"
                             : "primary"
                     }
                     iconFillColor="white"
-                    type="password"
-                    placeholder="Password..."
-                    value={values.password}
+                    placeholder="Message..."
+                    value={values.message}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
+
                   <FlexContainer style={{ minHeight: "20px" }}>
-                    {errors.password &&
-                      touched.password && (
+                    {errors.message &&
+                      touched.message && (
                         <Paragraph appearance="danger" size="sub">
-                          {errors.password}
+                          {errors.message}
                         </Paragraph>
                       )}
                   </FlexContainer>
@@ -222,20 +224,38 @@ let SignUpForm = ({
                   size={matches ? "small" : "medium"}
                   disabled={isSubmitting}
                 >
-                  Sign Up
+                  Send
                 </Button>
               </FlexContainer>
             </form>
           )}
         </Media>
-        <Media query={{ minHeight: 400 }}>
-          <Paragraph appearance="white">
-            Already have an account? <Link to="login">Log in here!</Link>
-          </Paragraph>
-        </Media>
       </FlexContainer>
     </div>
   );
+};
+
+const handleErrorResponse = response => {
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+  return response.json();
+};
+
+const sendMessage = values => {
+  return new Promise((resolve, reject) => {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/api/message`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify(values)
+    })
+      .then(handleErrorResponse)
+      .then(resolve)
+      .catch(reject);
+  });
 };
 
 const formikForm = withFormik({
@@ -243,7 +263,7 @@ const formikForm = withFormik({
     return {
       name: "",
       email: "",
-      password: ""
+      message: ""
     };
   },
   validationSchema: Yup.object().shape({
@@ -256,29 +276,34 @@ const formikForm = withFormik({
     email: Yup.string()
       .email("Email is not valid")
       .required("Email is required"),
-    password: Yup.string()
-      .trim("Your password should'nt include leading or trailing whitespace")
+    message: Yup.string()
       .strict(false)
-      .min(6, "Password must be 6 characters or longer")
-      .required("Password is required")
+      .required("Message is required")
   }),
+
   handleSubmit(values, { props, resetForm, setErrors, setSubmitting }) {
-    //TODO: send a request to db and check if the email already exists
-    props.signupRequest(values);
+    sendMessage(values)
+      .then(() => {
+        resetForm();
+        setSubmitting(false);
+      })
+      .catch(error => {
+        // TODO: Implement setErrors(...)
+        setSubmitting(false);
+      });
   }
-})(SignUpForm);
+})(ContactForm);
 
 export default withStyles(({ themes, text, colors }) => {
   return {
-    signUpForm: {
+    ContactForm: {
       ":nth-child(1n) form input": {
         margin: "0",
         borderRadius: "4px 0px 0px 4px"
       },
       ":nth-child(1n) label": {
         marginTop: "20px",
-        marginBottom: "5px",
-        color: "white"
+        marginBottom: "5px"
       }
     },
     primary: colors.primary,

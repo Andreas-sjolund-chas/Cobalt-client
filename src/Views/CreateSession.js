@@ -20,18 +20,19 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = ({
-  session: { isFetching, newSessionCreated, session, message }
+  session: { isFetching, newSessionCreated, session, message },
+  workspace: { workspaces }
 }) => ({
   isFetching,
   newSessionCreated,
   session,
-  message
+  message,
+  workspaces
 });
 
 class CreateSession extends React.Component {
   constructor({ styles, handleSubmit = null, ...props }) {
     super(props);
-
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.closeModal = this.closeModal.bind(this);
@@ -39,6 +40,13 @@ class CreateSession extends React.Component {
     this.state = {
       isModalHidden: false
     };
+  }
+
+  componentWillMount() {
+    this.setState({
+      ...this.state,
+      workspaces: this.props.workspaces
+    });
   }
 
   handleSubmit(data) {
@@ -50,7 +58,8 @@ class CreateSession extends React.Component {
       descriptionNegative: data.get("descriptionNegative"),
       message: data.get("message"),
       comments: data.get("comments"),
-      isAverage: data.get("isAverage")
+      isAverage: data.get("isAverage"),
+      workspace: data.get("workspace")
     };
 
     this.props.requestNewSession(dataObj);
@@ -67,7 +76,7 @@ class CreateSession extends React.Component {
   }
 
   render() {
-    const { isFetching, newSessionCreated, session } = this.props;
+    const { isFetching, newSessionCreated, session, workspaces } = this.props;
 
     {
       return !this.state.isModalHidden ? (
@@ -83,14 +92,19 @@ class CreateSession extends React.Component {
           </Modal>
         ) : (
           <Wizard handleSubmit={this.handleSubmit} isLoading={isFetching}>
-            <Name />
+            <Name workspace={this.state.workspaces} />
             <Preferences />
           </Wizard>
         )
       ) : (
-        <Redirect to="/dashboard" />
-      );
-    }
+        <Wizard handleSubmit={this.handleSubmit} isLoading={isFetching}>
+          <Name />
+          <Preferences />
+        </Wizard>
+      )
+    ) : (
+      <Redirect to="/dashboard" />
+    );
   }
 }
 

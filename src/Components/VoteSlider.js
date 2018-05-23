@@ -59,10 +59,9 @@ class VoteSlider extends React.Component {
       return heightToDivide / 2;
     };
     let voteCircleSize = WIDTH * 0.2;
-    let GRAVITY = 1;
     let isDraggable = false;
     let onCoolDown = false;
-    const cooldownTime = 5;
+    const cooldownTime = 15;
     let cooldownTimer = cooldownTime;
     let loader = 0;
     let shouldReset;
@@ -92,13 +91,13 @@ class VoteSlider extends React.Component {
         if (arcPosition.y > HEIGHT / 2) {
           setTimeout(() => {
             voteDown();
-          }, 100);
+          }, 500);
         }
 
         if (arcPosition.y < HEIGHT / 2) {
           setTimeout(() => {
             voteUp();
-          }, 100);
+          }, 500);
         }
 
         if (arcPosition.y !== arcPosition.last.y) {
@@ -106,7 +105,7 @@ class VoteSlider extends React.Component {
         }
         const testInterval = setInterval(() => {
           changeCurrentVote();
-          if (circleAnimation.getReset() == false) {
+          if (circleAnimation.getReset() === false) {
             clearInterval(testInterval);
           }
         }, 100);
@@ -240,8 +239,8 @@ class VoteSlider extends React.Component {
     const circleAnimation = CircleAnimation();
 
     function moveToMiddle() {
-      parseInt(arcPosition.y) < HEIGHT / 2 + 2 &&
-      parseInt(arcPosition.y) > HEIGHT / 2 - 2
+      parseInt(arcPosition.y, 10) < HEIGHT / 2 + 2 &&
+      parseInt(arcPosition.y, 10) > HEIGHT / 2 - 2
         ? circleAnimation.reset()
         : circleAnimation.animate();
     }
@@ -250,25 +249,14 @@ class VoteSlider extends React.Component {
       return p1 + (p2 - p1) * t;
     }
 
-    function easeInOut(t) {
-      return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-    }
+    // function easeInOut(t) {
+    //   return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+    // }
 
     function redraw() {
       requestAnimationFrame(redraw);
 
       ctx.clearRect(0, 0, WIDTH, HEIGHT);
-      ctx.beginPath();
-      ctx.arc(arcPosition.x, arcPosition.y, voteCircleSize, 0, 2 * Math.PI);
-      ctx.fillStyle = voteCircleColor;
-      ctx.fill();
-    }
-
-    function draw() {
-      requestAnimationFrame(draw);
-      ctx.clearRect(0, 0, WIDTH, HEIGHT);
-
-      // Draws vote circle
       ctx.beginPath();
       ctx.arc(arcPosition.x, arcPosition.y, voteCircleSize, 0, 2 * Math.PI);
       ctx.fillStyle = voteCircleColor;
@@ -284,12 +272,47 @@ class VoteSlider extends React.Component {
         ctx.fillText(cooldownTimer, arcPosition.x, arcPosition.y);
         ctx.fill();
 
+        // Draws loader on outer edge of the vote circle
+        ctx.beginPath();
+        ctx.arc(
+          arcPosition.x,
+          arcPosition.y,
+          voteCircleSize - 2.5,
+          1.5 * Math.PI,
+          (loader + 1.5) * Math.PI
+        );
+        ctx.strokeStyle = "#FFF";
+        ctx.lineWidth = 5;
+        ctx.stroke();
+      }
+    }
+
+    function draw() {
+      requestAnimationFrame(draw);
+      ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+      // Draws vote circle
+      ctx.beginPath();
+      ctx.arc(arcPosition.x, arcPosition.y, voteCircleSize, 0, 2 * Math.PI);
+      ctx.fillStyle = voteCircleColor;
+      ctx.fill();
+
+      if (loader > 2 || !onCoolDown) {
+        loader = 0;
+      }
+
+      if (onCoolDown) {
+        // Draws number in the middle of the vote circle
+        ctx.beginPath();
+        ctx.textBaseline = "middle";
+        ctx.textAlign = "center";
+        ctx.font = "30px montserrat";
+        ctx.fillStyle = voteCircleFontColor;
+        ctx.fillText(cooldownTimer, arcPosition.x, arcPosition.y);
+        ctx.fill();
+
         if (loader >= 0 && loader <= 2) {
           loader += 2 / cooldownTime / 60;
-
-          if (loader > 2) {
-            loader = 0;
-          }
         }
 
         // Draws loader on outer edge of the vote circle
@@ -373,15 +396,20 @@ class VoteSlider extends React.Component {
     };
 
     const voteUp = () => {
-      this.props.handleVote(this.state.currentVote * 1);
-
-      // initiateCooldown();
+      if (!onCoolDown) {
+        this.props.handleVote(this.state.currentVote * 1);
+        console.log("vote up");
+        initiateCooldown();
+      }
     };
 
     const voteDown = () => {
-      this.props.handleVote(this.state.currentVote * 1);
+      if (!onCoolDown) {
+        this.props.handleVote(this.state.currentVote * 1);
+        console.log("vote down");
 
-      // initiateCooldown();
+        initiateCooldown();
+      }
     };
 
     const initiateCooldown = () => {
@@ -394,7 +422,7 @@ class VoteSlider extends React.Component {
         if (this.state.cooldownTime === 0) {
           clearInterval(countCooldown);
           this.setState({
-            coolDownTime: cooldownTime
+            cooldownTime: cooldownTime
           });
           cooldownTimer = cooldownTime;
         }
@@ -404,7 +432,6 @@ class VoteSlider extends React.Component {
     const updateCooldownTimeLeft = () => {
       let timeLeft;
       timeLeft = cooldownTimer--;
-
       this.setState({
         cooldownTime: timeLeft
       });

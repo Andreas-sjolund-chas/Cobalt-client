@@ -2,11 +2,39 @@ import {
   REQUEST_SESSION_START,
   REQUEST_SESSION_SUCCESS,
   REQUEST_SESSION_FAIL,
+  REQUEST_SESSION_DATA_START,
+  REQUEST_SESSION_DATA_SUCCESS,
+  REQUEST_SESSION_DATA_FAIL,
   REQUEST_DELETE_SESSION_START,
   REQUEST_DELETE_SESSION_SUCCESS,
   REQUEST_DELETE_SESSION_FAIL,
   SESSION_CREATED
 } from "./constants";
+
+import { requestUser } from "../user/actions";
+
+export const requestSessionDataStart = () => ({
+  type: REQUEST_SESSION_DATA_START
+});
+export const requestSessionDataSuccess = data => ({
+  type: REQUEST_SESSION_DATA_SUCCESS,
+  payload: data
+});
+export const requestSessionDataFail = err => ({
+  type: REQUEST_SESSION_DATA_FAIL,
+  payload: err
+});
+export const requestSessionData = data => dispatch => {
+  dispatch(requestSessionDataStart());
+
+  fetch(process.env.REACT_APP_API_BASE_URL + "/api/session/" + data, {
+    method: "GET",
+    credentials: "include"
+  })
+    .then(handleResponse)
+    .then(data => dispatch(requestSessionDataSuccess(data)))
+    .catch(err => dispatch(requestSessionDataFail(err)));
+};
 
 export const requestSessionStart = () => ({ type: REQUEST_SESSION_START });
 export const requestSessionSuccess = data => ({
@@ -40,10 +68,9 @@ export const requestNewSession = data => dispatch => {
     threshold,
     descriptionPositive,
     descriptionNegative,
-    comments,
-    isAverage,
     name,
-    message
+    message,
+    workspace
   } = data;
 
   fetch(`${process.env.REACT_APP_API_BASE_URL}/api/session`, {
@@ -55,6 +82,7 @@ export const requestNewSession = data => dispatch => {
     body: JSON.stringify({
       name,
       description: message,
+      workspace: workspace,
       settings: {
         maxAttendees,
         threshold,
@@ -67,6 +95,7 @@ export const requestNewSession = data => dispatch => {
   })
     .then(handleResponse)
     .then(data => dispatch(requestSessionSuccess(data)))
+    .then(() => dispatch(requestUser()))
     .catch(err => dispatch(requestSessionFail(err)));
 };
 

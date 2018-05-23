@@ -1,13 +1,7 @@
 import React from "react";
 import { css, withStyles } from "../../../withStyles";
-import FlexContainer from "../../../Containers/FlexContainer";
-import Heading from "../../../Elements/Heading";
-import List from "../../../Elements/List";
-import ListItem from "../../../Elements/ListItem";
 import Paragraph from "../../../Elements/Paragraph";
 import Icon from "../../../Elements/Icon";
-import Button from "../../../Elements/Button";
-import Input from "../../../Elements/Input";
 import AddMember from "../../../Components/AddMember";
 import Loader from "../../../Elements/Loader";
 
@@ -73,37 +67,6 @@ const Members = ({
           })}
         </tbody>
       </table>
-
-      {/*<List {...css(styles.list)}>
-        {data.members.map((member, i) => {
-          return (
-            <ListItem key={i} {...css(styles.listItem)}>
-              <FlexContainer direction="row" align="center" justify="between">
-                <Paragraph size="sub" style={{ marginBottom: "0px" }}>
-                  {member.name}
-                </Paragraph>
-                -
-                <Paragraph size="sub" style={{ marginBottom: "0px" }}>
-                  {member.email}
-                </Paragraph>
-                {data.owner === member._id ? (
-                  <span {...css(styles.owner)}>OWNER</span>
-                ) : data.owner === user ? (
-                  <Icon
-                    onClick={e => handleRemoveMember(member._id, workspace._id)}
-                    icon="fas fa-times"
-                    fillColor="danger"
-                    size="medium"
-                    style={{ cursor: "pointer" }}
-                  />
-                ) : (
-                  ""
-                )}
-              </FlexContainer>
-            </ListItem>
-          );
-        })}
-      </List>*/}
       {data.owner === user ? (
         <AddMember data={data} handleAddMemberSubmit={handleSubmit} />
       ) : (

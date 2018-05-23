@@ -1,11 +1,9 @@
 import React from "react";
 import { css, withStyles } from "../../../withStyles";
 import FlexContainer from "../../../Containers/FlexContainer";
-import Heading from "../../../Elements/Heading";
 import Paragraph from "../../../Elements/Paragraph";
 import List from "../../../Elements/List";
 import ListItem from "../../../Elements/ListItem";
-import ButtonLink from "../../../Elements/ButtonLink";
 import Moment from "moment";
 
 const Presentations = ({ styles, ...props }) => {

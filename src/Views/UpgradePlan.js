@@ -8,7 +8,6 @@ import FlexContainer from "../Containers/FlexContainer";
 import ListItemWithIcon from "../Elements/ListItemWithIcon";
 import Button from "../Elements/Button";
 import Modal from "../Components/Modal";
-import Icon from "../Elements/Icon";
 
 const mockCards = [
   {
@@ -81,7 +80,7 @@ class UpgradePlan extends React.Component {
       name: this.state.workspaceName
     });
 
-    this.props.closeModal(e);
+    this.props.closeModal(e, true);
   }
 
   render() {

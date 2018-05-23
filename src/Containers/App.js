@@ -1,27 +1,27 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 
 import _debounce from "lodash.debounce";
 
 import { MobileContext } from "./MobileContext";
 
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
-
 import NotFound from "../Views/NotFound";
-import SocketClient from "../Views/Client";
+
 import LiveSessionHost from "../Views/LiveSessionHost/LiveSessionHost";
+import Summary from "../Views/LiveSessionHost/Summary";
 import Dashboard from "../Views/Dashboard/Dashboard";
 import Login from "../Views/Login";
 import LandingPage from "../Views/LandingPage";
 import PricingArea from "../Views/PricingArea";
-import CreateSession from "../Views/CreateSession";
 import SignUp from "../Views/SignUp";
 import Notifications from "../Components/Notifications";
 import Client from "../Views/Client";
 import Qrscanner from "../Components/Qrscanner";
 import QrCodeWindow from "../Components/QrCodeWindow";
+import Contact from "../Views/Contact";
+import DevelopersPage from "../Views/DevelopersPage";
+import AboutPage from "../Views/AboutPage";
 
 /* Actions */
 import { removeOldNotification } from "../redux/notifications/actions";
@@ -29,7 +29,6 @@ import { verifyAuth } from "../redux/auth/actions";
 
 /* HOC */
 import withSocket from "../Components/WithSocket";
-import requireAuth from "../Components/RequireAuth";
 import withPublicRoot from "../Containers/PublicRoot";
 import PrivateRoute from "../Components/PrivateRoute";
 
@@ -51,11 +50,14 @@ const LoginWithPublic = withPublicRoot(Login);
 const SignUpWithPublic = withPublicRoot(SignUp);
 const PricingAreaWithPublic = withPublicRoot(PricingArea);
 const LiveSessionHostWithSocket = withSocket(LiveSessionHost);
+const DevelopersPageWithPublic = withPublicRoot(DevelopersPage);
+const AboutPageWithPublic = withPublicRoot(AboutPage);
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
+    this.Contact = withPublicRoot(Contact);
     this.removeNotifications = this.removeNotifications.bind(this);
     this.updateMobile = _debounce(this.updateMobile, 200).bind(this);
 
@@ -129,7 +131,15 @@ class App extends React.Component {
                 />
               )}
             />
+
+            <Route exact path="/contact" component={this.Contact} />
+
             <Route path="/session/:sessionId" component={Client} />
+            <PrivateRoute
+              authenticated={isAuthenticated}
+              path="/summary/:sessionId"
+              component={Summary}
+            />
             <PrivateRoute
               authenticated={isAuthenticated}
               path="/host/:sessionId"
@@ -153,6 +163,9 @@ class App extends React.Component {
             <Route path="/lobby" component={this.Lobby} />
             <Route path="/dashboard" component={this.Dashboard} />
             <Route path="/scanner" component={Qrscanner} />
+            <Route path="/developers" component={DevelopersPageWithPublic} />
+            <Route path="/pricing" component={this.PricingArea} />
+            <Route path="/about" component={AboutPageWithPublic} />
             <Route path="*" component={NotFound} />
           </Switch>
         </div>
