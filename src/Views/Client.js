@@ -233,14 +233,13 @@ const Client = ({
       >
         <FlexContainer>
           {windowSize.width > 420 ? (
-            <div>
+            <div style={{ textAlign: "center" }}>
               <Heading appearance="primary" size="2">
                 {data.presentation.name}
               </Heading>
               <Heading appearance="primary" size="3">
                 {data.presentation.description}
               </Heading>
-              <Paragraph appearance="white">{data.status.time}</Paragraph>
             </div>
           ) : (
             ""
