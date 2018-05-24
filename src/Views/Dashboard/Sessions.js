@@ -105,13 +105,24 @@ class Sessions extends React.Component {
             </Heading>
             <Paragraph appearance="white">What do you want to do?</Paragraph>
             <FlexContainer direction="row">
-              <ButtonLink
-                to={`/host/${this.state.session.sessionId}`}
-                appearance="success"
-                onClick={this.toggleModal}
-              >
-                Go to lobby
-              </ButtonLink>
+              {this.state.session.hasEnded ? (
+                <ButtonLink
+                  to={`/summary/${this.state.session.sessionId}`}
+                  appearance="secondary"
+                  onClick={this.toggleModal}
+                >
+                  Go to summary
+                </ButtonLink>
+              ) : (
+                <ButtonLink
+                  to={`/host/${this.state.session.sessionId}`}
+                  appearance="success"
+                  onClick={this.toggleModal}
+                >
+                  Go to lobby
+                </ButtonLink>
+              )}
+
               <Button appearance="danger" onClick={this.handleDelete}>
                 Delete
               </Button>
