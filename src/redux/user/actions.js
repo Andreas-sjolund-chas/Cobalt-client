@@ -64,7 +64,10 @@ export const requestUserUpdate = data => dispatch => {
     body: JSON.stringify(data)
   })
     .then(handleResponse)
-    .then(data => dispatch(requestUserSuccess(data)))
+    .then(data => {
+      dispatch(requestUserSuccess(data));
+      dispatch(addWorkspaces(data.user.workspaces));
+    })
     .catch(err => dispatch(requestUserFail(err)));
 };
 

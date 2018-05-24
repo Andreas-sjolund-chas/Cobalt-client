@@ -14,16 +14,28 @@ import {
   ADD_WORKSPACE_FAIL
 } from "./constants";
 
+import { REQUEST_USER_START } from "../user/constants";
+
 const initialState = {
   workspaces: {},
   isFetching: false,
+  isFetchingWorkspaces: true,
   message: null
 };
 
 const workspaceReducer = (state = initialState, action) => {
   switch (action.type) {
+    case REQUEST_USER_START:
+      return {
+        ...state,
+        isFetchingWorkspaces: true
+      };
     case ADD_WORKSPACES:
-      return { ...state, isFetching: false, workspaces: action.payload };
+      return {
+        ...state,
+        isFetchingWorkspaces: false,
+        workspaces: action.payload
+      };
     case FETCH_MEMBERS_START:
       return { ...state, isFetching: true };
     case FETCH_MEMBERS_ERROR:
