@@ -27,13 +27,15 @@ const Members = ({
     <div {...css(styles.members)}>
       <table {...css(styles.table)}>
         <thead>
-          <td style={{ paddingLeft: "10px" }}>
-            <Paragraph size="normal">Name</Paragraph>
-          </td>
-          <td>
-            <Paragraph size="normal">Email</Paragraph>
-          </td>
-          <td />
+          <tr>
+            <th style={{ textAlign: "left", paddingLeft: "10px" }}>
+              <Paragraph size="normal">Name</Paragraph>
+            </th>
+            <th style={{ textAlign: "left" }}>
+              <Paragraph size="normal">Email</Paragraph>
+            </th>
+            <th />
+          </tr>
         </thead>
         <tbody>
           {data.members.map((member, i) => {

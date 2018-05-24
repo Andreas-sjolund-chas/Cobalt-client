@@ -270,34 +270,36 @@ class Workspaces extends Component {
           direction="row"
           style={{ flexWrap: "wrap" }}
         >
-          {!this.props.workspaces.isFetchingWorkspaces
-            ? this.props.workspaces.workspaces.map((workspace, i) => {
-                return (
-                  <div
-                    key={i}
-                    onClick={e => this.openModal(e, workspace, i)}
-                    {...css(this.styles.workspace)}
+          {!this.props.workspaces.isFetchingWorkspaces ? (
+            this.props.workspaces.workspaces.map((workspace, i) => {
+              return (
+                <div
+                  key={i}
+                  onClick={e => this.openModal(e, workspace, i)}
+                  {...css(this.styles.workspace)}
+                >
+                  <Card
+                    appearance="white"
+                    onClick={() => this.fetchMembers(workspace._id)}
                   >
-                    <Card
-                      appearance="white"
-                      onClick={() => this.fetchMembers(workspace._id)}
-                    >
-                      <Heading size="2">{workspace.name}</Heading>
-                      <Paragraph size="sub">
-                        Plan: {workspace.subscription.type}
-                      </Paragraph>
-                      <Paragraph size="sub">
-                        Members: {workspace.members.length}
-                      </Paragraph>
-                      <Paragraph size="sub">
-                        Presentations held in this workspace:{" "}
-                        {workspace.presentations.length}
-                      </Paragraph>
-                    </Card>
-                  </div>
-                );
-              })
-            : ""}
+                    <Heading size="2">{workspace.name}</Heading>
+                    <Paragraph size="sub">
+                      Plan: {workspace.subscription.type}
+                    </Paragraph>
+                    <Paragraph size="sub">
+                      Members: {workspace.members.length}
+                    </Paragraph>
+                    <Paragraph size="sub">
+                      Presentations held in this workspace:{" "}
+                      {workspace.presentations.length}
+                    </Paragraph>
+                  </Card>
+                </div>
+              );
+            })
+          ) : (
+            <Loader />
+          )}
         </FlexContainer>
       </div>
     );
