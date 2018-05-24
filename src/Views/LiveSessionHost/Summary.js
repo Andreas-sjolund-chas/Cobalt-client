@@ -16,7 +16,7 @@ import Loader from "../../Elements/Loader";
 import { requestSessionData } from "../../redux/session/actions";
 
 class Summary extends React.Component {
-  constructor({ styles, ...props }) {
+  constructor(props) {
     super(props);
 
     const {
@@ -48,7 +48,7 @@ class Summary extends React.Component {
           flex="1"
           align="start"
           justify="start"
-          style={{ maxWidth: "960px" }}
+          style={{ maxWidth: "960px", width: "90vw" }}
         >
           <header {...css(this.props.styles.hero)}>
             <Heading size="1" appearance="dawn">
@@ -92,7 +92,7 @@ class Summary extends React.Component {
           <Heading size="4" appearance="dawn">
             Average engagement over time
           </Heading>
-          <Card appearance="white">
+          <Card style={{ width: "100%" }} appearance="white">
             <SessionGraph data={session.data} isAverage threshold="30" />
           </Card>
           <FlexContainer direction="row" align="center" justify="center">

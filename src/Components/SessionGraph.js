@@ -19,7 +19,6 @@ const SessionTooltip = ({ active, payload, label, ...props }) =>
     <Tooltip isRounded withShadow>
       <p>Time: {label}</p>
       <p>Value: {payload[0].value}</p>
-      <p>Custom text.</p>
     </Tooltip>
   ) : null;
 
@@ -86,7 +85,7 @@ const SessionGraph = ({
   );
 
   return (
-    <FlexContainer style={{ height: "240px" }}>
+    <FlexContainer style={{ height: "240px", width: "100%" }}>
       <ResponsiveContainer height="100%" width="100%">
         {isAverage ? renderAverage() : renderPercent()}
       </ResponsiveContainer>
