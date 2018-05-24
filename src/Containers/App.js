@@ -52,6 +52,7 @@ const PricingAreaWithPublic = withPublicRoot(PricingArea);
 const LiveSessionHostWithSocket = withSocket(LiveSessionHost);
 const DevelopersPageWithPublic = withPublicRoot(DevelopersPage);
 const AboutPageWithPublic = withPublicRoot(AboutPage);
+const ContactWithPublic = withPublicRoot(Contact);
 
 class App extends React.Component {
   constructor(props) {
@@ -132,8 +133,6 @@ class App extends React.Component {
               )}
             />
 
-            <Route exact path="/contact" component={this.Contact} />
-
             <Route path="/session/:sessionId" component={Client} />
             <PrivateRoute path="/summary/:sessionId" component={Summary} />
             <PrivateRoute
@@ -150,11 +149,38 @@ class App extends React.Component {
                 />
               )}
             />
+
+            <Route
+              path="/developers"
+              render={routeProps => (
+                <DevelopersPageWithPublic
+                  {...routeProps}
+                  authenticated={isAuthenticated}
+                />
+              )}
+            />
+
+            <Route
+              path="/about"
+              render={routeProps => (
+                <AboutPageWithPublic
+                  {...routeProps}
+                  authenticated={isAuthenticated}
+                />
+              )}
+            />
+
+            <Route
+              path="/contact"
+              render={routeProps => (
+                <ContactWithPublic
+                  {...routeProps}
+                  authenticated={isAuthenticated}
+                />
+              )}
+            />
             <Route path="/qr/:sessionId" component={QrCodeWindow} />
             <Route path="/scanner" component={Qrscanner} />
-            <Route path="/developers" component={DevelopersPageWithPublic} />
-            <Route path="/pricing" component={this.PricingArea} />
-            <Route path="/about" component={AboutPageWithPublic} />
             <Route path="*" component={NotFound} />
           </Switch>
         </div>
