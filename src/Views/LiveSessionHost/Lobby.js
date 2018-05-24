@@ -66,11 +66,29 @@ class Lobby extends React.Component {
           </Heading>
         </FlexContainer>
         <FlexContainer fullWidth="1" align="end" justify="end">
-          <CopyTextfield
-            url={`${process.env.REACT_APP_CLIENT_BASE_URL}/session/${
-              this.props.data.sessionId
-            }`}
-          />
+          <FlexContainer direction="row">
+            <Button
+              appearance="secondary"
+              onClick={event => {
+                const size = window.innerHeight * 0.75;
+                event.preventDefault();
+                window.open(
+                  `${process.env.REACT_APP_CLIENT_BASE_URL}/qr/${
+                    this.props.data.sessionId
+                  }`,
+                  "Popup",
+                  `location,status,resizable,centerscreen,width=${size},height=${size}`
+                );
+              }}
+            >
+              Show QR-code
+            </Button>
+            <CopyTextfield
+              url={`${process.env.REACT_APP_CLIENT_BASE_URL}/session/${
+                this.props.data.sessionId
+              }`}
+            />
+          </FlexContainer>
         </FlexContainer>
       </div>
     );
