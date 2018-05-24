@@ -1,14 +1,19 @@
 import React from "react";
 import { css, withStyles } from "../withStyles";
 
-const Card = ({ appearance = "carbon", shadow = null, styles, ...props }) => (
+const Card = ({
+  appearance = "carbon",
+  shadow = "shadow",
+  styles,
+  ...props
+}) => (
   <div
     {...css(styles.card, styles[appearance], styles[shadow], styles.rounded)}
     {...props}
   />
 );
 
-export default withStyles(({ themes, shadow, rounded }) => {
+export default withStyles(({ colors, themes, shadow, rounded }) => {
   return {
     card: {
       padding: "40px",
@@ -22,6 +27,16 @@ export default withStyles(({ themes, shadow, rounded }) => {
     success: themes.success,
     danger: themes.danger,
     carbon: themes.carbon,
+    white: {
+      backgroundColor: "#FFF"
+    },
+
+    primaryBackground: {
+      backgroundColor: colors.primary
+    },
+    secondaryBackground: {
+      backgroundColor: colors.secondary
+    },
 
     /* Shadow */
     shadow: shadow,

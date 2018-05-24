@@ -9,6 +9,7 @@ const FlexContainer = ({
   justify = "start",
   fullWidth = null,
   flex = null,
+  wrap = false,
   ...props
 }) => {
   const flexSize = `flex${flex}`;
@@ -23,7 +24,8 @@ const FlexContainer = ({
         styles[alignItems],
         styles[justifyContent],
         styles[flexSize],
-        styles[fullWidth]
+        styles[fullWidth],
+        wrap && styles.wrap
       )}
       {...props}
     />
@@ -80,6 +82,9 @@ export default withStyles(() => {
     },
     "1": {
       width: "100%"
+    },
+    wrap: {
+      flexWrap: "wrap"
     }
   };
 })(FlexContainer);

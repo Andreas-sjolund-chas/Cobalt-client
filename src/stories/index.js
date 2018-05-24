@@ -37,6 +37,7 @@ import SignUpForm from "./Components/SignUpForm";
 import JoinSession from "./Components/JoinSession";
 import SessionItem from "./Components/SessionItem";
 import SessionItemCard from "./Components/SessionItemCard";
+import SessionGraph from "./Components/SessionGraph";
 import Wizard from "./Components/Wizard";
 import Notifications from "./Components/Notifications";
 import VoteSlider from "./Components/VoteSlider";

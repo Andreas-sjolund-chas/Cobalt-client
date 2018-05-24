@@ -1,6 +1,7 @@
 import React from "react";
-import { withStyles } from "../withStyles";
+
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import Wizard from "../Components/Wizard";
 import Preferences from "../Components/CreateSession/Preferences";
@@ -19,58 +20,82 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = ({
-  session: { isFetching, newSessionCreated, session, message }
+  session: { isFetching, newSessionCreated, session, message },
+  workspace: { workspaces }
 }) => ({
   isFetching,
   newSessionCreated,
   session,
-  message
+  message,
+  workspaces
 });
 
 class CreateSession extends React.Component {
-  constructor({ styles, handleSubmit = null, ...props }) {
+  constructor({ handleSubmit = null, ...props }) {
     super(props);
-
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    this.closeModal = this.closeModal.bind(this);
+
+    this.state = {
+      isModalHidden: false
+    };
+  }
+
+  componentWillMount() {
+    this.setState({
+      ...this.state,
+      workspaces: this.props.workspaces
+    });
   }
 
   handleSubmit(data) {
-    let newObj = {};
+    const dataObj = {
+      name: data.get("name"),
+      maxAttendees: data.get("maxAttendees"),
+      threshold: data.get("threshold"),
+      descriptionPositive: data.get("descriptionPositive"),
+      descriptionNegative: data.get("descriptionNegative"),
+      message: data.get("message"),
+      comments: data.get("comments"),
+      isAverage: data.get("isAverage"),
+      workspace: data.get("workspace")
+    };
 
-    for (const [key, value] of data.entries()) {
-      newObj[key] = value;
-    }
-
-    this.props.requestNewSession(newObj);
+    this.props.requestNewSession(dataObj);
   }
 
   componentWillUnmount() {
     this.props.sessionCreated();
   }
 
-  render() {
-    const { isFetching, newSessionCreated, session } = this.props;
+  closeModal(e, shouldClose) {
+    this.setState({
+      isModalHidden: shouldClose
+    });
+  }
 
-    return newSessionCreated ? (
-      <Modal withOverlay>
-        <SessionStarted sessionId={session.sessionId} />
-        <ButtonLink to={"/host/" + session.sessionId} appearance="secondary">
-          GO TO PRESENTATION LOBBY
-        </ButtonLink>
-      </Modal>
+  render() {
+    const { isFetching, newSessionCreated, session, workspaces } = this.props;
+
+    return !this.state.isModalHidden ? (
+      newSessionCreated ? (
+        <Modal closeModal={this.closeModal} withOverlay>
+          <SessionStarted sessionId={session.sessionId} />
+          <ButtonLink to={"/host/" + session.sessionId} appearance="secondary">
+            GO TO PRESENTATION LOBBY
+          </ButtonLink>
+        </Modal>
+      ) : (
+        <Wizard handleSubmit={this.handleSubmit} isLoading={isFetching}>
+          <Name workspace={this.state.workspaces} />
+          <Preferences />
+        </Wizard>
+      )
     ) : (
-      <Wizard handleSubmit={this.handleSubmit} isLoading={isFetching}>
-        <Name />
-        <Preferences />
-      </Wizard>
+      <Redirect to="/dashboard" />
     );
   }
 }
 
-CreateSession = connect(mapStateToProps, mapDispatchToProps)(CreateSession);
-
-export default withStyles(({ colors }) => {
-  return {
-    createSession: {}
-  };
-})(CreateSession);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateSession);

@@ -4,10 +4,8 @@ import { css, withStyles } from "../../withStyles";
 import FlexContainer from "../../Containers/FlexContainer";
 import CopyTextfield from "../../Elements/CopyTextfield";
 import Button from "../../Elements/Button";
-import Notification from "../../Elements/Notification";
 import Heading from "../../Elements/Heading";
-import Paragraph from "../../Elements/Paragraph";
-import Input from "../../Elements/Input";
+import Balloon from "../../Elements/Balloon";
 import Warning from "./Warning";
 import Engagement from "./Engagement";
 import Timer from "./Timer";
@@ -24,8 +22,24 @@ const LiveSessionHost = ({ styles, ...props }) => {
     return <Lobby {...props} />;
   }
 
+  let percentage =
+    100 - props.getPercentageFromAvg(props.data.engagement.average);
+
   return (
     <div {...css(styles.LiveSessionHost)}>
+      <div {...css(styles.balloonContainer)}>
+        {props.likes.map((like, key) => (
+          <Balloon
+            key={like.key}
+            id={like.key}
+            handleDelete={props.handleBalloonDelete}
+            pos={{
+              marginLeft: like.startPos,
+              zIndex: `${9999 + like.key}`
+            }}
+          />
+        ))}
+      </div>
       <div {...css(styles.interface)}>
         <FlexContainer
           justify="between"
@@ -52,18 +66,36 @@ const LiveSessionHost = ({ styles, ...props }) => {
           <Heading size="2" appearance="white">
             {props.data.attendees} attendees
           </Heading>
-          <CopyTextfield
-            url={`${process.env.REACT_APP_CLIENT_BASE_URL}/session/${
-              props.data.sessionId
-            }`}
-          />
+          <FlexContainer direction="row">
+            <Button
+              appearance="secondary"
+              onClick={event => {
+                const size = window.innerHeight * 0.75;
+                event.preventDefault();
+                window.open(
+                  `${process.env.REACT_APP_CLIENT_BASE_URL}/qr/${
+                    props.data.sessionId
+                  }`,
+                  "Popup",
+                  `location,status,resizable,centerscreen,width=${size},height=${size}`
+                );
+              }}
+            >
+              Show QR-code
+            </Button>
+            <CopyTextfield
+              url={`${process.env.REACT_APP_CLIENT_BASE_URL}/session/${
+                props.data.sessionId
+              }`}
+            />
+          </FlexContainer>
         </FlexContainer>
       </div>
       {props.data.status.isPaused ? <Paused {...props} /> : ""}
       <div {...css(styles.graphWrap)}>
         {/* TODO: Fix threshold when isAverage! */}
-        {props.data.engagement.negative > props.data.settings.threshold ? (
-          <Warning {...props} />
+        {100 - percentage < parseInt(props.data.settings.threshold) ? (
+          <Warning {...props} percentage={percentage} />
         ) : (
           <Engagement {...props} />
         )}
@@ -83,8 +115,15 @@ export default withStyles(({ themes, text, colors }) => {
       alignItems: "center",
       flexDirection: "column"
     },
+    balloonContainer: {
+      zIndex: "9999",
+      position: "absolute",
+      width: "100vw",
+      height: "100vh",
+      overflow: "hidden"
+    },
     interface: {
-      zIndex: "999",
+      zIndex: "10000",
       padding: "0px 16px",
       position: "absolute",
       width: "100%",

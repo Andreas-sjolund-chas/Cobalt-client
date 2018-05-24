@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { css, withStyles } from "../withStyles";
 
 import FlexContainer from "../Containers/FlexContainer";

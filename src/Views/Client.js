@@ -2,13 +2,16 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { css, withStyles } from "../withStyles";
 
+import { handleResponse } from "../redux/utils/utils";
+
 import Button from "../Elements/Button";
 import Heading from "../Elements/Heading";
 import Paragraph from "../Elements/Paragraph";
 import Loader from "../Elements/Loader";
 import FlexContainer from "../Containers/FlexContainer";
 import VoteSlider from "../Components/VoteSlider";
-import Modal from "../Components/Modal";
+
+import balloon from "../assets/balloon.svg";
 
 import io from "socket.io-client";
 const withSocket = WrappedComponent => {
@@ -26,7 +29,9 @@ const withSocket = WrappedComponent => {
         windowSize: {
           width: window.innerWidth,
           height: window.innerHeight
-        }
+        },
+        isLoading: true,
+        doesNotExist: undefined
       };
 
       const {
@@ -36,6 +41,7 @@ const withSocket = WrappedComponent => {
       } = this.props;
 
       this.handleClick = this.handleClick.bind(this);
+      this.handleLike = this.handleLike.bind(this);
       this.preventBounce = this.preventBounce.bind(this);
 
       this.sessionId = sessionId;
@@ -43,6 +49,29 @@ const withSocket = WrappedComponent => {
     }
 
     componentWillMount() {
+      fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/api/session/${this.sessionId}`
+      )
+        .then(handleResponse)
+        .then(res => {
+          this.setState({
+            data: {
+              status: {
+                ...this.state.data.status,
+                hasEnded: res.presentation.hasEnded
+              }
+            },
+            doesNotExist: false,
+            isLoading: false
+          });
+        })
+        .catch(err => {
+          this.setState({
+            doesNotExist: true,
+            isLoading: false
+          });
+        });
+
       this.updateWindowSize();
       this.updateWindowSize = this.updateWindowSize.bind(this);
     }
@@ -85,6 +114,15 @@ const withSocket = WrappedComponent => {
       });
     }
 
+    handleLike = () => {
+      this.socket.emit("attendeeLike", {
+        session: this.sessionId,
+        payload: {
+          type: "like"
+        }
+      });
+    };
+
     handleVote = value =>
       this.socket.emit("attendeePayload", {
         session: this.sessionId,
@@ -98,13 +136,19 @@ const withSocket = WrappedComponent => {
     };
 
     render() {
-      if (this.state.fireRedirect) {
+      if (this.state.isLoading) {
+        return <Loader />;
+      }
+
+      if (this.state.fireRedirect || this.state.doesNotExist) {
         return <Redirect to={"/"} />;
       }
+
       return (
         <WrappedComponent
           handleVote={this.handleVote}
           handleClick={this.handleClick}
+          handleLike={this.handleLike}
           data={this.state.data}
           windowSize={this.state.windowSize}
           {...this.props}
@@ -122,10 +166,30 @@ const Client = ({
   styles,
   ...props
 }) => {
+  if (data.status.hasEnded) {
+    return (
+      <div {...css(styles.message)}>
+        <FlexContainer flex="1" align="center" justify="center">
+          <Heading size="2">The session has ended</Heading>
+          <Paragraph>Thank you for participating</Paragraph>
+          <Button onClick={handleClick} appearance="secondary">
+            LEAVE SESSION
+          </Button>
+        </FlexContainer>
+      </div>
+    );
+  }
+
   if (!data.status.hasStarted) {
     return (
       <div {...css(styles.message)}>
         <FlexContainer flex="1" align="center" justify="center">
+          <Heading size="2" style={{ textAlign: "center" }}>
+            {data.presentation ? "Welcome to" : ""}
+          </Heading>
+          <Heading size="1" style={{ textAlign: "center" }}>
+            {data.presentation ? data.presentation.name : ""}
+          </Heading>
           <Heading size="2" style={{ textAlign: "center" }}>
             Waiting for host to start session
           </Heading>
@@ -150,20 +214,6 @@ const Client = ({
     );
   }
 
-  if (data.status.hasEnded) {
-    return (
-      <div {...css(styles.message)}>
-        <FlexContainer flex="1" align="center" justify="center">
-          <Heading size="2">The session has ended</Heading>
-          <Paragraph>Thank you for participating</Paragraph>
-          <Button onClick={handleClick} appearance="secondary">
-            LEAVE SESSION
-          </Button>
-        </FlexContainer>
-      </div>
-    );
-  }
-
   return (
     <div
       {...css(styles.client)}
@@ -172,6 +222,10 @@ const Client = ({
         position: windowSize.width < 420 ? "fixed" : ""
       }}
     >
+      <span {...css(styles.likeButton)} onClick={props.handleLike}>
+        {" "}
+        <img src={balloon} alt="heart-balloon" width="48px" />
+      </span>
       <FlexContainer
         justify="center"
         align="center"
@@ -179,14 +233,13 @@ const Client = ({
       >
         <FlexContainer>
           {windowSize.width > 420 ? (
-            <div>
+            <div style={{ textAlign: "center" }}>
               <Heading appearance="primary" size="2">
                 {data.presentation.name}
               </Heading>
               <Heading appearance="primary" size="3">
                 {data.presentation.description}
               </Heading>
-              <Paragraph appearance="white">{data.status.time}</Paragraph>
             </div>
           ) : (
             ""
@@ -226,7 +279,7 @@ const Client = ({
 
 const ClientWithSocket = withSocket(Client);
 
-export default withStyles(({ themes, colors }) => {
+export default withStyles(({ themes, colors, shadow }) => {
   return {
     client: {
       backgroundColor: colors.nightsky,
@@ -252,6 +305,27 @@ export default withStyles(({ themes, colors }) => {
       backgroundColor: colors.sand,
       animation: "fade 0.5s ease",
       willChange: "transform, opacity"
+    },
+    likeButton: {
+      display: "block",
+      padding: "10px",
+      borderRadius: "50%",
+      backgroundColor: colors.carbon,
+      color: "white",
+      position: "absolute",
+      zIndex: "999",
+      left: "25px",
+      top: "25px",
+      cursor: "pointer",
+      overflow: "hidden",
+      boxShadow: shadow.shadow,
+      transition: "transform 0.3s ease",
+      ":hover": {
+        transform: "scale(1.05)"
+      },
+      ":nth-child(1n) img": {
+        animation: "sway 3s ease infinite"
+      }
     },
     spinner: {
       ":nth-child(1n) span": {

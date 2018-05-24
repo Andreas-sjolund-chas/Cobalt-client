@@ -12,19 +12,24 @@ import {
   faPlus,
   faTag,
   faCog,
+  faBars,
   faPowerOff,
   faBriefcase,
   faBuilding,
   faBoxes,
   faQuestion,
   faExclamationTriangle,
-  faSpinner
+  faSpinner,
+  faExternalLinkAlt,
+  faEdit,
+  faCopy
 } from "@fortawesome/fontawesome-free-solid";
 
 const Icon = ({
   icon = null,
   fillColor = "white",
   size = "small",
+  padding = "padding",
   styles,
   ...props
 }) => {
@@ -69,6 +74,9 @@ const Icon = ({
     case "fas fa-building":
       faIcon = faBuilding;
       break;
+    case "fas fa-bars":
+      faIcon = faBars;
+      break;
     case "fas fa-boxes":
       faIcon = faBoxes;
       break;
@@ -78,12 +86,24 @@ const Icon = ({
     case "fas fa-spinner":
       faIcon = faSpinner;
       break;
+    case "fas fa-external-link-alt":
+      faIcon = faExternalLinkAlt;
+      break;
+    case "fas fa-copy":
+      faIcon = faCopy;
+      break;
+    case "fas fa-edit":
+      faIcon = faEdit;
+      break;
     default:
       faIcon = faQuestion;
   }
 
   return (
-    <span {...css(styles.icon, styles[size], styles[fillColor])} {...props}>
+    <span
+      {...css(styles.icon, styles[size], styles[fillColor], styles[padding])}
+      {...props}
+    >
       <FontAwesomeIcon icon={faIcon} />
     </span>
   );
@@ -92,10 +112,12 @@ const Icon = ({
 export default withStyles(({ colors, text }) => {
   return {
     icon: {
-      padding: "13.5px",
       ":nth-child(1) svg": {
         verticalAlign: "0px"
       }
+    },
+    padding: {
+      padding: "13.5px"
     },
     /** TODO: change from fontawesome to svg? */
 

@@ -1,22 +1,30 @@
 import React from "react";
 import { css, withStyles } from "../withStyles";
+import { Redirect } from "react-router-dom";
 
 import FlexContainer from "../Containers/FlexContainer";
 import Modal from "./Modal";
 import Button from "../Elements/Button";
-import Icon from "../Elements/Icon";
 import Loader from "../Elements/Loader";
 
 class Wizard extends React.Component {
   constructor({ styles, handleSubmit = null, ...props }) {
     super(props);
     this.state = {
-      currentPage: 0
+      currentPage: 0,
+      isModalHidden: false
     };
 
     this.nextPage = this.nextPage.bind(this);
     this.previousPage = this.previousPage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  closeModal(e, shouldClose) {
+    this.setState({
+      isModalHidden: shouldClose
+    });
   }
 
   nextPage(e) {
@@ -40,33 +48,10 @@ class Wizard extends React.Component {
   }
 
   render() {
-    return (
+    return !this.state.isModalHidden ? (
       <div {...css(this.props.styles.wizard)} {...this.props}>
         <form onSubmit={this.handleSubmit}>
-          <Modal withOverlay>
-            <FlexContainer
-              align="end"
-              style={{
-                width: "100%",
-                position: "absolute",
-                top: "20px",
-                right: "20px"
-              }}
-            >
-              <Icon
-                icon="fas fa-times"
-                fillColor="white"
-                style={{
-                  borderRadius: "4px",
-                  width: "25px",
-                  height: "25px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-                {...css(this.props.styles.closeModal)}
-              />
-            </FlexContainer>
+          <Modal withOverlay closeModal={this.closeModal}>
             {this.props.children.map((child, i) => (
               <li
                 key={i}
@@ -123,6 +108,8 @@ class Wizard extends React.Component {
           </Modal>
         </form>
       </div>
+    ) : (
+      <Redirect to="/dashboard" />
     );
   }
 }
@@ -136,7 +123,6 @@ export default withStyles(({ colors, themes }) => {
           backgroundColor: colors.nightsky
         }
       }
-    },
-    closeModal: themes.danger
+    }
   };
 })(Wizard);

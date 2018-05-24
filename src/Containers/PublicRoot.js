@@ -1,19 +1,14 @@
 import React from "react";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
-import { verifyAuth } from "../redux/auth/actions";
-
-import { connect } from "react-redux";
 
 let withPublicRoot = ComposedComponent => {
-  class PublicRoot extends React.Component {
-    componentWillMount() {
-      this.props.dispatch(verifyAuth());
-    }
+  return class PublicRoot extends React.Component {
     render() {
+      const { authenticated } = this.props;
       return (
         <React.Fragment>
-          <Header {...this.props} />
+          <Header isAuthenticated={authenticated} />
           <main className="App-content">
             <ComposedComponent />
           </main>
@@ -21,14 +16,7 @@ let withPublicRoot = ComposedComponent => {
         </React.Fragment>
       );
     }
-  }
-
-  const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    success: state.signup.success
-  });
-
-  return connect(mapStateToProps)(PublicRoot);
+  };
 };
 
 export default withPublicRoot;
