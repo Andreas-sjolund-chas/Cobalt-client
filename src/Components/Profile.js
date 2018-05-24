@@ -38,6 +38,7 @@ const Profile = ({
         style={{ width: "100%", flexWrap: "wrap" }}
       >
         <Card
+          appearance="white"
           style={{
             height: "240px",
             width: "480px",
@@ -57,7 +58,7 @@ const Profile = ({
                     type="file"
                     name="file"
                     onChange={handleUploadFile}
-                    style={{ width: "200px" }}
+                    style={{ width: "200px", color: "black" }}
                   />
                 </FlexContainer>
               </FlexContainer>
@@ -73,6 +74,7 @@ const Profile = ({
             }}
           >
             <Card
+              appearance="white"
               style={{
                 height: "240px",
                 width: "480px",
@@ -138,6 +140,7 @@ const Profile = ({
             </Card>
 
             <Card
+              appearance="white"
               style={{
                 height: "240px",
                 width: "480px",
