@@ -7,7 +7,12 @@ import {
   REQUEST_SESSION_FAIL,
   REQUEST_DELETE_SESSION_SUCCESS
 } from "../session/constants";
-import { REQUEST_LOGOUT_SUCCESS, REQUEST_LOGOUT_FAIL } from "../auth/constants";
+import {
+  REQUEST_LOGOUT_SUCCESS,
+  REQUEST_LOGOUT_FAIL,
+  REQUEST_AUTH_FAIL,
+  REQUEST_AUTH_SUCCESS
+} from "../auth/constants";
 import {
   ADD_MEMBER_SUCCESS,
   ADD_MEMBER_ERROR,
@@ -44,6 +49,8 @@ const notificationsReducer = (state = initialState, action) => {
     case REQUEST_AVATAR_UPDATE_FAIL:
     case REQUEST_USER_SUCCESS:
     case REQUEST_USER_FAIL:
+    case REQUEST_AUTH_FAIL:
+    case REQUEST_AUTH_SUCCESS:
       return {
         ...state,
         messages: [
