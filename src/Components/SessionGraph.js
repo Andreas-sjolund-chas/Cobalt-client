@@ -19,7 +19,6 @@ const SessionTooltip = ({ active, payload, label, ...props }) =>
     <Tooltip isRounded withShadow>
       <p>Time: {label}</p>
       <p>Value: {payload[0].value}</p>
-      <p>Custom text.</p>
     </Tooltip>
   ) : null;
 
