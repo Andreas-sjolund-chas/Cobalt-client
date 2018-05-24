@@ -8,7 +8,7 @@ const Warning = ({ styles, ...props }) => {
       <Heading size="1" appearance="white">
         Engagement threshold reached
       </Heading>
-      <span {...css(styles.value)}>{props.data.engagement.negative}%</span>
+      <span {...css(styles.value)}>{props.percentage}%</span>
     </div>
   );
 };
